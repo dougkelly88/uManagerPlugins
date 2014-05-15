@@ -1,0 +1,4 @@
+uManagerPlugins
+===============
+
+Micromanager java repo
