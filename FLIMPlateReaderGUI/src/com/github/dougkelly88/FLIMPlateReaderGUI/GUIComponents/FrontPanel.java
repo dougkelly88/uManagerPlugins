@@ -22,7 +22,7 @@ import javax.swing.SwingUtilities;
 public class FrontPanel extends javax.swing.JFrame implements org.micromanager.api.MMPlugin{
    public static String menuName = "FLIMPlateReaderTest";
    public static String tooltipDescription = "Plugin allowing control of an OpenFLIM-HCA plate reader";
-   private CMMCore core_;
+   public CMMCore core_;
    private MMStudio gui_;
    private AcquisitionEngine acq_;
 
@@ -45,14 +45,18 @@ public class FrontPanel extends javax.swing.JFrame implements org.micromanager.a
         jTabbedPane1 = new javax.swing.JTabbedPane();
         fLIMControls1 = new com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.FLIMControls();
         fLIMControls2 = new com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.FLIMControls();
+        lightPathControls1 = new com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.LightPathControls();
+        xYZControls1 = new com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.XYZControls();
         jToggleButton1 = new javax.swing.JToggleButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         displayDichroicLabel = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jTabbedPane1.addTab("tab1", fLIMControls1);
-        jTabbedPane1.addTab("tab2", fLIMControls2);
+        jTabbedPane1.addTab("Dummy", fLIMControls1);
+        jTabbedPane1.addTab("FLIM", fLIMControls2);
+        jTabbedPane1.addTab("Light path", lightPathControls1);
+        jTabbedPane1.addTab("XYZ", xYZControls1);
 
         jToggleButton1.setText("GetProperty");
         jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -150,6 +154,8 @@ public class FrontPanel extends javax.swing.JFrame implements org.micromanager.a
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JToggleButton jToggleButton1;
+    private com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.LightPathControls lightPathControls1;
+    private com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.XYZControls xYZControls1;
     // End of variables declaration//GEN-END:variables
 
     @Override
