@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.github.dougkelly88.uManagerPlugins;
+package com.github.dougkelly88.uManagerPlugins.Dummy;
 
 
 import org.micromanager.api.ScriptInterface;
@@ -13,6 +13,7 @@ import org.micromanager.MMStudioMainFrame;
 import org.micromanager.acquisition.AcquisitionEngine;
 import org.micromanager.api.ScriptInterface;
 import org.micromanager.utils.ReportingUtils;
+import loci.formats.MetadataTools;
 
 /**
  *
@@ -24,6 +25,7 @@ public class Dummy implements org.micromanager.api.MMPlugin{
    private CMMCore core_;
    private MMStudioMainFrame gui_;
    private AcquisitionEngine acq_;
+   public DummyControls controlFrame_;
             
    @Override
    public void dispose() {
@@ -44,6 +46,7 @@ public class Dummy implements org.micromanager.api.MMPlugin{
    @Override
    public void show() {//this is run when the menu listing for the plugin is clicked
       gui_.showMessage("This is some nonsense!"); 
+      
    }
 
 
