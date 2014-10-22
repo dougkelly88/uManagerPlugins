@@ -20,7 +20,7 @@ import javax.swing.SwingUtilities;
  * @author dk1109
  */
 public class FrontPanel extends javax.swing.JFrame implements org.micromanager.api.MMPlugin{
-   public static String menuName = "FLIMPlateReader";
+   public static String menuName = "FLIMPlateReaderTest";
    public static String tooltipDescription = "Plugin allowing control of an OpenFLIM-HCA plate reader";
    private CMMCore core_;
    private MMStudio gui_;
@@ -44,38 +44,69 @@ public class FrontPanel extends javax.swing.JFrame implements org.micromanager.a
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
         fLIMControls1 = new com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.FLIMControls();
-        lightPathControls1 = new com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.LightPathControls();
-        xYZControls1 = new com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.XYZControls();
+        fLIMControls2 = new com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.FLIMControls();
+        jToggleButton1 = new javax.swing.JToggleButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        displayDichroicLabel = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jTabbedPane1.addTab("tab1", fLIMControls1);
-        jTabbedPane1.addTab("tab2", lightPathControls1);
-        jTabbedPane1.addTab("tab3", xYZControls1);
+        jTabbedPane1.addTab("tab2", fLIMControls2);
+
+        jToggleButton1.setText("GetProperty");
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton1ActionPerformed(evt);
+            }
+        });
+
+        displayDichroicLabel.setColumns(20);
+        displayDichroicLabel.setRows(5);
+        jScrollPane1.setViewportView(displayDichroicLabel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1122, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 621, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(491, Short.MAX_VALUE)))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 611, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(49, 49, 49)
+                        .addComponent(jToggleButton1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 217, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 835, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 813, Short.MAX_VALUE)
-                    .addContainerGap()))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 811, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 24, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(55, 55, 55)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jToggleButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        
+        String a = "Dummy";
+        displayDichroicLabel.setText(a);
+        try{displayDichroicLabel.setText(core_.getProperty("Dichroic","Label"));}
+        catch (Exception e)
+        {
+            displayDichroicLabel.setText("error");
+        }
+        //core_.getProperty("Dichroic", "Label");
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -113,20 +144,24 @@ public class FrontPanel extends javax.swing.JFrame implements org.micromanager.a
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea displayDichroicLabel;
     private com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.FLIMControls fLIMControls1;
+    private com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.FLIMControls fLIMControls2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.LightPathControls lightPathControls1;
-    private com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.XYZControls xYZControls1;
+    private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void setApp(ScriptInterface si) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void setApp(ScriptInterface app) {
+      gui_ = (MMStudio) app;
+      core_ = app.getMMCore();
+      acq_ = gui_.getAcquisitionEngine(); 
     }
 
     @Override
     public String getDescription() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Template
     }
 
     @Override
