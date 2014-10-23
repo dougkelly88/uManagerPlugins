@@ -6,9 +6,11 @@
 
 package com.github.dougkelly88.FLIMPlateReaderGUI.Classes;
 
+import javax.swing.JFrame;
 import mmcorej.CMMCore;
 import org.micromanager.MMStudio;
 import org.micromanager.acquisition.AcquisitionEngine;
+import org.micromanager.acquisition.AcquisitionWrapperEngine;
 import org.micromanager.api.MMPlugin;
 import org.micromanager.api.ScriptInterface;
 
@@ -21,11 +23,19 @@ public class HCAFLIMPlugin implements MMPlugin {
     public static final String menuName = "HCA-FLIM Plugin";
     public static final String tooltipDescription = "Suite of controls for use with HCA-FLIM instruments";
     
+    public static JFrame frame_;
+    HCAFLIMPluginControl pc_;
     static ScriptInterface si_;
     private CMMCore core_;
     private MMStudio gui_;
     private AcquisitionEngine acq_;
 
+    public static AcquisitionWrapperEngine getAcquisitionWrapperEngine() 
+    {
+        AcquisitionWrapperEngine engineWrapper = (AcquisitionWrapperEngine) MMStudio.getInstance().getAcquisitionEngine();
+        return engineWrapper;
+    }
+    
     @Override
     public void dispose() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -36,11 +46,18 @@ public class HCAFLIMPlugin implements MMPlugin {
       gui_ = (MMStudio) si;
       core_ = si.getMMCore();
       acq_ = gui_.getAcquisitionEngine();
+      pc_ = new HCAFLIMPluginControl(getAcquisitionWrapperEngine(), core_);
     }
 
     @Override
     public void show() {
         gui_.showMessage("HELLO WORLD!");
+        if (frame_ == null) {
+            frame_ = pc_.getFrame();
+            gui_.addMMBackgroundListener(frame_);
+//            frame_.setLocation(fa.controlFrame_.FrameXpos, fa.controlFrame_.FrameYpos);
+        }
+        frame_.setVisible(true);
     }
 
     @Override
