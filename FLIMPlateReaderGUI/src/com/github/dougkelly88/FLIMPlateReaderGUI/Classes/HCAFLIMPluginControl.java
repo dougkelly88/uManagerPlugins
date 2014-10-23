@@ -6,11 +6,13 @@
 
 package com.github.dougkelly88.FLIMPlateReaderGUI.Classes;
 
+import com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.HCAFLIMPluginFrame;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JFrame;
 import mmcorej.CMMCore;
 import org.micromanager.acquisition.AcquisitionWrapperEngine;
-
-import com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.HCAFLIMPluginFrame;
-import javax.swing.JFrame;
 import org.micromanager.utils.GUIUtils;
 
 /**
@@ -37,4 +39,13 @@ public class HCAFLIMPluginControl {
         return frame_;
     }
     
+    public String test(String dev, String prop)
+    {
+        String out;
+        try{out = core_.getProperty(dev, prop);}
+        catch (Exception e){out = "Error:" + e.getMessage();}
+        return out;
+    }
+    
+
 }

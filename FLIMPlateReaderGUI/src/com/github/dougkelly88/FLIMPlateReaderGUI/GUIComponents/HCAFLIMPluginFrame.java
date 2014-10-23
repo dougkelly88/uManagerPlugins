@@ -7,6 +7,11 @@
 package com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents;
 
 import com.github.dougkelly88.FLIMPlateReaderGUI.Classes.HCAFLIMPluginControl;
+import static com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.HCAFLIMPluginFrame.frame_;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  *
@@ -35,10 +40,32 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        getDichroic = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        testText = new javax.swing.JTextArea();
+        getObjective = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("HCAFLIMPluginFrame");
+
+        getDichroic.setText("getDichroic");
+        getDichroic.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                getDichroicActionPerformed(evt);
+            }
+        });
+
+        testText.setColumns(20);
+        testText.setRows(5);
+        jScrollPane1.setViewportView(testText);
+
+        getObjective.setText("getObjective");
+        getObjective.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                getObjectiveActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -48,17 +75,42 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
                 .addContainerGap(547, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(601, 601, 601))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(144, 144, 144)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(getDichroic)
+                    .addComponent(getObjective))
+                .addGap(91, 91, 91)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(340, 340, 340)
+                .addGap(116, 116, 116)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(getDichroic)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(getObjective)))
+                .addGap(128, 128, 128)
                 .addComponent(jLabel1)
                 .addContainerGap(406, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+
+            
+    private void getDichroicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getDichroicActionPerformed
+        testText.setText(pc_.test("Dichroic", "Label"));
+    }//GEN-LAST:event_getDichroicActionPerformed
+
+    private void getObjectiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getObjectiveActionPerformed
+        testText.setText(pc_.test("Objective", "Label"));
+    }//GEN-LAST:event_getObjectiveActionPerformed
 
     /**
      * @param args the command line arguments
@@ -97,6 +149,12 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton getDichroic;
+    private javax.swing.JButton getObjective;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea testText;
     // End of variables declaration//GEN-END:variables
+
+    
 }
