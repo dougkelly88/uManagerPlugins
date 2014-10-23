@@ -6,33 +6,39 @@
 
 package com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents;
 
-import mmcorej.CMMCore;
-import org.micromanager.MMStudio;
-import org.micromanager.acquisition.AcquisitionEngine;
-import org.micromanager.api.ScriptInterface;
+//import com.github.dougkelly88.FLIMPlateReaderGUI.Classes.FLIMControl;
+import com.github.dougkelly88.FLIMPlateReaderGUI.Classes.FrontPanelControl;
 
-import javax.swing.JFrame;
-import javax.swing.JTabbedPane;
-import javax.swing.SwingUtilities;
+//import javax.swing.JFrame;
+//import javax.swing.JTabbedPane;
+//import javax.swing.SwingUtilities;
+//import mmcorej.CMMCore;
+//import org.micromanager.MMStudio;
+//import org.micromanager.acquisition.AcquisitionEngine;
+//import org.micromanager.api.ScriptInterface;
 
 /**
  *
  * @author dk1109
  */
-public class FrontPanel extends javax.swing.JFrame implements org.micromanager.api.MMPlugin{
-   public static String menuName = "FLIMPlateReaderTest";
-   public static String tooltipDescription = "Plugin allowing control of an OpenFLIM-HCA plate reader";
-   public CMMCore core_;
-   private MMStudio gui_;
-   private AcquisitionEngine acq_;
+public class FrontPanelFrame extends javax.swing.JFrame {
+   static FrontPanelFrame frame;
+   static private FrontPanelControl fpc;
 
     /**
      * Creates new form FrontPanel
      */
-    public FrontPanel() {
+    public FrontPanelFrame(FrontPanelControl fpc) {
+        this.fpc = fpc;
         initComponents();
+        initPanels();
     }
 
+    private void initPanels()
+    {
+//        jPanelFLIM = new com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.FLIMControls();
+//        jTabbedPane1.addTab("FLIM controls", jPanelFLIM);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -43,20 +49,14 @@ public class FrontPanel extends javax.swing.JFrame implements org.micromanager.a
     private void initComponents() {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        fLIMControls1 = new com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.FLIMControls();
-        fLIMControls2 = new com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.FLIMControls();
         lightPathControls1 = new com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.LightPathControls();
-        xYZControls1 = new com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.XYZControls();
         jToggleButton1 = new javax.swing.JToggleButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         displayDichroicLabel = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jTabbedPane1.addTab("Dummy", fLIMControls1);
-        jTabbedPane1.addTab("FLIM", fLIMControls2);
-        jTabbedPane1.addTab("Light path", lightPathControls1);
-        jTabbedPane1.addTab("XYZ", xYZControls1);
+        jTabbedPane1.addTab("tab1", lightPathControls1);
 
         jToggleButton1.setText("GetProperty");
         jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -102,14 +102,14 @@ public class FrontPanel extends javax.swing.JFrame implements org.micromanager.a
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
         
-        String a = "Dummy";
-        displayDichroicLabel.setText(a);
-        try{displayDichroicLabel.setText(core_.getProperty("Dichroic","Label"));}
-        catch (Exception e)
-        {
-            displayDichroicLabel.setText("error");
-        }
-        //core_.getProperty("Dichroic", "Label");
+//        String a = "Dummy";
+//        displayDichroicLabel.setText(a);
+//        try{displayDichroicLabel.setText(core_.getProperty("Dichroic","Label"));}
+//        catch (Exception e)
+//        {
+//            displayDichroicLabel.setText("error");
+//        }
+//        //core_.getProperty("Dichroic", "Label");
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     /**
@@ -129,59 +129,32 @@ public class FrontPanel extends javax.swing.JFrame implements org.micromanager.a
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrontPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrontPanelFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrontPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrontPanelFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrontPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrontPanelFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrontPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrontPanelFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrontPanel().setVisible(true);
+                new FrontPanelFrame(fpc).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea displayDichroicLabel;
-    private com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.FLIMControls fLIMControls1;
-    private com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.FLIMControls fLIMControls2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JToggleButton jToggleButton1;
     private com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.LightPathControls lightPathControls1;
-    private com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.XYZControls xYZControls1;
     // End of variables declaration//GEN-END:variables
-
-    @Override
-    public void setApp(ScriptInterface app) {
-      gui_ = (MMStudio) app;
-      core_ = app.getMMCore();
-      acq_ = gui_.getAcquisitionEngine(); 
-    }
-
-    @Override
-    public String getDescription() {
-      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Template
-    }
-
-    @Override
-    public String getInfo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public String getVersion() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public String getCopyright() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    private com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.FLIMControls jPanelFLIM;
+    private com.github.dougkelly88.FLIMPlateReaderGUI.Classes.FLIMControl fc;
+      
 }

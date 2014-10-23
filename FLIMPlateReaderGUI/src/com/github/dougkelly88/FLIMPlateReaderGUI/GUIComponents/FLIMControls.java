@@ -7,26 +7,34 @@
 package com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents;
 
 import org.jfree.chart.ChartFactory;
-import com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.FrontPanel.*;
 import mmcorej.CMMCore;
-import org.micromanager.MMStudio;
-import org.micromanager.acquisition.AcquisitionEngine;
-import org.micromanager.api.ScriptInterface;
+import com.github.dougkelly88.FLIMPlateReaderGUI.Classes.FLIMControl;
+
 
 /**
  *
  * @author dk1109
  */
-public class FLIMControls extends javax.swing.JPanel implements org.micromanager.api.MMPlugin{
-    //private CMMCore core_;
-   private MMStudio gui_;
-   private AcquisitionEngine acq_;
+public class FLIMControls extends javax.swing.JPanel{
+
+    CMMCore core_;
+    FLIMControl fc_;
+    
     /**
      * Creates new form FLIMControls
      */
-    public FLIMControls() {
+    
+    public FLIMControls(){
         initComponents();
         initPlots();
+        
+    }
+    
+    public FLIMControls(FLIMControl fc) {
+        initComponents();
+        initPlots();
+        fc_ = fc;
+        displayDichroicLabel.setText("FLIMControls Set");
     }
 
     /**
@@ -325,13 +333,16 @@ public class FLIMControls extends javax.swing.JPanel implements org.micromanager
 
     private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
 
+        int b = fc_.test();
+        //fc.doSometjing()
         String a = "Dummy";
         displayDichroicLabel.setText(a);
-        try{displayDichroicLabel.setText(core_.getProperty("Dichroic","Label"));}
-        catch (Exception e)
-        {
-            displayDichroicLabel.setText("error");
-        }
+        displayDichroicLabel.setText("test = " + b);
+//        try{displayDichroicLabel.setText(core_.getProperty("Dichroic","Label"));}
+//        catch (Exception e)
+//        {
+//            displayDichroicLabel.setText("error");
+//        }
         //core_.getProperty("Dichroic", "Label");
     }//GEN-LAST:event_jToggleButton2ActionPerformed
 
@@ -360,35 +371,5 @@ public class FLIMControls extends javax.swing.JPanel implements org.micromanager
     private javax.swing.JToggleButton jToggleButton2;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public void dispose() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-       @Override
-    public void setApp(ScriptInterface app) {
-      gui_ = (MMStudio) app;
-      core_ = app.getMMCore();
-      acq_ = gui_.getAcquisitionEngine(); 
-    }
-
-    @Override
-    public String getDescription() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public String getInfo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public String getVersion() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public String getCopyright() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 }
