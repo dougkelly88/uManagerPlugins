@@ -54,6 +54,10 @@ public class FrontPanelFred extends javax.swing.JFrame implements org.micromanag
         ExcitationComboBox = new javax.swing.JComboBox();
         NDFWLabel = new javax.swing.JLabel();
         NDFWComboBox = new javax.swing.JComboBox();
+        FilterCubeComboBox = new javax.swing.JComboBox();
+        FilterCubeLabel = new javax.swing.JLabel();
+        SwitchPortComboBox = new javax.swing.JComboBox();
+        SwitchPortLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -121,6 +125,24 @@ public class FrontPanelFred extends javax.swing.JFrame implements org.micromanag
             }
         });
 
+        FilterCubeComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        FilterCubeComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FilterCubeComboBoxActionPerformed(evt);
+            }
+        });
+
+        FilterCubeLabel.setText("FilerCube");
+
+        SwitchPortComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        SwitchPortComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SwitchPortComboBoxActionPerformed(evt);
+            }
+        });
+
+        SwitchPortLabel.setText("PortSwitch");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -132,45 +154,58 @@ public class FrontPanelFred extends javax.swing.JFrame implements org.micromanag
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(Filter, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 41, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(Olympus, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addComponent(LaserON, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(81, 81, 81)
-                        .addComponent(loadConfigButton))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(General, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ObjectiveLabel)
-                            .addComponent(ObjectiveComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(ExcitationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(20, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(ObjectiveComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(ObjectiveLabel))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(NDFWLabel))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(SwitchPortLabel)
+                                    .addComponent(SwitchPortComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(5, 5, 5)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(FilterCubeLabel)
+                                    .addComponent(FilterCubeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(233, 233, 233))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(ExcitationComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(19, 19, 19)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(ExcitationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(NDFWLabel))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(ExcitationComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(NDFWComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(NDFWComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(DichroicComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(DichroicLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(EmissionLabel)
-                            .addComponent(EmissionComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 176, Short.MAX_VALUE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(DichroicComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(DichroicLabel))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(EmissionLabel)
+                                    .addComponent(EmissionComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(39, 39, 39)
+                                .addComponent(LaserON, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(81, 81, 81)
+                                .addComponent(loadConfigButton))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(General, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(31, 31, 31)))
                 .addContainerGap())
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {DichroicComboBox, DichroicLabel, EmissionComboBox, EmissionLabel, ExcitationComboBox, ExcitationLabel, NDFWComboBox, NDFWLabel});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {DichroicLabel, EmissionComboBox, EmissionLabel, ExcitationLabel, NDFWLabel});
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {DichroicComboBox, ExcitationComboBox, FilterCubeComboBox, NDFWComboBox, ObjectiveComboBox, SwitchPortComboBox});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -197,12 +232,24 @@ public class FrontPanelFred extends javax.swing.JFrame implements org.micromanag
                     .addComponent(NDFWComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
                 .addComponent(Olympus, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ObjectiveLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(ObjectiveComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(SwitchPortLabel)
+                            .addComponent(ObjectiveLabel))
+                        .addGap(26, 26, 26))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(FilterCubeLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(SwitchPortComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ObjectiveComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(FilterCubeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(26, 26, 26))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {DichroicComboBox, EmissionComboBox, ExcitationComboBox, FilterCubeComboBox, NDFWComboBox, ObjectiveComboBox, SwitchPortComboBox});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -269,6 +316,21 @@ public class FrontPanelFred extends javax.swing.JFrame implements org.micromanag
         EmissionComboBox.addItem(str);
         }    
         
+//FilterCube Load
+        // Read allowed values for Label
+        StrVector CubeBox = null;
+        try {
+            CubeBox = core_.getAllowedPropertyValues("FilterCube", "Label");
+        } catch (Exception ex) {
+            Logger.getLogger(FrontPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //Write Dichroic Label ComboBox
+        FilterCubeComboBox.removeAllItems();
+        for(String str : CubeBox) {
+        FilterCubeComboBox.addItem(str);
+        }
+        
  //Objective Load
         // Read allowed values for Label
         StrVector ObjeBox = null;
@@ -282,6 +344,21 @@ public class FrontPanelFred extends javax.swing.JFrame implements org.micromanag
         ObjectiveComboBox.removeAllItems();
         for(String str : ObjeBox) {
         ObjectiveComboBox.addItem(str);
+        }  
+        
+ //SwitchProt Load
+        // Read allowed values for Label
+        StrVector SwPoBox = null;
+        try {
+            SwPoBox = core_.getAllowedPropertyValues("LightPathPrism", "Label");
+        } catch (Exception ex) {
+            Logger.getLogger(FrontPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //Write Dichroic Label ComboBox
+        SwitchPortComboBox.removeAllItems();
+        for(String str : ObjeBox) {
+        SwitchPortComboBox.addItem(str);
         }        
     }//GEN-LAST:event_loadConfigButtonActionPerformed
 
@@ -354,6 +431,26 @@ public class FrontPanelFred extends javax.swing.JFrame implements org.micromanag
             // TODO add your handling code here:
     }//GEN-LAST:event_NDFWComboBoxActionPerformed
 
+    private void FilterCubeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FilterCubeComboBoxActionPerformed
+        int CubeState= FilterCubeComboBox.getSelectedIndex();
+        try {
+            core_.setProperty("FilterCube", "State", CubeState);
+        } catch (Exception ex) {
+            Logger.getLogger(FrontPanelFred.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_FilterCubeComboBoxActionPerformed
+
+    private void SwitchPortComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SwitchPortComboBoxActionPerformed
+        int SwPoState= SwitchPortComboBox.getSelectedIndex();
+        try {
+            core_.setProperty("LightPathPrism", "State", SwPoState);
+        } catch (Exception ex) {
+            Logger.getLogger(FrontPanelFred.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SwitchPortComboBoxActionPerformed
+
                         
     /**
      * @param args the command line arguments
@@ -398,6 +495,8 @@ public class FrontPanelFred extends javax.swing.JFrame implements org.micromanag
     private javax.swing.JComboBox ExcitationComboBox;
     private javax.swing.JLabel ExcitationLabel;
     private javax.swing.JSeparator Filter;
+    private javax.swing.JComboBox FilterCubeComboBox;
+    private javax.swing.JLabel FilterCubeLabel;
     private javax.swing.JSeparator General;
     private javax.swing.JToggleButton LaserON;
     private javax.swing.JComboBox NDFWComboBox;
@@ -405,6 +504,8 @@ public class FrontPanelFred extends javax.swing.JFrame implements org.micromanag
     private javax.swing.JComboBox ObjectiveComboBox;
     private javax.swing.JLabel ObjectiveLabel;
     private javax.swing.JSeparator Olympus;
+    private javax.swing.JComboBox SwitchPortComboBox;
+    private javax.swing.JLabel SwitchPortLabel;
     private javax.swing.JButton loadConfigButton;
     // End of variables declaration//GEN-END:variables
 
