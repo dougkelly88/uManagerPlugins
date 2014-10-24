@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents;
 
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import mmcorej.CMMCore;
 import org.micromanager.MMStudio;
 import org.micromanager.acquisition.AcquisitionEngine;
@@ -14,17 +16,19 @@ import org.micromanager.api.ScriptInterface;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
+import mmcorej.StrVector;
 
 /**
  *
  * @author dk1109
  */
-public class FrontPanel extends javax.swing.JFrame implements org.micromanager.api.MMPlugin{
-   public static String menuName = "FLIMPlateReaderTest";
-   public static String tooltipDescription = "Plugin allowing control of an OpenFLIM-HCA plate reader";
-   private CMMCore core_;
-   private MMStudio gui_;
-   private AcquisitionEngine acq_;
+public class FrontPanel extends javax.swing.JFrame implements org.micromanager.api.MMPlugin {
+
+    public static String menuName = "FLIMPlateReaderTest";
+    public static String tooltipDescription = "Plugin allowing control of an OpenFLIM-HCA plate reader";
+    private CMMCore core_;
+    private MMStudio gui_;
+    private AcquisitionEngine acq_;
 
     /**
      * Creates new form FrontPanel
@@ -45,14 +49,19 @@ public class FrontPanel extends javax.swing.JFrame implements org.micromanager.a
         jTabbedPane1 = new javax.swing.JTabbedPane();
         fLIMControls1 = new com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.FLIMControls();
         fLIMControls2 = new com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.FLIMControls();
+        lightPathControls1 = new com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.LightPathControls();
         jToggleButton1 = new javax.swing.JToggleButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         displayDichroicLabel = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList();
+        jComboBox1 = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jTabbedPane1.addTab("tab1", fLIMControls1);
         jTabbedPane1.addTab("tab2", fLIMControls2);
+        jTabbedPane1.addTab("tab3", lightPathControls1);
 
         jToggleButton1.setText("GetProperty");
         jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -65,6 +74,15 @@ public class FrontPanel extends javax.swing.JFrame implements org.micromanager.a
         displayDichroicLabel.setRows(5);
         jScrollPane1.setViewportView(displayDichroicLabel);
 
+        jList1.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane2.setViewportView(jList1);
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -74,11 +92,15 @@ public class FrontPanel extends javax.swing.JFrame implements org.micromanager.a
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(49, 49, 49)
-                        .addComponent(jToggleButton1))
+                        .addComponent(jToggleButton1)
+                        .addGap(86, 86, 86)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(30, 30, 30)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 217, Short.MAX_VALUE))
+                .addGap(0, 168, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -89,7 +111,10 @@ public class FrontPanel extends javax.swing.JFrame implements org.micromanager.a
                 .addGap(55, 55, 55)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jToggleButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jToggleButton1)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -97,15 +122,19 @@ public class FrontPanel extends javax.swing.JFrame implements org.micromanager.a
     }// </editor-fold>//GEN-END:initComponents
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        
-        String a = "Dummy";
-        displayDichroicLabel.setText(a);
-        try{displayDichroicLabel.setText(core_.getProperty("Dichroic","Label"));}
-        catch (Exception e)
-        {
-            displayDichroicLabel.setText("error");
+        // Read allowed values for Dichroic Label
+        StrVector values = null;
+        try {
+            values = core_.getAllowedPropertyValues("Dichroic", "Label");
+        } catch (Exception ex) {
+            Logger.getLogger(FrontPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //core_.getProperty("Dichroic", "Label");
+
+        //Write Dichroic Label ComboBox
+        jComboBox1.removeAllItems();
+        for(String str : values) {
+        jComboBox1.addItem(str);
+        }
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     /**
@@ -147,21 +176,25 @@ public class FrontPanel extends javax.swing.JFrame implements org.micromanager.a
     private javax.swing.JTextArea displayDichroicLabel;
     private com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.FLIMControls fLIMControls1;
     private com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.FLIMControls fLIMControls2;
+    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JList jList1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JToggleButton jToggleButton1;
+    private com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.LightPathControls lightPathControls1;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void setApp(ScriptInterface app) {
-      gui_ = (MMStudio) app;
-      core_ = app.getMMCore();
-      acq_ = gui_.getAcquisitionEngine(); 
+        gui_ = (MMStudio) app;
+        core_ = app.getMMCore();
+        acq_ = gui_.getAcquisitionEngine();
     }
 
     @Override
     public String getDescription() {
-      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Template
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Template
     }
 
     @Override
