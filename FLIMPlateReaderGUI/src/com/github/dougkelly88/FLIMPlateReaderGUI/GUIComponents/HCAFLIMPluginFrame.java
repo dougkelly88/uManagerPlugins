@@ -44,6 +44,8 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         testText = new javax.swing.JTextArea();
         getObjective = new javax.swing.JButton();
+        FLIMPanel = new javax.swing.JTabbedPane();
+        fLIMPanel1 = new com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.FLIMPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -67,36 +69,45 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
             }
         });
 
+        FLIMPanel.addTab("FLIM controls", fLIMPanel1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(547, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(601, 601, 601))
             .addGroup(layout.createSequentialGroup()
-                .addGap(144, 144, 144)
+                .addContainerGap()
+                .addComponent(FLIMPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 625, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(getDichroic)
-                    .addComponent(getObjective))
-                .addGap(91, 91, 91)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(getDichroic)
+                            .addComponent(getObjective))
+                        .addGap(91, 91, 91)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(169, 169, 169))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(296, 296, 296))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(116, 116, 116)
+                .addContainerGap(350, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(getDichroic)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(getObjective)))
-                .addGap(128, 128, 128)
+                .addGap(183, 183, 183)
                 .addComponent(jLabel1)
-                .addContainerGap(406, Short.MAX_VALUE))
+                .addGap(117, 117, 117))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(FLIMPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -149,6 +160,8 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTabbedPane FLIMPanel;
+    private com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.FLIMPanel fLIMPanel1;
     private javax.swing.JButton getDichroic;
     private javax.swing.JButton getObjective;
     private javax.swing.JLabel jLabel1;
