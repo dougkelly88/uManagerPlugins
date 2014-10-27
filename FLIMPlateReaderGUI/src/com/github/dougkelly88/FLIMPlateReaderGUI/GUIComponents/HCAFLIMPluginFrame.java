@@ -6,28 +6,45 @@
 
 package com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents;
 
-import com.github.dougkelly88.FLIMPlateReaderGUI.Classes.HCAFLIMPluginControl;
 import static com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.HCAFLIMPluginFrame.frame_;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Observable;
-import java.util.Observer;
+import com.google.common.eventbus.Subscribe;
+import java.awt.Image;
+import java.awt.Toolkit;
+import mmcorej.CMMCore;
+import org.micromanager.MMStudio;
+import org.micromanager.api.events.PropertyChangedEvent; 
 
 /**
  *
  * @author dk1109
  */
+//public class HCAFLIMPluginFrame extends javax.swing.JFrame implements MMListenerInterface{
 public class HCAFLIMPluginFrame extends javax.swing.JFrame {
+    CMMCore core_;
 
+//    @Subscribe
+//    public void onPropertyChanged(PropertyChangedEvent event)
+////    public void onPropertyChanged(PropertiesChangedEvent event)
+//    {
+//        testText.setText("google eventbus triggered in device " + event.getDevice() + "\n with property " + event.getProperty() + "\n changed to value " + event.getValue());
+//    }
+
+    
     static HCAFLIMPluginFrame frame_;
-    private HCAFLIMPluginControl pc_;
+    
     /**
      * Creates new form HCAFLIMPluginFrame
      */
-    public HCAFLIMPluginFrame(HCAFLIMPluginControl pc) {
-        this.pc_ = pc;
+    public HCAFLIMPluginFrame(CMMCore core) {
+//        this.pc_ = pc;
         initComponents();
+//        Image im = Toolkit.getDefaultToolkit().getImage("C:\\Users\\dk1109\\repositories\\uManagerPlugins\\FLIMPlateReaderGUI\\src\\com\\github\\dougkelly88\\FLIMPlateReaderGUI\\MediaMedia\\96wp.gif");
+//        this.setIconImage(im);
+        core_ = core;
         frame_ = this;
+        MMStudio gui_ = MMStudio.getInstance();
+//        gui_.addMMListener(this);
+//        gui_.registerForEvents(this);
     }
 
     /**
@@ -39,6 +56,12 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuBar1 = new javax.swing.JMenuBar();
+        fileMenu = new javax.swing.JMenu();
+        quitMenu = new javax.swing.JMenuItem();
+        helpMenu = new javax.swing.JMenu();
+        FLIMHCAHelpMenu = new javax.swing.JMenuItem();
+        aboutMenu = new javax.swing.JMenuItem();
         jLabel1 = new javax.swing.JLabel();
         getDichroic = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -47,7 +70,26 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         FLIMPanel = new javax.swing.JTabbedPane();
         fLIMPanel1 = new com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.FLIMPanel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        fileMenu.setText("File");
+
+        quitMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
+        quitMenu.setText("Quit");
+        fileMenu.add(quitMenu);
+
+        jMenuBar1.add(fileMenu);
+
+        helpMenu.setText("Help");
+
+        FLIMHCAHelpMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        FLIMHCAHelpMenu.setText("Help");
+        helpMenu.add(FLIMHCAHelpMenu);
+
+        aboutMenu.setText("About");
+        helpMenu.add(aboutMenu);
+
+        jMenuBar1.add(helpMenu);
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("HCAFLIMPluginFrame");
 
@@ -116,11 +158,11 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
 
             
     private void getDichroicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getDichroicActionPerformed
-        testText.setText(pc_.test("Dichroic", "Label"));
+        testText.setText(test("Dichroic", "Label"));
     }//GEN-LAST:event_getDichroicActionPerformed
 
     private void getObjectiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getObjectiveActionPerformed
-        testText.setText(pc_.test("Objective", "Label"));
+        testText.setText(test("Objective", "Label"));
     }//GEN-LAST:event_getObjectiveActionPerformed
 
     /**
@@ -151,23 +193,76 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
 //        }
 //        //</editor-fold>
 //
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new HCAFLIMPluginFrame(pc_).setVisible(true);
-//            }
-//        });
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem FLIMHCAHelpMenu;
     private javax.swing.JTabbedPane FLIMPanel;
+    private javax.swing.JMenuItem aboutMenu;
     private com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.FLIMPanel fLIMPanel1;
+    private javax.swing.JMenu fileMenu;
     private javax.swing.JButton getDichroic;
     private javax.swing.JButton getObjective;
+    private javax.swing.JMenu helpMenu;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JMenuItem quitMenu;
     private javax.swing.JTextArea testText;
     // End of variables declaration//GEN-END:variables
+
+//    @Override
+//    public void propertiesChangedAlert() {
+//        testText.setText("something changed");
+//    }
+//
+//    @Override
+//    public void propertyChangedAlert(String string, String string1, String string2) {
+//        testText.setText("The device " +  string + " has had its property " + string1 + " altered to value: " + string2);
+//    }
+//
+//    @Override
+//    public void configGroupChangedAlert(String string, String string1) {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
+//
+//    @Override
+//    public void systemConfigurationLoaded() {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
+//
+//    @Override
+//    public void pixelSizeChangedAlert(double d) {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
+//
+//    @Override
+//    public void stagePositionChangedAlert(String string, double d) {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
+//
+//    @Override
+//    public void xyStagePositionChanged(String string, double d, double d1) {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
+//
+//    @Override
+//    public void exposureChanged(String string, double d) {
+//        testText.setText("Exposure changed");
+//    }
+//
+//    @Override
+//    public void slmExposureChanged(String string, double d) {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
+    
+     private String test(String dev, String prop)
+    {
+        String out;
+        try{out = core_.getProperty(dev, prop);}
+        catch (Exception e){out = "Error:" + e.getMessage();}
+        return out;
+    }
 
     
 }

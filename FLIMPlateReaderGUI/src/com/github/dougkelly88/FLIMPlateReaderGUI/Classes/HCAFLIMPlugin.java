@@ -6,6 +6,12 @@
 
 package com.github.dougkelly88.FLIMPlateReaderGUI.Classes;
 
+import com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.HCAFLIMPluginFrame;
+import java.awt.AlphaComposite;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.SplashScreen;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import mmcorej.CMMCore;
 import org.micromanager.MMStudio;
@@ -24,11 +30,14 @@ public class HCAFLIMPlugin implements MMPlugin {
     public static final String tooltipDescription = "Suite of controls for use with HCA-FLIM instruments";
     
     public static JFrame frame_;
-    HCAFLIMPluginControl pc_;
     static ScriptInterface si_;
     private CMMCore core_;
     private MMStudio gui_;
     private AcquisitionEngine acq_;
+    
+    final SplashScreen splash = SplashScreen.getSplashScreen();
+    
+  
 
     public static AcquisitionWrapperEngine getAcquisitionWrapperEngine() 
     {
@@ -36,6 +45,7 @@ public class HCAFLIMPlugin implements MMPlugin {
         return engineWrapper;
     }
     
+  
     @Override
     public void dispose() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -46,14 +56,19 @@ public class HCAFLIMPlugin implements MMPlugin {
       gui_ = (MMStudio) si;
       core_ = si.getMMCore();
       acq_ = gui_.getAcquisitionEngine();
-      pc_ = new HCAFLIMPluginControl(getAcquisitionWrapperEngine(), core_);
+      
+      frame_ = new HCAFLIMPluginFrame(core_);
     }
 
     @Override
     public void show() {
-        gui_.showMessage("HELLO WORLD!");
+//        gui_.showMessage("HELLO WORLD!");
+        splash.update();
+        core_.sleep(1000);
+        splash.close();
+        
         if (frame_ == null) {
-            frame_ = pc_.getFrame();
+            frame_ = new HCAFLIMPluginFrame(core_);
             gui_.addMMBackgroundListener(frame_);
 //            frame_.setLocation(fa.controlFrame_.FrameXpos, fa.controlFrame_.FrameYpos);
         }
@@ -79,5 +94,6 @@ public class HCAFLIMPlugin implements MMPlugin {
     public String getCopyright() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
+   
 }

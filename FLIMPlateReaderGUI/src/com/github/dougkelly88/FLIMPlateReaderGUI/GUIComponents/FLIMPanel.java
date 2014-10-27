@@ -6,17 +6,35 @@
 
 package com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents;
 
+import com.google.common.eventbus.Subscribe;
+import mmcorej.CMMCore;
+import org.micromanager.MMStudio;
+import org.micromanager.api.events.PropertyChangedEvent; 
+
 /**
  *
  * @author dk1109
  */
 public class FLIMPanel extends javax.swing.JPanel {
 
+    MMStudio gui_;
+    CMMCore core_;
+    
+    @Subscribe
+    public void onPropertyChanged(PropertyChangedEvent event)
+//    public void onPropertyChanged(PropertiesChangedEvent event)
+    {
+        FLIMTestText.setText("google eventbus triggered in device " + event.getDevice() + "\n with property " + event.getProperty() + "\n changed to value " + event.getValue());
+    }
+    
     /**
      * Creates new form FLIMPanel
      */
     public FLIMPanel() {
         initComponents();
+        gui_ = MMStudio.getInstance();
+        gui_.registerForEvents(this);
+        core_ = gui_.getCore();
     }
 
     /**
@@ -71,6 +89,11 @@ public class FLIMPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(FLIMTestText);
 
         getDichroic.setText("getDichroic");
+        getDichroic.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                getDichroicActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout FLIMToolsPanelLayout = new javax.swing.GroupLayout(FLIMToolsPanel);
         FLIMToolsPanel.setLayout(FLIMToolsPanelLayout);
@@ -204,7 +227,18 @@ public class FLIMPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_fastCurrentDelayActionPerformed
 
+    private void getDichroicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getDichroicActionPerformed
+        FLIMTestText.setText(test("Dichroic", "Label"));
+    }//GEN-LAST:event_getDichroicActionPerformed
 
+    private String test(String dev, String prop)
+    {
+        String out;
+        try{out = core_.getProperty(dev, prop);}
+        catch (Exception e){out = "Error:" + e.getMessage();}
+        return out;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea FLIMTestText;
     private javax.swing.JPanel FLIMToolsPanel;
