@@ -7,11 +7,6 @@
 package com.github.dougkelly88.FLIMPlateReaderGUI.Classes;
 
 import com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.HCAFLIMPluginFrame;
-import java.awt.AlphaComposite;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.SplashScreen;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import mmcorej.CMMCore;
 import org.micromanager.MMStudio;
@@ -34,9 +29,7 @@ public class HCAFLIMPlugin implements MMPlugin {
     private CMMCore core_;
     private MMStudio gui_;
     private AcquisitionEngine acq_;
-    
-    final SplashScreen splash = SplashScreen.getSplashScreen();
-    
+     
   
 
     public static AcquisitionWrapperEngine getAcquisitionWrapperEngine() 
@@ -63,10 +56,7 @@ public class HCAFLIMPlugin implements MMPlugin {
     @Override
     public void show() {
 //        gui_.showMessage("HELLO WORLD!");
-        splash.update();
-        core_.sleep(1000);
-        splash.close();
-        
+                
         if (frame_ == null) {
             frame_ = new HCAFLIMPluginFrame(core_);
             gui_.addMMBackgroundListener(frame_);

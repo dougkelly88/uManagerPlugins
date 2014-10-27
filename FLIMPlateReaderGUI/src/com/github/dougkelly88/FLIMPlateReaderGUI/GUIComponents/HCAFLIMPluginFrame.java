@@ -8,26 +8,22 @@ package com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents;
 
 import static com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.HCAFLIMPluginFrame.frame_;
 import com.google.common.eventbus.Subscribe;
-import java.awt.Image;
-import java.awt.Toolkit;
 import mmcorej.CMMCore;
-import org.micromanager.MMStudio;
+import org.micromanager.MMStudio; 
 import org.micromanager.api.events.PropertyChangedEvent; 
 
 /**
  *
  * @author dk1109
  */
-//public class HCAFLIMPluginFrame extends javax.swing.JFrame implements MMListenerInterface{
 public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     CMMCore core_;
 
-//    @Subscribe
-//    public void onPropertyChanged(PropertyChangedEvent event)
-////    public void onPropertyChanged(PropertiesChangedEvent event)
-//    {
-//        testText.setText("google eventbus triggered in device " + event.getDevice() + "\n with property " + event.getProperty() + "\n changed to value " + event.getValue());
-//    }
+    @Subscribe
+    public void onPropertyChanged(PropertyChangedEvent event)
+    {
+        testText.setText("google eventbus triggered in device " + event.getDevice() + "\n with property " + event.getProperty() + "\n changed to value " + event.getValue());
+    }
 
     
     static HCAFLIMPluginFrame frame_;
@@ -38,13 +34,10 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     public HCAFLIMPluginFrame(CMMCore core) {
 //        this.pc_ = pc;
         initComponents();
-//        Image im = Toolkit.getDefaultToolkit().getImage("C:\\Users\\dk1109\\repositories\\uManagerPlugins\\FLIMPlateReaderGUI\\src\\com\\github\\dougkelly88\\FLIMPlateReaderGUI\\MediaMedia\\96wp.gif");
-//        this.setIconImage(im);
         core_ = core;
         frame_ = this;
         MMStudio gui_ = MMStudio.getInstance();
-//        gui_.addMMListener(this);
-//        gui_.registerForEvents(this);
+        gui_.registerForEvents(this);
     }
 
     /**
@@ -56,12 +49,6 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jMenuBar1 = new javax.swing.JMenuBar();
-        fileMenu = new javax.swing.JMenu();
-        quitMenu = new javax.swing.JMenuItem();
-        helpMenu = new javax.swing.JMenu();
-        FLIMHCAHelpMenu = new javax.swing.JMenuItem();
-        aboutMenu = new javax.swing.JMenuItem();
         jLabel1 = new javax.swing.JLabel();
         getDichroic = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -69,25 +56,12 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         getObjective = new javax.swing.JButton();
         FLIMPanel = new javax.swing.JTabbedPane();
         fLIMPanel1 = new com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.FLIMPanel();
-
-        fileMenu.setText("File");
-
-        quitMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
-        quitMenu.setText("Quit");
-        fileMenu.add(quitMenu);
-
-        jMenuBar1.add(fileMenu);
-
-        helpMenu.setText("Help");
-
-        FLIMHCAHelpMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
-        FLIMHCAHelpMenu.setText("Help");
-        helpMenu.add(FLIMHCAHelpMenu);
-
-        aboutMenu.setText("About");
-        helpMenu.add(aboutMenu);
-
-        jMenuBar1.add(helpMenu);
+        jMenuBar2 = new javax.swing.JMenuBar();
+        fileMenu = new javax.swing.JMenu();
+        quitMenu = new javax.swing.JMenuItem();
+        helpMenu = new javax.swing.JMenu();
+        FLIMHCAHelpMenu = new javax.swing.JMenuItem();
+        aboutMenu = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -113,6 +87,32 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
 
         FLIMPanel.addTab("FLIM controls", fLIMPanel1);
 
+        fileMenu.setText("File");
+
+        quitMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
+        quitMenu.setText("Quit");
+        fileMenu.add(quitMenu);
+
+        jMenuBar2.add(fileMenu);
+
+        helpMenu.setText("Help");
+
+        FLIMHCAHelpMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        FLIMHCAHelpMenu.setText("Help");
+        helpMenu.add(FLIMHCAHelpMenu);
+
+        aboutMenu.setText("About");
+        aboutMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aboutMenuActionPerformed(evt);
+            }
+        });
+        helpMenu.add(aboutMenu);
+
+        jMenuBar2.add(helpMenu);
+
+        setJMenuBar(jMenuBar2);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -136,7 +136,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(350, Short.MAX_VALUE)
+                .addContainerGap(329, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
@@ -164,6 +164,12 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     private void getObjectiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getObjectiveActionPerformed
         testText.setText(test("Objective", "Label"));
     }//GEN-LAST:event_getObjectiveActionPerformed
+
+    private void aboutMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuActionPerformed
+        Splash s = new Splash();
+        s.setVisible(true);
+        s.setAlwaysOnTop(rootPaneCheckingEnabled);
+    }//GEN-LAST:event_aboutMenuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -205,7 +211,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     private javax.swing.JButton getObjective;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenuItem quitMenu;
     private javax.swing.JTextArea testText;

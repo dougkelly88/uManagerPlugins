@@ -41,10 +41,33 @@
         </target>
 
     For list of available properties check the imported 
-    nbproject/build-impl.xml file. 
+    nbproject/build-impl.xml file. -->
+    
+    <target name="-pre-init">
+   <property name="project.name" value="HCA-FLIM" />
+   <property name="version.num" value="0.0.1" />
+   <tstamp>
+      <format property="NOW" pattern="yyyy-MM-dd HH:mm:ss z" />
+   </tstamp>
 
 
-    Another way to customize the build is by overriding existing main targets.
+
+
+   <manifest file="MANIFEST.MF">
+      <attribute name="Bundle-Name" value="${project.name}" />           
+      <attribute name="Bundle-Version" value="${version.num}" />
+      <attribute name="Bundle-Date" value="${NOW}" />
+      <!--<attribute name="Bundle-Revision" value="${svna.version}" />-->
+      <attribute name="Implementation-Title" value="${project.name}" />
+      <attribute name="Implementation-Version" value="${version.num}" />
+      <attribute name="Implementation-URL" value="http://www.example.com" />
+      <attribute name="SplashScreen-Image" value="C:/Users/dk1109/repositories/uManagerPlugins/FLIMPlateReaderGUI/src/com/github/dougkelly88/FLIMPlateReaderGUI/Media/HCAFLIM.png"/>
+   </manifest>
+
+</target>
+
+
+    <!--Another way to customize the build is by overriding existing main targets.
     The targets of interest are: 
 
       -init-macrodef-javac:     defines macro for javac compilation
