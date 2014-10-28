@@ -21,8 +21,8 @@ import org.micromanager.api.ScriptInterface;
  */
 public class HCAFLIMPlugin implements MMPlugin {
     
-    public static final String menuName = "HCA-FLIM Plugin";
-    public static final String tooltipDescription = "Suite of controls for use with HCA-FLIM instruments";
+    public static final String menuName = "OpenHCA-FLIM Plugin";
+    public static final String tooltipDescription = "Suite of controls for use with OpenHCA-FLIM instruments";
     
     public static JFrame frame_;
     static ScriptInterface si_;
