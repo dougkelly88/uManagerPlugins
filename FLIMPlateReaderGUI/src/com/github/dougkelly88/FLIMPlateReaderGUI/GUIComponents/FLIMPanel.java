@@ -6,9 +6,15 @@
 
 package com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents;
 
-import com.github.dougkelly88.FLIMPlateReaderGUI.Classes.sliderListener;
+//import com.github.dougkelly88.FLIMPlateReaderGUI.Classes.sliderListener;
 import com.google.common.eventbus.Subscribe;
-import mmcorej.CMMCore;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.FlowLayout;
+import java.beans.PropertyChangeEvent;
+import javax.swing.JButton;
+import javax.swing.JLabel; 
+import mmcorej.CMMCore; 
 import org.micromanager.MMStudio; 
 import org.micromanager.api.events.PropertyChangedEvent; 
 
@@ -21,6 +27,8 @@ public class FLIMPanel extends javax.swing.JPanel {
     MMStudio gui_;
     CMMCore core_;
     PropertyChangedEvent event_;
+    SliderControl mcpSlider_;
+    SliderControl gatewidthSlider_;
     
     @Subscribe
     public PropertyChangedEvent onPropertyChanged(PropertyChangedEvent event)
@@ -60,7 +68,9 @@ public class FLIMPanel extends javax.swing.JPanel {
 
         HRIControlsPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        MCPSlider = new com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.SliderControl();
+        mcpVoltagePanel = new javax.swing.JPanel();
+        gatewidthPanel = new javax.swing.JPanel();
+        inhibitCheck = new javax.swing.JCheckBox();
         FLIMToolsPanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -79,14 +89,38 @@ public class FLIMPanel extends javax.swing.JPanel {
 
         jLabel1.setText("HRI controls");
 
-        MCPSlider.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                MCPSliderPropertyChange(evt);
-            }
-        });
-        MCPSlider.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
-            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
-                MCPSliderVetoableChange(evt);
+        mcpVoltagePanel.setToolTipText("Sets the microchannel plate gain voltage on the Kentech HRI. ");
+
+        javax.swing.GroupLayout mcpVoltagePanelLayout = new javax.swing.GroupLayout(mcpVoltagePanel);
+        mcpVoltagePanel.setLayout(mcpVoltagePanelLayout);
+        mcpVoltagePanelLayout.setHorizontalGroup(
+            mcpVoltagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 345, Short.MAX_VALUE)
+        );
+        mcpVoltagePanelLayout.setVerticalGroup(
+            mcpVoltagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 65, Short.MAX_VALUE)
+        );
+
+        gatewidthPanel.setToolTipText("Sets the gate ON time on the Kentech HRI. ");
+
+        javax.swing.GroupLayout gatewidthPanelLayout = new javax.swing.GroupLayout(gatewidthPanel);
+        gatewidthPanel.setLayout(gatewidthPanelLayout);
+        gatewidthPanelLayout.setHorizontalGroup(
+            gatewidthPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 345, Short.MAX_VALUE)
+        );
+        gatewidthPanelLayout.setVerticalGroup(
+            gatewidthPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 65, Short.MAX_VALUE)
+        );
+
+        inhibitCheck.setSelected(true);
+        inhibitCheck.setText("Inhibit?");
+        inhibitCheck.setToolTipText("Inhibits the HRI; uncheck to use the HRI for FLIM imaging");
+        inhibitCheck.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inhibitCheckActionPerformed(evt);
             }
         });
 
@@ -97,20 +131,32 @@ public class FLIMPanel extends javax.swing.JPanel {
             .addGroup(HRIControlsPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(536, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, HRIControlsPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(MCPSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(126, 126, 126))
+                .addGap(66, 66, 66)
+                .addComponent(inhibitCheck)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(HRIControlsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(gatewidthPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mcpVoltagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(36, 36, 36))
         );
         HRIControlsPanelLayout.setVerticalGroup(
             HRIControlsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(HRIControlsPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(MCPSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(128, Short.MAX_VALUE))
+                .addGroup(HRIControlsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(HRIControlsPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                        .addComponent(mcpVoltagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(gatewidthPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(42, 42, 42))
+                    .addGroup(HRIControlsPanelLayout.createSequentialGroup()
+                        .addGap(84, 84, 84)
+                        .addComponent(inhibitCheck)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         jLabel2.setText("FLIM tools");
@@ -269,21 +315,18 @@ public class FLIMPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_fastCurrentDelayActionPerformed
 
     private void getDichroicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getDichroicActionPerformed
+        
         FLIMTestText.setText(test("Dichroic", "Label"));
+        
     }//GEN-LAST:event_getDichroicActionPerformed
 
     private void scanDelCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scanDelCheckActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_scanDelCheckActionPerformed
 
-    private void MCPSliderPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_MCPSliderPropertyChange
-        
-        FLIMTestText.setText("Slider value = " + MCPSlider.getValue());
-    }//GEN-LAST:event_MCPSliderPropertyChange
-
-    private void MCPSliderVetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {//GEN-FIRST:event_MCPSliderVetoableChange
-        // TODO add your handling code here:
-    }//GEN-LAST:event_MCPSliderVetoableChange
+    private void inhibitCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inhibitCheckActionPerformed
+        FLIMTestText.setText("Inhibit state = " + inhibitCheck.isSelected());
+    }//GEN-LAST:event_inhibitCheckActionPerformed
 
     private String test(String dev, String prop)
     {
@@ -295,27 +338,63 @@ public class FLIMPanel extends javax.swing.JPanel {
     
     private void initBeanControls(){
         
-        MCPSlider.setLabel("MCP voltage (V)");
-        MCPSlider.setMaxValue(850);
-        MCPSlider.setMinValue(500);
-//        MCPSlider.addPropertyChangeListener("value_", new sliderListener(core_));
+        mcpSlider_ = new SliderControl("MCP voltage (V)",300,850,750);
+        mcpVoltagePanel.setLayout(new BorderLayout());
+        mcpVoltagePanel.add(mcpSlider_, BorderLayout.SOUTH);
+        mcpSlider_.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                mcpSliderPropertyChange(evt);
+            }
+        });
+        
+        gatewidthSlider_ = new SliderControl("Gate width (ps)", 200, 7000, 3000);
+        gatewidthPanel.setLayout(new BorderLayout());
+        gatewidthPanel.add(gatewidthSlider_, BorderLayout.SOUTH);
+        gatewidthSlider_.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                gatewidthSliderPropertyChange(evt);
+            }
+        });
+        
+        HRIControlsPanel.revalidate();
+        HRIControlsPanel.repaint();
+        
     }
+    
+    private void mcpSliderPropertyChange(java.beans.PropertyChangeEvent evt) {
+
+        FLIMTestText.setText("MCP slider value = " + mcpSlider_.getValue());
+        
+    }//GEN-LAST:event_MCPSliderPropertyChange
+    
+    private void gatewidthSliderPropertyChange(java.beans.PropertyChangeEvent evt) {
+
+        FLIMTestText.setText("Gatewidth value = " + gatewidthSlider_.getValue());
+        
+    }//GEN-LAST:event_MCPSliderPropertyChange
+
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea FLIMTestText;
     private javax.swing.JPanel FLIMToolsPanel;
     private javax.swing.JPanel HRIControlsPanel;
-    private com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.SliderControl MCPSlider;
     private javax.swing.JTabbedPane delayBoxTabbedPane;
     private javax.swing.JCheckBox fastBoxCalibratedCheck;
     private javax.swing.JTextField fastCurrentDelay;
     private javax.swing.JPanel fastDelayBoxPanel;
+    private javax.swing.JPanel gatewidthPanel;
     private javax.swing.JButton getDichroic;
+    private javax.swing.JCheckBox inhibitCheck;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel mcpVoltagePanel;
     private javax.swing.JCheckBox scanDelCheck;
     private javax.swing.JCheckBox slowBoxCalibrated;
     private javax.swing.JTextField slowCurrentDelay;

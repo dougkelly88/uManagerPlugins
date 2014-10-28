@@ -23,11 +23,25 @@ public class SliderControl extends javax.swing.JPanel {
      */
     public SliderControl() {
         initComponents();
+        jLabel1.setText("Default slider control");
         setValue((int) ((maxValue_ - minValue_)/2));
     }
     
     public SliderControl(String label) {
+        initComponents();
         jLabel1.setText(label);
+        setValue((int) ((maxValue_ - minValue_)/2));
+    }
+    
+    public SliderControl(String label, int minVal, int maxVal, int defaultVal){
+        initComponents();
+        jLabel1.setText(label);
+        minValue_ = minVal;
+        maxValue_ = maxVal;
+        value_ = defaultVal;
+        setMaxValue(maxVal);
+        setMinValue(minVal);
+        setValue(defaultVal);
     }
 
     /**

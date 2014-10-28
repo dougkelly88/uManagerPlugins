@@ -10,8 +10,12 @@ import static com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.HCAFLIMPlu
 import com.google.common.eventbus.Subscribe;
 import java.awt.Dialog;
 import java.awt.Toolkit; 
+import java.awt.event.WindowAdapter; 
+import java.awt.event.WindowEvent;
 import java.net.URL; 
-import javax.swing.JOptionPane; 
+import javax.swing.JFrame; 
+import javax.swing.JOptionPane;
+import javax.swing.WindowConstants;
 import mmcorej.CMMCore; 
 import org.micromanager.MMStudio; 
 import org.micromanager.api.events.PropertyChangedEvent; 
@@ -36,15 +40,25 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
      * Creates new form HCAFLIMPluginFrame
      */
     public HCAFLIMPluginFrame(CMMCore core) {
-//        this.pc_ = pc;
+
         initComponents();
         URL url  = ClassLoader.getSystemResource("com/github/dougkelly88/FLIMPlateReaderGUI/Resources/GFPFishIcon.png");
         this.setIconImage(Toolkit.getDefaultToolkit().createImage(url));
         this.setTitle("HCA-FLIM Plugin");
         core_ = core;
         frame_ = this;
+        
         MMStudio gui_ = MMStudio.getInstance();
         gui_.registerForEvents(this);
+        
+        // Add confirm dialog when window closed using x
+        frame_.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame_.addWindowListener(new  WindowAdapter(){
+            @Override
+            public void windowClosing(WindowEvent we){
+                confirmQuit();
+            }
+        });
     }
 
     /**
@@ -92,12 +106,17 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
             }
         });
 
-        FLIMPanel.addTab("tab1", fLIMPanel1);
+        FLIMPanel.addTab("FLIM instruments", fLIMPanel1);
 
         fileMenu.setText("File");
 
         quitMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
         quitMenu.setText("Quit");
+        quitMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                quitMenuActionPerformed(evt);
+            }
+        });
         fileMenu.add(quitMenu);
 
         jMenuBar2.add(fileMenu);
@@ -143,7 +162,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(329, Short.MAX_VALUE)
+                .addContainerGap(349, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
@@ -177,6 +196,10 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         s.setVisible(true);
         s.setAlwaysOnTop(rootPaneCheckingEnabled);
     }//GEN-LAST:event_aboutMenuActionPerformed
+
+    private void quitMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitMenuActionPerformed
+        confirmQuit();
+    }//GEN-LAST:event_quitMenuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -224,50 +247,14 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     private javax.swing.JTextArea testText;
     // End of variables declaration//GEN-END:variables
 
-//    @Override
-//    public void propertiesChangedAlert() {
-//        testText.setText("something changed");
-//    }
-//
-//    @Override
-//    public void propertyChangedAlert(String string, String string1, String string2) {
-//        testText.setText("The device " +  string + " has had its property " + string1 + " altered to value: " + string2);
-//    }
-//
-//    @Override
-//    public void configGroupChangedAlert(String string, String string1) {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//    }
-//
-//    @Override
-//    public void systemConfigurationLoaded() {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//    }
-//
-//    @Override
-//    public void pixelSizeChangedAlert(double d) {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//    }
-//
-//    @Override
-//    public void stagePositionChangedAlert(String string, double d) {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//    }
-//
-//    @Override
-//    public void xyStagePositionChanged(String string, double d, double d1) {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//    }
-//
-//    @Override
-//    public void exposureChanged(String string, double d) {
-//        testText.setText("Exposure changed");
-//    }
-//
-//    @Override
-//    public void slmExposureChanged(String string, double d) {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//    }
+    private void confirmQuit(){
+        int n = JOptionPane.showConfirmDialog(frame_, 
+                "Quit: are you sure?", "Quit", JOptionPane.YES_NO_OPTION);
+        if (n==JOptionPane.YES_OPTION){
+            dispose();
+        }
+
+    }
     
      private String test(String dev, String prop)
     {
