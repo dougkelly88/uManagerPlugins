@@ -19,12 +19,15 @@ public class FLIMPanel extends javax.swing.JPanel {
 
     MMStudio gui_;
     CMMCore core_;
+    PropertyChangedEvent event_;
     
     @Subscribe
-    public void onPropertyChanged(PropertyChangedEvent event)
+    public PropertyChangedEvent onPropertyChanged(PropertyChangedEvent event)
 //    public void onPropertyChanged(PropertiesChangedEvent event)
     {
         FLIMTestText.setText("google eventbus triggered in device " + event.getDevice() + "\n with property " + event.getProperty() + "\n changed to value " + event.getValue());
+        event_ = event;
+        return event;
     }
     
     /**
@@ -37,7 +40,10 @@ public class FLIMPanel extends javax.swing.JPanel {
         gui_.registerForEvents(this);
         core_ = gui_.getCore();
         }
-        catch (Exception e) {}
+        catch (Exception e) 
+        {
+            gui_.showMessage("Error in FLIMPanel constructor: " + e.getMessage());
+        }
     }
 
     /**

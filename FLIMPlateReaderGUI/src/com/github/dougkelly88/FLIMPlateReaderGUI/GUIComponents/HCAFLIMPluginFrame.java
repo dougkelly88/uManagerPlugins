@@ -8,7 +8,11 @@ package com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents;
 
 import static com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.HCAFLIMPluginFrame.frame_;
 import com.google.common.eventbus.Subscribe;
-import mmcorej.CMMCore;
+import java.awt.Dialog;
+import java.awt.Toolkit; 
+import java.net.URL; 
+import javax.swing.JOptionPane; 
+import mmcorej.CMMCore; 
 import org.micromanager.MMStudio; 
 import org.micromanager.api.events.PropertyChangedEvent; 
 
@@ -34,6 +38,9 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     public HCAFLIMPluginFrame(CMMCore core) {
 //        this.pc_ = pc;
         initComponents();
+        URL url  = ClassLoader.getSystemResource("com/github/dougkelly88/FLIMPlateReaderGUI/Resources/GFPFishIcon.png");
+        this.setIconImage(Toolkit.getDefaultToolkit().createImage(url));
+        this.setTitle("HCA-FLIM Plugin");
         core_ = core;
         frame_ = this;
         MMStudio gui_ = MMStudio.getInstance();
@@ -85,12 +92,17 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
             }
         });
 
-        FLIMPanel.addTab("tab1", fLIMPanel1);
+        FLIMPanel.addTab("FLIM Devices", fLIMPanel1);
 
         fileMenu.setText("File");
 
         quitMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
         quitMenu.setText("Quit");
+        quitMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                quitMenuActionPerformed(evt);
+            }
+        });
         fileMenu.add(quitMenu);
 
         jMenuBar2.add(fileMenu);
@@ -170,6 +182,16 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         s.setVisible(true);
         s.setAlwaysOnTop(rootPaneCheckingEnabled);
     }//GEN-LAST:event_aboutMenuActionPerformed
+
+    private void quitMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitMenuActionPerformed
+        
+        int n = JOptionPane.showConfirmDialog(frame_, 
+                "Quit: are you sure?", "Quit", JOptionPane.YES_NO_OPTION);
+        if (n==JOptionPane.YES_OPTION){
+            dispose();
+        }
+  
+    }//GEN-LAST:event_quitMenuActionPerformed
 
     /**
      * @param args the command line arguments

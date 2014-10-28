@@ -23,7 +23,7 @@ public class Splash extends JFrame implements MouseListener {
 
     public Splash() {
         // show splash screen image
-        ImageIcon icon = new ImageIcon(this.getClass().getResource("../Media/HCAFLIM.png"));
+        ImageIcon icon = new ImageIcon(this.getClass().getResource("../Resources/HCAFLIM.png"));
         JLabel label = new JLabel(icon);
         getContentPane().add(label, BorderLayout.CENTER);
 
