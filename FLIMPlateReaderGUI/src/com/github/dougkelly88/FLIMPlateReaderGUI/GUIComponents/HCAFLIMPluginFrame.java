@@ -9,11 +9,13 @@ package com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents;
 import static com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.HCAFLIMPluginFrame.frame_;
 import com.google.common.eventbus.Subscribe;
 import java.awt.Dialog;
+import java.awt.Image;
 import java.awt.Toolkit; 
 import java.awt.event.WindowAdapter; 
 import java.awt.event.WindowEvent;
 import java.net.URL; 
-import javax.swing.JFrame; 
+import javax.swing.ImageIcon; 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 import mmcorej.CMMCore; 
@@ -42,8 +44,10 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     public HCAFLIMPluginFrame(CMMCore core) {
 
         initComponents();
-        URL url  = ClassLoader.getSystemResource("com/github/dougkelly88/FLIMPlateReaderGUI/Resources/GFPFishIcon.png");
-        this.setIconImage(Toolkit.getDefaultToolkit().createImage(url));
+        ImageIcon icon = new ImageIcon(this.getClass().getResource("../Resources/GFPFishIcon.png"));
+        this.setIconImage(icon.getImage());
+//        URL url  = ClassLoader.getSystemResource("com/github/dougkelly88/FLIMPlateReaderGUI/Resources/GFPFishIcon.png");
+//        this.setIconImage(Toolkit.getDefaultToolkit().createImage(url));
         this.setTitle("HCA-FLIM Plugin");
         core_ = core;
         frame_ = this;
