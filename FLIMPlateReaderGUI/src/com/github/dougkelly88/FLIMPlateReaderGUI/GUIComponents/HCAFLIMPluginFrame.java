@@ -92,17 +92,12 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
             }
         });
 
-        FLIMPanel.addTab("FLIM Devices", fLIMPanel1);
+        FLIMPanel.addTab("tab1", fLIMPanel1);
 
         fileMenu.setText("File");
 
         quitMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
         quitMenu.setText("Quit");
-        quitMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                quitMenuActionPerformed(evt);
-            }
-        });
         fileMenu.add(quitMenu);
 
         jMenuBar2.add(fileMenu);
@@ -182,16 +177,6 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         s.setVisible(true);
         s.setAlwaysOnTop(rootPaneCheckingEnabled);
     }//GEN-LAST:event_aboutMenuActionPerformed
-
-    private void quitMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitMenuActionPerformed
-        
-        int n = JOptionPane.showConfirmDialog(frame_, 
-                "Quit: are you sure?", "Quit", JOptionPane.YES_NO_OPTION);
-        if (n==JOptionPane.YES_OPTION){
-            dispose();
-        }
-  
-    }//GEN-LAST:event_quitMenuActionPerformed
 
     /**
      * @param args the command line arguments

@@ -6,9 +6,10 @@
 
 package com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents;
 
+import com.github.dougkelly88.FLIMPlateReaderGUI.Classes.sliderListener;
 import com.google.common.eventbus.Subscribe;
 import mmcorej.CMMCore;
-import org.micromanager.MMStudio;
+import org.micromanager.MMStudio; 
 import org.micromanager.api.events.PropertyChangedEvent; 
 
 /**
@@ -35,6 +36,7 @@ public class FLIMPanel extends javax.swing.JPanel {
      */
     public FLIMPanel() {
         initComponents();
+        initBeanControls();
         gui_ = MMStudio.getInstance();
         try{
         gui_.registerForEvents(this);
@@ -44,6 +46,7 @@ public class FLIMPanel extends javax.swing.JPanel {
         {
             gui_.showMessage("Error in FLIMPanel constructor: " + e.getMessage());
         }
+         
     }
 
     /**
@@ -57,6 +60,7 @@ public class FLIMPanel extends javax.swing.JPanel {
 
         HRIControlsPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        MCPSlider = new com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.SliderControl();
         FLIMToolsPanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -67,12 +71,24 @@ public class FLIMPanel extends javax.swing.JPanel {
         fastBoxCalibratedCheck = new javax.swing.JCheckBox();
         jLabel3 = new javax.swing.JLabel();
         fastCurrentDelay = new javax.swing.JTextField();
+        scanDelCheck = new javax.swing.JCheckBox();
         slowDelayBoxPanel = new javax.swing.JPanel();
         slowBoxCalibrated = new javax.swing.JCheckBox();
         jLabel4 = new javax.swing.JLabel();
         slowCurrentDelay = new javax.swing.JTextField();
 
         jLabel1.setText("HRI controls");
+
+        MCPSlider.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                MCPSliderPropertyChange(evt);
+            }
+        });
+        MCPSlider.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
+            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
+                MCPSliderVetoableChange(evt);
+            }
+        });
 
         javax.swing.GroupLayout HRIControlsPanelLayout = new javax.swing.GroupLayout(HRIControlsPanel);
         HRIControlsPanel.setLayout(HRIControlsPanelLayout);
@@ -82,13 +98,19 @@ public class FLIMPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, HRIControlsPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(MCPSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(126, 126, 126))
         );
         HRIControlsPanelLayout.setVerticalGroup(
             HRIControlsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(HRIControlsPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addContainerGap(195, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(MCPSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(128, Short.MAX_VALUE))
         );
 
         jLabel2.setText("FLIM tools");
@@ -145,6 +167,13 @@ public class FLIMPanel extends javax.swing.JPanel {
             }
         });
 
+        scanDelCheck.setText("Enable fast delay switching?");
+        scanDelCheck.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                scanDelCheckActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout fastDelayBoxPanelLayout = new javax.swing.GroupLayout(fastDelayBoxPanel);
         fastDelayBoxPanel.setLayout(fastDelayBoxPanelLayout);
         fastDelayBoxPanelLayout.setHorizontalGroup(
@@ -152,6 +181,7 @@ public class FLIMPanel extends javax.swing.JPanel {
             .addGroup(fastDelayBoxPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(fastDelayBoxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scanDelCheck)
                     .addComponent(fastBoxCalibratedCheck)
                     .addGroup(fastDelayBoxPanelLayout.createSequentialGroup()
                         .addComponent(jLabel3)
@@ -168,7 +198,9 @@ public class FLIMPanel extends javax.swing.JPanel {
                 .addGroup(fastDelayBoxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(fastCurrentDelay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(106, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(scanDelCheck)
+                .addContainerGap(76, Short.MAX_VALUE))
         );
 
         delayBoxTabbedPane.addTab("Fast delay box", fastDelayBoxPanel);
@@ -240,6 +272,19 @@ public class FLIMPanel extends javax.swing.JPanel {
         FLIMTestText.setText(test("Dichroic", "Label"));
     }//GEN-LAST:event_getDichroicActionPerformed
 
+    private void scanDelCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scanDelCheckActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_scanDelCheckActionPerformed
+
+    private void MCPSliderPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_MCPSliderPropertyChange
+        
+        FLIMTestText.setText("Slider value = " + MCPSlider.getValue());
+    }//GEN-LAST:event_MCPSliderPropertyChange
+
+    private void MCPSliderVetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {//GEN-FIRST:event_MCPSliderVetoableChange
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MCPSliderVetoableChange
+
     private String test(String dev, String prop)
     {
         String out;
@@ -248,10 +293,19 @@ public class FLIMPanel extends javax.swing.JPanel {
         return out;
     }
     
+    private void initBeanControls(){
+        
+        MCPSlider.setLabel("MCP voltage (V)");
+        MCPSlider.setMaxValue(850);
+        MCPSlider.setMinValue(500);
+//        MCPSlider.addPropertyChangeListener("value_", new sliderListener(core_));
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea FLIMTestText;
     private javax.swing.JPanel FLIMToolsPanel;
     private javax.swing.JPanel HRIControlsPanel;
+    private com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.SliderControl MCPSlider;
     private javax.swing.JTabbedPane delayBoxTabbedPane;
     private javax.swing.JCheckBox fastBoxCalibratedCheck;
     private javax.swing.JTextField fastCurrentDelay;
@@ -262,6 +316,7 @@ public class FLIMPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JCheckBox scanDelCheck;
     private javax.swing.JCheckBox slowBoxCalibrated;
     private javax.swing.JTextField slowCurrentDelay;
     private javax.swing.JPanel slowDelayBoxPanel;
