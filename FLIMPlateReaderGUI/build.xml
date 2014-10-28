@@ -61,7 +61,7 @@
       <attribute name="Implementation-Title" value="${project.name}" />
       <attribute name="Implementation-Version" value="${version.num}" />
       <attribute name="Implementation-URL" value="http://www.example.com" />
-      <attribute name="SplashScreen-Image" value="C:/Users/dk1109/repositories/uManagerPlugins/FLIMPlateReaderGUI/src/com/github/dougkelly88/FLIMPlateReaderGUI/Media/HCAFLIM.png"/>
+      
    </manifest>
 
 </target>

@@ -85,7 +85,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
             }
         });
 
-        FLIMPanel.addTab("FLIM controls", fLIMPanel1);
+        FLIMPanel.addTab("tab1", fLIMPanel1);
 
         fileMenu.setText("File");
 

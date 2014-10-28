@@ -158,8 +158,8 @@
         <Component class="com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.FLIMPanel" name="fLIMPanel1">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="FLIM controls">
-                <Property name="tabTitle" type="java.lang.String" value="FLIM controls"/>
+              <JTabbedPaneConstraints tabName="tab1">
+                <Property name="tabTitle" type="java.lang.String" value="tab1"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>

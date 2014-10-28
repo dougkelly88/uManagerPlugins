@@ -33,8 +33,11 @@ public class FLIMPanel extends javax.swing.JPanel {
     public FLIMPanel() {
         initComponents();
         gui_ = MMStudio.getInstance();
+        try{
         gui_.registerForEvents(this);
         core_ = gui_.getCore();
+        }
+        catch (Exception e) {}
     }
 
     /**
