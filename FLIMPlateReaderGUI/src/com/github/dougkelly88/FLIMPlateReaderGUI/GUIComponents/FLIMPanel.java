@@ -6,8 +6,7 @@
 
 package com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents;
 
-//import com.github.dougkelly88.FLIMPlateReaderGUI.Classes.sliderListener;
-import com.github.dougkelly88.FLIMPlateReaderGUI.Classes.SequencedAcquisitionProperties;
+import com.github.dougkelly88.FLIMPlateReaderGUI.Classes.SeqAcqProps;
 import com.google.common.eventbus.Subscribe;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -30,11 +29,11 @@ public class FLIMPanel extends javax.swing.JPanel {
     PropertyChangedEvent event_;
     SliderControl mcpSlider_;
     SliderControl gatewidthSlider_;
-    private SequencedAcquisitionProperties sap_;
+    private SeqAcqProps sap_;
+//    private SequencedAcquisitionProperties sap_;
     
     @Subscribe
     public PropertyChangedEvent onPropertyChanged(PropertyChangedEvent event)
-//    public void onPropertyChanged(PropertiesChangedEvent event)
     {
         FLIMTestText.setText("google eventbus triggered in device " + event.getDevice() + "\n with property " + event.getProperty() + "\n changed to value " + event.getValue());
         event_ = event;
@@ -48,6 +47,7 @@ public class FLIMPanel extends javax.swing.JPanel {
         initComponents();
         initBeanControls();
         gui_ = MMStudio.getInstance();
+        sap_ = SeqAcqProps.getInstance();
         try{
         gui_.registerForEvents(this);
         core_ = gui_.getCore();
@@ -397,12 +397,13 @@ public class FLIMPanel extends javax.swing.JPanel {
 
     private void getDichroicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getDichroicActionPerformed
         
-        FLIMTestText.setText(test("Dichroic", "Label"));
+        FLIMTestText.setText("Getting acq params scan, results = " + ( sap_.getUseScanFLIM()? "true":"false" ) );
         
     }//GEN-LAST:event_getDichroicActionPerformed
 
     private void scanDelCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scanDelCheckActionPerformed
-        sap_.setUseScanFLIM(scanDelCheck.isSelected());
+//        sap_.setUseScanFLIM(scanDelCheck.isSelected());
+        sap_ = sap_.setUseScanFLIM(scanDelCheck.isSelected());
     }//GEN-LAST:event_scanDelCheckActionPerformed
 
     private void inhibitCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inhibitCheckActionPerformed
@@ -466,19 +467,19 @@ public class FLIMPanel extends javax.swing.JPanel {
         
     }                                        
 
-    public void initSequencedAcquisitionProperties(SequencedAcquisitionProperties sap, final HCAFLIMPluginFrame frame){
-        this.sap_=sap;
-        sap_.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-
-            @Override
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                
-                FLIMTestText.setText("ScanFLIM set to " + ( (sap_.getUseScanFLIM()) ? "true":"false"));
-                frame.sap_ = sap_;
-            }
-        });
-//        sap_.addPropertyChangeListener();
-    }
+//    public void initSequencedAcquisitionProperties(SequencedAcquisitionProperties sap, final HCAFLIMPluginFrame frame){
+//        this.sap_=sap;
+//        sap_.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+//
+//            @Override
+//            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+//                
+//                FLIMTestText.setText("ScanFLIM set to " + ( (sap_.getUseScanFLIM()) ? "true":"false"));
+//                frame.sap_ = sap_;
+//            }
+//        });
+////        sap_.addPropertyChangeListener();
+//    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea FLIMTestText;

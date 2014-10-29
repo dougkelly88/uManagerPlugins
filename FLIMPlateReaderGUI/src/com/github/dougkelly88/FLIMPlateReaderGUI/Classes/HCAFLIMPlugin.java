@@ -29,6 +29,7 @@ public class HCAFLIMPlugin implements MMPlugin {
     private CMMCore core_;
     private MMStudio gui_;
     private AcquisitionEngine acq_;
+    
 
     public static AcquisitionWrapperEngine getAcquisitionWrapperEngine() 
     {

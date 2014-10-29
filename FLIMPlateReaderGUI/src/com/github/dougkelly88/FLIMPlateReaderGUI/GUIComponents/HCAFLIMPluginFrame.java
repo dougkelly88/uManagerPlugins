@@ -6,8 +6,7 @@
 
 package com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents;
 
-import com.github.dougkelly88.FLIMPlateReaderGUI.Classes.SequencedAcquisitionProperties;
-import static com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.HCAFLIMPluginFrame.frame_;
+import com.github.dougkelly88.FLIMPlateReaderGUI.Classes.SeqAcqProps;
 import com.google.common.eventbus.Subscribe;
 import java.awt.Dialog;
 import java.awt.Image;
@@ -30,7 +29,8 @@ import org.micromanager.api.events.PropertyChangedEvent;
 public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     CMMCore core_;
     static HCAFLIMPluginFrame frame_;
-    SequencedAcquisitionProperties sap_;
+    private SeqAcqProps tsi_;
+//    SequencedAcquisitionProperties sap_;
     
     @Subscribe
     public void onPropertyChanged(PropertyChangedEvent event)
@@ -64,9 +64,10 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
             }
         });
         
-        sap_ = new SequencedAcquisitionProperties.Builder().useScanFLIM(true).build();
-        sap_.addPropertyChangeListener(null);
-        fLIMPanel1.initSequencedAcquisitionProperties(sap_, frame_);
+        tsi_ = SeqAcqProps.getInstance();
+//        sap_ = new SequencedAcquisitionProperties.Builder().useScanFLIM(true).build();
+//        sap_.addPropertyChangeListener(null);
+//        fLIMPanel1.initSequencedAcquisitionProperties(sap_, frame_);
 //        fLIMPanel1.sap_ = sap_;
     }
 
@@ -193,7 +194,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
 
             
     private void getDichroicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getDichroicActionPerformed
-        testText.setText(test("Dichroic", "Label"));
+        testText.setText("Getting acq params scan, results = " + ( tsi_.getUseScanFLIM()? "true":"false" ) );
     }//GEN-LAST:event_getDichroicActionPerformed
 
     private void getObjectiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getObjectiveActionPerformed

@@ -19,11 +19,11 @@ package com.github.dougkelly88.FLIMPlateReaderGUI.Classes;
 
 
 
-public final class TestSingleInstance {
+public final class SeqAcqProps {
     private boolean useScanFLIM;
     private boolean powerMonitoring;
 
-  public static TestSingleInstance getInstance() {
+  public static SeqAcqProps getInstance() {
      return fINSTANCE;
   }
 
@@ -32,16 +32,17 @@ public final class TestSingleInstance {
   /**
   * Single instance created upon class loading.
   */
-  private static final TestSingleInstance fINSTANCE =  new TestSingleInstance();
+  private static final SeqAcqProps fINSTANCE =  new SeqAcqProps();
 
   /**
   * Private constructor prevents construction outside this class.
   */
-  private TestSingleInstance() {
-    //..elided
+  private SeqAcqProps() {
+    useScanFLIM = false;
+    powerMonitoring = false;
   }
   
-  public TestSingleInstance setUseScanFLIM(boolean usf){
+  public SeqAcqProps setUseScanFLIM(boolean usf){
       useScanFLIM = usf;
       return this;
   }
