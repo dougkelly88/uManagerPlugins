@@ -29,8 +29,6 @@ public class HCAFLIMPlugin implements MMPlugin {
     private CMMCore core_;
     private MMStudio gui_;
     private AcquisitionEngine acq_;
-     
-  
 
     public static AcquisitionWrapperEngine getAcquisitionWrapperEngine() 
     {
@@ -51,6 +49,7 @@ public class HCAFLIMPlugin implements MMPlugin {
       acq_ = gui_.getAcquisitionEngine();
       
       frame_ = new HCAFLIMPluginFrame(core_);
+      
     }
 
     @Override
@@ -63,6 +62,7 @@ public class HCAFLIMPlugin implements MMPlugin {
 //            frame_.setLocation(fa.controlFrame_.FrameXpos, fa.controlFrame_.FrameYpos);
         }
         frame_.setVisible(true);
+        
     }
 
     @Override

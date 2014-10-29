@@ -6,6 +6,7 @@
 
 package com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents;
 
+import com.github.dougkelly88.FLIMPlateReaderGUI.Classes.SequencedAcquisitionProperties;
 import static com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.HCAFLIMPluginFrame.frame_;
 import com.google.common.eventbus.Subscribe;
 import java.awt.Dialog;
@@ -28,16 +29,15 @@ import org.micromanager.api.events.PropertyChangedEvent;
  */
 public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     CMMCore core_;
-
+    static HCAFLIMPluginFrame frame_;
+    SequencedAcquisitionProperties sap_;
+    
     @Subscribe
     public void onPropertyChanged(PropertyChangedEvent event)
     {
         testText.setText("google eventbus triggered in device " + event.getDevice() + "\n with property " + event.getProperty() + "\n changed to value " + event.getValue());
     }
 
-    
-    static HCAFLIMPluginFrame frame_;
-    
     /**
      * Creates new form HCAFLIMPluginFrame
      */
@@ -51,7 +51,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         this.setTitle("HCA-FLIM Plugin");
         core_ = core;
         frame_ = this;
-        
+                
         MMStudio gui_ = MMStudio.getInstance();
         gui_.registerForEvents(this);
         
@@ -63,6 +63,11 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
                 confirmQuit();
             }
         });
+        
+        sap_ = new SequencedAcquisitionProperties.Builder().useScanFLIM(true).build();
+        sap_.addPropertyChangeListener(null);
+        fLIMPanel1.initSequencedAcquisitionProperties(sap_, frame_);
+//        fLIMPanel1.sap_ = sap_;
     }
 
     /**
@@ -267,6 +272,5 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         catch (Exception e){out = "Error:" + e.getMessage();}
         return out;
     }
-
     
 }
