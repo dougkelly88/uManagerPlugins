@@ -1,0 +1,435 @@
+ Device 5: OlympusHub, Property 0: Control
+bsh % 
+Device 5: OlympusHub, Property 0: Control, Possible value 1: Computer
+bsh % 
+Device 5: OlympusHub, Property 0: Control, Possible value 2: Manual + Computer
+bsh % 
+Device 5: OlympusHub, Property 1: Description
+bsh % 
+Device 5: OlympusHub, Property 2: Model
+bsh % 
+Device 5: OlympusHub, Property 3: Name
+bsh % 
+Device 5: OlympusHub, Property 4: Port
+bsh % 
+Device 5: OlympusHub, Property 5: Version
+bsh % 
+Device 6: Objective, Property 0: ClosedPosition
+bsh % 
+Device 6: Objective, Property 0: ClosedPosition, Possible value 1: 0
+bsh % 
+Device 6: Objective, Property 0: ClosedPosition, Possible value 2: 1
+bsh % 
+Device 6: Objective, Property 0: ClosedPosition, Possible value 3: 2
+bsh % 
+Device 6: Objective, Property 0: ClosedPosition, Possible value 4: 3
+bsh % 
+Device 6: Objective, Property 0: ClosedPosition, Possible value 5: 4
+bsh % 
+Device 6: Objective, Property 0: ClosedPosition, Possible value 6: 5
+bsh % 
+Device 6: Objective, Property 1: Description
+bsh % 
+Device 6: Objective, Property 2: Label
+bsh % 
+Device 6: Objective, Property 2: Label, Possible value 1: Position-1
+bsh % 
+Device 6: Objective, Property 2: Label, Possible value 2: Position-2
+bsh % 
+Device 6: Objective, Property 2: Label, Possible value 3: Position-3
+bsh % 
+Device 6: Objective, Property 2: Label, Possible value 4: Position-4
+bsh % 
+Device 6: Objective, Property 2: Label, Possible value 5: Position-5
+bsh % 
+Device 6: Objective, Property 2: Label, Possible value 6: Position-6
+bsh % 
+Device 6: Objective, Property 3: Name
+bsh % 
+Device 6: Objective, Property 4: Safe Position
+bsh % 
+Device 6: Objective, Property 5: State
+bsh % 
+Device 6: Objective, Property 5: State, Possible value 1: 0
+bsh % 
+Device 6: Objective, Property 5: State, Possible value 2: 1
+bsh % 
+Device 6: Objective, Property 5: State, Possible value 3: 2
+bsh % 
+Device 6: Objective, Property 5: State, Possible value 4: 3
+bsh % 
+Device 6: Objective, Property 5: State, Possible value 5: 4
+bsh % 
+Device 6: Objective, Property 5: State, Possible value 6: 5
+bsh % 
+Device 6: Objective, Property 6: Use Safe Position
+bsh % 
+Device 7: LightPathPrism, Property 0: ClosedPosition
+bsh % 
+Device 7: LightPathPrism, Property 0: ClosedPosition, Possible value 1: 0
+bsh % 
+Device 7: LightPathPrism, Property 0: ClosedPosition, Possible value 2: 1
+bsh % 
+Device 7: LightPathPrism, Property 1: Description
+bsh % 
+Device 7: LightPathPrism, Property 2: Label
+bsh % 
+Device 7: LightPathPrism, Property 2: Label, Possible value 1: Eye
+bsh % 
+Device 7: LightPathPrism, Property 2: Label, Possible value 2: Side Port
+bsh % 
+Device 7: LightPathPrism, Property 3: Name
+bsh % 
+Device 7: LightPathPrism, Property 4: State
+bsh % 
+Device 7: LightPathPrism, Property 4: State, Possible value 1: 0
+bsh % 
+Device 7: LightPathPrism, Property 4: State, Possible value 2: 1
+bsh % 
+Device 8: FilterCube, Property 0: ClosedPosition
+bsh % 
+Device 8: FilterCube, Property 0: ClosedPosition, Possible value 1: 0
+bsh % 
+Device 8: FilterCube, Property 0: ClosedPosition, Possible value 2: 1
+bsh % 
+Device 8: FilterCube, Property 0: ClosedPosition, Possible value 3: 2
+bsh % 
+Device 8: FilterCube, Property 0: ClosedPosition, Possible value 4: 3
+bsh % 
+Device 8: FilterCube, Property 0: ClosedPosition, Possible value 5: 4
+bsh % 
+Device 8: FilterCube, Property 0: ClosedPosition, Possible value 6: 5
+bsh % 
+Device 8: FilterCube, Property 1: Description
+bsh % 
+Device 8: FilterCube, Property 2: Label
+bsh % 
+Device 8: FilterCube, Property 2: Label, Possible value 1: Position-1
+bsh % 
+Device 8: FilterCube, Property 2: Label, Possible value 2: Position-2
+bsh % 
+Device 8: FilterCube, Property 2: Label, Possible value 3: Position-3
+bsh % 
+Device 8: FilterCube, Property 2: Label, Possible value 4: Position-4
+bsh % 
+Device 8: FilterCube, Property 2: Label, Possible value 5: Position-5
+bsh % 
+Device 8: FilterCube, Property 2: Label, Possible value 6: Position-6
+bsh % 
+Device 8: FilterCube, Property 3: Name
+bsh % 
+Device 8: FilterCube, Property 4: State
+bsh % 
+Device 8: FilterCube, Property 4: State, Possible value 1: 0
+bsh % 
+Device 8: FilterCube, Property 4: State, Possible value 2: 1
+bsh % 
+Device 8: FilterCube, Property 4: State, Possible value 3: 2
+bsh % 
+Device 8: FilterCube, Property 4: State, Possible value 4: 3
+bsh % 
+Device 8: FilterCube, Property 4: State, Possible value 5: 4
+bsh % 
+Device 8: FilterCube, Property 4: State, Possible value 6: 5
+bsh % 
+Device 9: AutoFocusZDC, Property 0: ContinuousMode
+bsh % 
+Device 9: AutoFocusZDC, Property 0: ContinuousMode, Possible value 1: Off
+bsh % 
+Device 9: AutoFocusZDC, Property 0: ContinuousMode, Possible value 2: On
+bsh % 
+Device 9: AutoFocusZDC, Property 1: Description
+bsh % 
+Device 9: AutoFocusZDC, Property 2: MeasureOffset
+bsh % 
+Device 9: AutoFocusZDC, Property 2: MeasureOffset, Possible value 1: Now
+bsh % 
+Device 9: AutoFocusZDC, Property 2: MeasureOffset, Possible value 2: Off
+bsh % 
+Device 9: AutoFocusZDC, Property 3: Name
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 1: ApoN60XOTIRF
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 2: LCPlanFl 20X
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 3: LCPlanFl 40X
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 4: LCPlanFl 60X
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 5: LUCPLFLN 20X
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 6: LUCPLFLN40X
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 7: LUCPlanFl 40X
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 8: LUCPlanFlN20X
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 9: LUCPlanFlN40X
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 10: LUCPlanFlN60X
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 11: None
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 12: PlanApo 100XO3
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 13: PlanApo 60X O TIRFM-SP
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 14: PlanApo 60X O/LSM
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 15: PlanApo 60XO3
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 16: PlanApo40XW/LSM
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 17: PlanApoN60XO
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 18: SLCPlanFl 40X
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 19: UAPO40XO Iris3/340
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 20: UApo 20X3 /340
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 21: UApo 40X3 /340
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 22: UApo 40XOI3 /340
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 23: UApo40XW
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 24: UApoN100XOTIRF
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 25: UPLFLN100XO2
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 26: UPLFLN100XOI
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 27: UPLFLN60X
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 28: UPLSAPO40X2
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 29: UPLSAPO60XO
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 30: UPLanFl 60XOI3
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 31: UPlanAPO 20X
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 32: UPlanAPo 100XOI3
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 33: UPlanApo 40X OI3
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 34: UPlanApo 60X
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 35: UPlanApo60XW
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 36: UPlanApo60XW/IR
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 37: UPlanFl 100XO3
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 38: UPlanFl 20X
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 39: UPlanFl 40X O-SP
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 40: UPlanFl40X
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 41: UPlanFlN100XO
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 42: UPlanFlN100XOI
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 43: UPlanFlN20X
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 44: UPlanFlN40XO
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 45: UPlanFlN60X
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 46: UPlanFlN60XOI
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 47: UPlanSApo100XO
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 48: UPlanSApo20X
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 49: UPlanSApo40X
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 50: UPlanSApo60XO
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 51: UPlanSApo60XW
+bsh % 
+Device 9: AutoFocusZDC, Property 4: ObjectiveTypeSetting, Possible value 52: UplanFlN40X
+bsh % 
+Device 9: AutoFocusZDC, Property 5: Offset
+bsh % 
+Device 9: AutoFocusZDC, Property 6: SearchRange
+bsh % 
+Device 10: CSUX-Hub, Property 0: BrightFieldPort
+bsh % 
+Device 10: CSUX-Hub, Property 0: BrightFieldPort, Possible value 1: BrightField
+bsh % 
+Device 10: CSUX-Hub, Property 0: BrightFieldPort, Possible value 2: Confocal
+bsh % 
+Device 10: CSUX-Hub, Property 1: Description
+bsh % 
+Device 10: CSUX-Hub, Property 2: Name
+bsh % 
+Device 10: CSUX-Hub, Property 3: Port
+bsh % 
+Device 11: CSUX-Filter Wheel, Property 0: Description
+bsh % 
+Device 11: CSUX-Filter Wheel, Property 1: Label
+bsh % 
+Device 11: CSUX-Filter Wheel, Property 1: Label, Possible value 1: Filter-1
+bsh % 
+Device 11: CSUX-Filter Wheel, Property 1: Label, Possible value 2: Filter-2
+bsh % 
+Device 11: CSUX-Filter Wheel, Property 1: Label, Possible value 3: Filter-3
+bsh % 
+Device 11: CSUX-Filter Wheel, Property 1: Label, Possible value 4: Filter-4
+bsh % 
+Device 11: CSUX-Filter Wheel, Property 1: Label, Possible value 5: Filter-5
+bsh % 
+Device 11: CSUX-Filter Wheel, Property 1: Label, Possible value 6: Filter-6
+bsh % 
+Device 11: CSUX-Filter Wheel, Property 2: Name
+bsh % 
+Device 11: CSUX-Filter Wheel, Property 3: Speed
+bsh % 
+Device 11: CSUX-Filter Wheel, Property 3: Speed, Possible value 1: 0
+bsh % 
+Device 11: CSUX-Filter Wheel, Property 3: Speed, Possible value 2: 1
+bsh % 
+Device 11: CSUX-Filter Wheel, Property 3: Speed, Possible value 3: 2
+bsh % 
+Device 11: CSUX-Filter Wheel, Property 3: Speed, Possible value 4: 3
+bsh % 
+Device 11: CSUX-Filter Wheel, Property 4: State
+bsh % 
+Device 11: CSUX-Filter Wheel, Property 5: WheelNumber
+bsh % 
+Device 11: CSUX-Filter Wheel, Property 5: WheelNumber, Possible value 1: 1
+bsh % 
+Device 11: CSUX-Filter Wheel, Property 5: WheelNumber, Possible value 2: 2
+bsh % 
+Device 12: CSUX-Dichroic Mirror, Property 0: Description
+bsh % 
+Device 12: CSUX-Dichroic Mirror, Property 1: Label
+bsh % 
+Device 12: CSUX-Dichroic Mirror, Property 1: Label, Possible value 1: Dichroic-1
+bsh % 
+Device 12: CSUX-Dichroic Mirror, Property 1: Label, Possible value 2: Dichroic-2
+bsh % 
+Device 12: CSUX-Dichroic Mirror, Property 1: Label, Possible value 3: Dichroic-3
+bsh % 
+Device 12: CSUX-Dichroic Mirror, Property 2: Name
+bsh % 
+Device 12: CSUX-Dichroic Mirror, Property 3: State
+bsh % 
+Device 12: CSUX-Dichroic Mirror, Property 3: State, Possible value 1: 0
+bsh % 
+Device 12: CSUX-Dichroic Mirror, Property 3: State, Possible value 2: 1
+bsh % 
+Device 12: CSUX-Dichroic Mirror, Property 3: State, Possible value 3: 2
+bsh % 
+Device 13: CSUX-Shutter, Property 0: Description
+bsh % 
+Device 13: CSUX-Shutter, Property 1: Name
+bsh % 
+Device 13: CSUX-Shutter, Property 2: State
+bsh % 
+Device 13: CSUX-Shutter, Property 2: State, Possible value 1: Closed
+bsh % 
+Device 13: CSUX-Shutter, Property 2: State, Possible value 2: Open
+bsh % 
+Device 14: SpectralFW, Property 0: Description
+bsh % 
+Device 14: SpectralFW, Property 1: Label
+bsh % 
+Device 14: SpectralFW, Property 1: Label, Possible value 1: Filter-1
+bsh % 
+Device 14: SpectralFW, Property 1: Label, Possible value 2: Filter-2
+bsh % 
+Device 14: SpectralFW, Property 1: Label, Possible value 3: Filter-3
+bsh % 
+Device 14: SpectralFW, Property 1: Label, Possible value 4: Filter-4
+bsh % 
+Device 14: SpectralFW, Property 1: Label, Possible value 5: Filter-5
+bsh % 
+Device 14: SpectralFW, Property 1: Label, Possible value 6: Filter-6
+bsh % 
+Device 14: SpectralFW, Property 2: Name
+bsh % 
+Device 14: SpectralFW, Property 3: Port
+bsh % 
+Device 14: SpectralFW, Property 4: State
+bsh % 
+Device 15: NDFW, Property 0: Description
+bsh % 
+Device 15: NDFW, Property 1: Label
+bsh % 
+Device 15: NDFW, Property 1: Label, Possible value 1: Filter-1
+bsh % 
+Device 15: NDFW, Property 1: Label, Possible value 2: Filter-2
+bsh % 
+Device 15: NDFW, Property 1: Label, Possible value 3: Filter-3
+bsh % 
+Device 15: NDFW, Property 1: Label, Possible value 4: Filter-4
+bsh % 
+Device 15: NDFW, Property 1: Label, Possible value 5: Filter-5
+bsh % 
+Device 15: NDFW, Property 1: Label, Possible value 6: Filter-6
+bsh % 
+Device 15: NDFW, Property 2: Name
+bsh % 
+Device 15: NDFW, Property 3: Port
+bsh % 
+Device 15: NDFW, Property 4: State
+bsh % 
+Device 16: Core, Property 0: AutoFocus
+bsh % 
+Device 16: Core, Property 0: AutoFocus, Possible value 1: 
+bsh % 
+Device 16: Core, Property 0: AutoFocus, Possible value 2: AutoFocusZDC
+bsh % 
+Device 16: Core, Property 1: AutoShutter
+bsh % 
+Device 16: Core, Property 1: AutoShutter, Possible value 1: 0
+bsh % 
+Device 16: Core, Property 1: AutoShutter, Possible value 2: 1
+bsh % 
+Device 16: Core, Property 2: Camera
+bsh % 
+Device 16: Core, Property 2: Camera, Possible value 1: 
+bsh % 
+Device 16: Core, Property 3: ChannelGroup
+bsh % 
+Device 16: Core, Property 3: ChannelGroup, Possible value 1: 
+bsh % 
+Device 16: Core, Property 4: Focus
+bsh % 
+Device 16: Core, Property 4: Focus, Possible value 1: 
+bsh % 
+Device 16: Core, Property 5: Galvo
+bsh % 
+Device 16: Core, Property 5: Galvo, Possible value 1: 
+bsh % 
+Device 16: Core, Property 6: ImageProcessor
+bsh % 
+Device 16: Core, Property 6: ImageProcessor, Possible value 1: 
+bsh % 
+Device 16: Core, Property 7: Initialize
+bsh % 
+Device 16: Core, Property 7: Initialize, Possible value 1: 0
+bsh % 
+Device 16: Core, Property 7: Initialize, Possible value 2: 1
+bsh % 
+Device 16: Core, Property 8: SLM
+bsh % 
+Device 16: Core, Property 8: SLM, Possible value 1: 
+bsh % 
+Device 16: Core, Property 9: Shutter
+bsh % 
+Device 16: Core, Property 9: Shutter, Possible value 1: 
+bsh % 
+Device 16: Core, Property 9: Shutter, Possible value 2: CSUX-Shutter
+bsh % 
+Device 16: Core, Property 10: TimeoutMs
+bsh % 
+Device 16: Core, Property 11: XYStage
+bsh % 
+Device 16: Core, Property 11: XYStage, Possible value 1: 
