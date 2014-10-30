@@ -6,6 +6,9 @@
 
 package com.github.dougkelly88.FLIMPlateReaderGUI.Classes;
 
+import java.awt.List;
+import java.util.ArrayList;
+
 /**
  *
  * @author dk1109
@@ -22,6 +25,7 @@ package com.github.dougkelly88.FLIMPlateReaderGUI.Classes;
 public final class SeqAcqProps {
     private boolean useScanFLIM;
     private boolean powerMonitoring;
+    private ArrayList<ArrayList<Integer>> delaysArray;
 
   public static SeqAcqProps getInstance() {
      return fINSTANCE;
@@ -40,6 +44,7 @@ public final class SeqAcqProps {
   private SeqAcqProps() {
     useScanFLIM = false;
     powerMonitoring = false;
+//    delaysArray = new ArrayList<Integer>().add(4);
   }
   
   public SeqAcqProps setUseScanFLIM(boolean usf){

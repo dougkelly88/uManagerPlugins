@@ -29,7 +29,7 @@ import org.micromanager.api.events.PropertyChangedEvent;
 public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     CMMCore core_;
     static HCAFLIMPluginFrame frame_;
-    private SeqAcqProps tsi_;
+    private SeqAcqProps sap_;
 //    SequencedAcquisitionProperties sap_;
     
     @Subscribe
@@ -46,8 +46,6 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         initComponents();
         ImageIcon icon = new ImageIcon(this.getClass().getResource("../Resources/GFPFishIcon.png"));
         this.setIconImage(icon.getImage());
-//        URL url  = ClassLoader.getSystemResource("com/github/dougkelly88/FLIMPlateReaderGUI/Resources/GFPFishIcon.png");
-//        this.setIconImage(Toolkit.getDefaultToolkit().createImage(url));
         this.setTitle("HCA-FLIM Plugin");
         core_ = core;
         frame_ = this;
@@ -64,11 +62,8 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
             }
         });
         
-        tsi_ = SeqAcqProps.getInstance();
-//        sap_ = new SequencedAcquisitionProperties.Builder().useScanFLIM(true).build();
-//        sap_.addPropertyChangeListener(null);
-//        fLIMPanel1.initSequencedAcquisitionProperties(sap_, frame_);
-//        fLIMPanel1.sap_ = sap_;
+        sap_ = SeqAcqProps.getInstance();
+
     }
 
     /**
@@ -116,7 +111,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
             }
         });
 
-        FLIMPanel.addTab("FLIM instruments", fLIMPanel1);
+        FLIMPanel.addTab("FLIM panel", fLIMPanel1);
 
         fileMenu.setText("File");
 
@@ -155,8 +150,8 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(FLIMPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 625, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
+                .addComponent(FLIMPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 630, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -172,7 +167,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(349, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
@@ -194,7 +189,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
 
             
     private void getDichroicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getDichroicActionPerformed
-        testText.setText("Getting acq params scan, results = " + ( tsi_.getUseScanFLIM()? "true":"false" ) );
+        testText.setText("Getting acq params scan, results = " + ( sap_.getUseScanFLIM()? "true":"false" ) );
     }//GEN-LAST:event_getDichroicActionPerformed
 
     private void getObjectiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getObjectiveActionPerformed
