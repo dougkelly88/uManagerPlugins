@@ -6,10 +6,15 @@
 
 package com.github.dougkelly88.FLIMPlateReaderGUI.Classes;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Rectangle;
+import java.awt.Shape;
+import java.awt.geom.Ellipse2D;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.annotations.XYTextAnnotation;
@@ -23,15 +28,14 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
-import org.jfree.chart.renderer.xy.XYBarRenderer;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
-import org.jfree.data.time.Day;
 import org.jfree.data.xy.IntervalXYDataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-import org.jfree.date.SerialDate;
+import org.jfree.util.ShapeUtilities;
+
 
 /**
  *
@@ -40,19 +44,35 @@ import org.jfree.date.SerialDate;
 public class FindMaxpoint {
     
     private JFreeChart chart_;
-    private IntervalXYDataset dataset_;
-    private IntervalXYDataset dataset2_;
+    private XYDataset findMaxpointData_;
+    private XYDataset gatePositionData_;
+//    private XYDataset dataset_;
     
     public FindMaxpoint(){
-        dataset_ = createDummyDataset(0);
-        dataset2_ = createDummyDataset(1000);
-        chart_ = createDummyChart(dataset_, dataset2_);
-//        chart_ = createOverlaidChart(dataset_, dataset2_);
+        findMaxpointData_ = createDummyMaxpointData(0);
+        gatePositionData_ = createDummyGatingData();
+        chart_ = createChart();
+//        chart_ = createOverlaidChart(findMaxpointData_, gatePositionData_);
+    }
+    private XYDataset createDummyGatingData(){
+        
+        final XYSeries s1 = new XYSeries("DummyGating");
+        s1.add(1000, 0);
+        s1.add(2000, 0);
+        s1.add(3000, 0);
+        s1.add(4000, 0);
+        s1.add(5000, 0);
+        s1.add(6000, 0);
+        
+        final XYSeriesCollection dataset = new XYSeriesCollection();
+        dataset.addSeries(s1);
+        
+        return dataset;
     }
     
-    private IntervalXYDataset createDummyDataset(int offset){
+    private XYDataset createDummyMaxpointData(int offset){
         
-        final XYSeries s1 = new XYSeries("Dummy");
+        final XYSeries s1 = new XYSeries("DummyMaxpoint");
         s1.add(1000, 0 + offset);
         s1.add(2000, 1000 + offset);
         s1.add(3000, 4000 + offset);
@@ -74,124 +94,95 @@ public class FindMaxpoint {
      * 
      * @return a chart.
      */
-    private JFreeChart createDummyChart(final XYDataset dataset, final XYDataset dataset2) {
+    private JFreeChart createChart() {
         
+        //http://www.java2s.com/Code/Java/Chart/JFreeChartDualAxisDemo2.htm
         String xlabel = "Delay (ps)";
         String ylabel = "Signal (DN)";
-        
-        // create the chart...
+                
+        // create the chart with findmaxpoint results
         final JFreeChart chart = ChartFactory.createXYLineChart(
-            null,           // chart title
-            xlabel,           // x axis label
-            ylabel,          // y axis label
-            dataset_,               // data
+            null,                   // chart title
+            xlabel,                 // x axis label
+            ylabel,                 // y axis label
+            findMaxpointData_,      // data
             PlotOrientation.VERTICAL,
             false,                  // include legend
             true,                   // tooltips
             false                   // urls
         );
         
-        final JFreeChart chart2 = ChartFactory.createXYBarChart(
-                null, 
-                xlabel, 
-                false, 
-                ylabel, 
-                dataset2_, 
-                PlotOrientation.HORIZONTAL, 
-                false, 
-                true, 
-                false);
-        
-
-
-        // NOW DO SOME OPTIONAL CUSTOMISATION OF THE CHART...
-        chart.setBackgroundPaint(Color.white);
-
-        
-        // get a reference to the plot for further customisation...
         final XYPlot plot = chart.getXYPlot();
-        plot.setBackgroundPaint(Color.lightGray);
-        plot.setDomainGridlinePaint(Color.white);
-        plot.setRangeGridlinePaint(Color.white);
-        
-        final XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
-        renderer.setSeriesLinesVisible(0, true);
-        plot.setRenderer(renderer);
+        // deal with axes and add second dataset
+        final NumberAxis yaxis1 = (NumberAxis) plot.getRangeAxis();
+        yaxis1.setTickLabelFont(new Font("Dialog", Font.PLAIN, 10));
+        yaxis1.setLabelFont(new Font("Dialog", Font.PLAIN, 10));
+        final NumberAxis yaxis2 = new NumberAxis(null);
+        final NumberAxis xaxis = (NumberAxis) plot.getDomainAxis();
+        xaxis.setTickLabelFont(new Font("Dialog", Font.PLAIN, 10));
+        xaxis.setLabelFont(new Font("Dialog", Font.PLAIN, 10));
+        plot.setRangeAxis(1,yaxis2);
+        plot.setDataset(1, gatePositionData_);
+        plot.mapDatasetToRangeAxis(1, 1);
+        yaxis1.setRange(0,5000);
+        yaxis2.setRange(-1,1);
+        yaxis2.setTickLabelsVisible(false);
+        xaxis.setRange(0,16666);
 
-        // change the auto tick unit selection to integer units only...
-        final NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
-        rangeAxis.setTickLabelFont(new Font("Dialog", Font.PLAIN, 10));
-        rangeAxis.setLabelFont(new Font("Dialog", Font.PLAIN, 10));
-        rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-        rangeAxis.setRange(0, 5000);
+        // deal with visuals
+//        final XYItemRenderer renderer = plot.getRenderer();
+//        if (renderer instanceof StandardXYItemRenderer) {
+//            final StandardXYItemRenderer rr = (StandardXYItemRenderer) renderer;
+//            rr.setSeriesPaint(0, Color.BLACK);
+//            rr.setSeriesStroke(0, new BasicStroke(4));
+//            rr.setBaseShapesVisible(true);
+//            rr.setSeriesShape(0, ShapeUtilities.createDiagonalCross(3, 1));
+//        }
+        final XYLineAndShapeRenderer renderer1= new XYLineAndShapeRenderer(true, true);
+        renderer1.setSeriesPaint(0, Color.RED);
+        renderer1.setSeriesStroke(0, new BasicStroke(3));
+//        renderer1.setSeriesShapesFilled(0, Boolean.TRUE);
+        renderer1.setBaseShapesVisible(true);
+        renderer1.setSeriesShape(0, ShapeUtilities.createDiagonalCross(4,1));
+//        renderer1.setShape(ShapeUtilities.createDiagonalCross(3, 3));
+//        renderer1.setOutlineStroke(new BasicStroke(1));
+//        renderer1.setOutlinePaint(Color.GRAY);
+//        renderer1.setUseOutlinePaint(true);
+        plot.setRenderer(0, renderer1);
         
-        final NumberAxis domainAxis = (NumberAxis) plot.getDomainAxis();
-        domainAxis.setTickLabelFont(new Font("Dialog", Font.PLAIN, 10));
-        domainAxis.setLabelFont(new Font("Dialog", Font.PLAIN, 10));
-        domainAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-        domainAxis.setRange(0, 16666);
         
+//        final StandardXYItemRenderer renderer2 = new StandardXYItemRenderer();
+        final XYLineAndShapeRenderer renderer2= new XYLineAndShapeRenderer(false, true);
+        renderer2.setSeriesPaint(0, Color.CYAN);
+        renderer2.setSeriesShapesFilled(0, Boolean.TRUE);
+        renderer2.setBaseShapesVisible(true);
+        renderer2.setShape(new Rectangle(-2,-100,4,200));
+        renderer2.setOutlineStroke(new BasicStroke(1));
+        renderer2.setOutlinePaint(Color.GRAY);
+        renderer2.setUseOutlinePaint(true);
+        plot.setRenderer(1, renderer2);
         
-        
-       
-        // OPTIONAL CUSTOMISATION COMPLETED.
-                
+        plot.setBackgroundPaint(Color.white);
+        plot.setDomainGridlinePaint(Color.lightGray);
+        plot.setRangeGridlinePaint(Color.lightGray);
+//                
         return chart;
         
     }
             
-//    private JFreeChart createOverlaidChart(IntervalXYDataset data1, IntervalXYDataset data2) {
-//
-//        String xlabel = "Delay (ps)";
-//        String ylabel = "Signal (DN)";
-//        JFreeChart c;
-//        // create plot ...
-////        final IntervalXYDataset data1 = createDummyDataset(10);
-//        final XYItemRenderer renderer1 = new XYBarRenderer(0.20);
-//        renderer1.setSeriesPaint(0, Color.BLUE);
-//        final NumberAxis domainAxis = new NumberAxis(xlabel);
-//        domainAxis.setTickLabelFont(new Font("Dialog", Font.PLAIN, 10));
-//        domainAxis.setLabelFont(new Font("Dialog", Font.PLAIN, 10));
-//        domainAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-//        domainAxis.setRange(0, 16666);
-//        final ValueAxis rangeAxis = new NumberAxis(ylabel);
-//        rangeAxis.setTickLabelFont(new Font("Dialog", Font.PLAIN, 10));
-//        rangeAxis.setLabelFont(new Font("Dialog", Font.PLAIN, 10));
-//        rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-//        rangeAxis.setRange(0, 5000);
-//        
-//        final XYPlot plot = new XYPlot(data1, domainAxis, rangeAxis, renderer1);
-//        
-//        // add a second dataset and renderer...
-////        final XYDataset data2 = createDummyDataset(100);
-//        final XYItemRenderer renderer2 = new StandardXYItemRenderer();
-//        renderer2.setSeriesPaint(0, Color.RED);
-//        
-//        renderer2.setToolTipGenerator(      //As of version 1.0.6, this override setting should not be used. You can use the base setting instead (XYItemRenderer.setBaseToolTipGenerator(XYToolTipGenerator)).
-//            new StandardXYToolTipGenerator(
-//                StandardXYToolTipGenerator.DEFAULT_TOOL_TIP_FORMAT,
-//                new DecimalFormat("0.0"), new DecimalFormat("0.0")
-//            )
-//        );
-//        plot.setDataset(1, data2);
-//        plot.setRenderer(1, renderer2);
-//        
-//        
-//        plot.setDatasetRenderingOrder(DatasetRenderingOrder.FORWARD);
-//        plot.setBackgroundPaint(Color.white);
-//        plot.setDomainGridlinePaint(Color.LIGHT_GRAY);
-//        plot.setRangeGridlinePaint(Color.LIGHT_GRAY);
-//        
-//        c = new JFreeChart(null, plot);
-//        c.removeLegend();
-//       
-//        return c;
-////        return new JFreeChart("Overlaid Plot Example", JFreeChart.DEFAULT_TITLE_FONT, plot, true);
-//
-//    }
-
     
-    public JFreeChart getDummyChart(){
+    public JFreeChart getChart(){
         return chart_;
+    }
+    
+    public void setGatingData(ArrayList<Integer> delays){
+        final XYSeries s1 = new XYSeries("delays");
+        for (Integer delay : delays) {
+            s1.add((double) delay, 0);
+        }
+        final XYSeriesCollection dataset = new XYSeriesCollection();
+        dataset.addSeries(s1);
+        
+        gatePositionData_ = dataset;
     }
 }

@@ -40,7 +40,7 @@ public class HCAFLIMPlugin implements MMPlugin {
   
     @Override
     public void dispose() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
@@ -68,22 +68,22 @@ public class HCAFLIMPlugin implements MMPlugin {
 
     @Override
     public String getDescription() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "Imperial College London Photonics Group, OpenHCA-FLIM plugin";
     }
 
     @Override
     public String getInfo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "Imperial College London Photonics Group, OpenHCA-FLIM plugin";
     }
 
     @Override
     public String getVersion() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "0.1";
     }
 
     @Override
     public String getCopyright() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "CopyNotics";
     }
 
    

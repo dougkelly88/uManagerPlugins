@@ -44,15 +44,68 @@ public final class SeqAcqProps {
   private SeqAcqProps() {
     useScanFLIM = false;
     powerMonitoring = false;
-//    delaysArray = new ArrayList<Integer>().add(4);
+    delaysArray = initDelaysArray();
+    
+    
   }
   
+   private ArrayList<ArrayList<Integer>> initDelaysArray(){
+    ArrayList<Integer> delays = new ArrayList<Integer>();
+    ArrayList<ArrayList<Integer>> delArr;
+    delays.add(0);
+    delays.add(1000);
+    delays.add(2000);
+    delays.add(3000);
+    delays.add(4000);
+    delays.add(5000);
+    delArr = new ArrayList<ArrayList<Integer>>();
+    delArr.add(delays);
+    return delArr;
+  }
+   
+  // Setters
   public SeqAcqProps setUseScanFLIM(boolean usf){
       useScanFLIM = usf;
       return this;
   }
+  public SeqAcqProps setPowerMonitoring(boolean pm){
+      powerMonitoring = pm;
+      return this;
+  }
+  public SeqAcqProps setDelaysArray(int ind, ArrayList<Integer> delays){
+      
+      if (delaysArray.size() > ind)
+          // replace existing delays
+          delaysArray.set(ind, delays);
+      else
+      {
+          // add empty arrays in indices up to chosen index, then add new delays
+          for (int i = delaysArray.size(); i < ind; i++){
+              delaysArray.add(new ArrayList<Integer>());
+          }
+          delaysArray.add(delays);
+          // DEBUG - check size
+          int s = delaysArray.size();
+      }
+      
+      return this;
+  }
+  public SeqAcqProps clearDelaysArray(){
+      delaysArray.clear();
+      return this;
+  }
   
+  // Getters
+  public SeqAcqProps getSeqAcqProps(){
+      return this;
+  }
   public boolean getUseScanFLIM(){
       return useScanFLIM;
+  }
+  public boolean getPowerMonitoring(){
+      return powerMonitoring;
+  }
+  public ArrayList<ArrayList<Integer>> getDelaysArray(){
+      return delaysArray;
   }
 } 
