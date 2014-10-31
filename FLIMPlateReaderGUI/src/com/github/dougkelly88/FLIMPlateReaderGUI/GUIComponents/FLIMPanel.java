@@ -6,8 +6,8 @@
 
 package com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents;
 
-import com.github.dougkelly88.FLIMPlateReaderGUI.Classes.SeqAcqProps;
 import com.github.dougkelly88.FLIMPlateReaderGUI.Classes.FindMaxpoint;
+import com.github.dougkelly88.FLIMPlateReaderGUI.Classes.SeqAcqProps;
 import com.google.common.eventbus.Subscribe;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -16,6 +16,7 @@ import java.awt.FlowLayout;
 import java.beans.PropertyChangeEvent;
 import javax.swing.JButton;
 import javax.swing.JLabel; 
+import javax.swing.JTable; 
 import mmcorej.CMMCore; 
 import org.jfree.chart.ChartPanel; 
 import org.micromanager.MMStudio; 
@@ -32,6 +33,7 @@ public class FLIMPanel extends javax.swing.JPanel {
     PropertyChangedEvent event_;
     SliderControl mcpSlider_;
     SliderControl gatewidthSlider_;
+    JTable delayTable_;
     private SeqAcqProps sap_;
     
     @Subscribe
@@ -81,18 +83,30 @@ public class FLIMPanel extends javax.swing.JPanel {
         getDichroic = new javax.swing.JButton();
         maxpointGraphPanel = new javax.swing.JPanel();
         autogateButton = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        maxpointPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         maxpointButton = new javax.swing.JButton();
         maxpointResolutionField = new javax.swing.JTextField();
         delayBoxTabbedPane = new javax.swing.JTabbedPane();
+        slowDelayBoxPanel = new javax.swing.JPanel();
+        slowBoxCalibrated = new javax.swing.JCheckBox();
+        slowCurrentDelayPanel = new javax.swing.JPanel();
         fastDelayBoxPanel = new javax.swing.JPanel();
         fastBoxCalibratedCheck = new javax.swing.JCheckBox();
         scanDelCheck = new javax.swing.JCheckBox();
         fastCurrentDelayPanel = new javax.swing.JPanel();
-        slowDelayBoxPanel = new javax.swing.JPanel();
-        slowBoxCalibrated = new javax.swing.JCheckBox();
-        slowCurrentDelayPanel = new javax.swing.JPanel();
+        delaySeqPanel = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        clearDelayButton = new javax.swing.JButton();
+        startField = new javax.swing.JTextField();
+        endField = new javax.swing.JTextField();
+        incrementField = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         HRIControlsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("HRI controls"));
 
@@ -188,7 +202,7 @@ public class FLIMPanel extends javax.swing.JPanel {
 
         autogateButton.setText("Autogating...");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        maxpointPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         jLabel1.setText("\"Find maxpoint\" resolution (ps)");
 
@@ -206,11 +220,11 @@ public class FLIMPanel extends javax.swing.JPanel {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout maxpointPanelLayout = new javax.swing.GroupLayout(maxpointPanel);
+        maxpointPanel.setLayout(maxpointPanelLayout);
+        maxpointPanelLayout.setHorizontalGroup(
+            maxpointPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(maxpointPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
@@ -219,11 +233,11 @@ public class FLIMPanel extends javax.swing.JPanel {
                 .addComponent(maxpointButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        maxpointPanelLayout.setVerticalGroup(
+            maxpointPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(maxpointPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(maxpointPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(maxpointButton)
                     .addComponent(maxpointResolutionField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -239,10 +253,10 @@ public class FLIMPanel extends javax.swing.JPanel {
                 .addGroup(FLIMToolsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(maxpointGraphPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(FLIMToolsPanelLayout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(maxpointPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(FLIMToolsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(FLIMToolsPanelLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(getDichroic)
                                 .addGap(10, 10, 10))
                             .addGroup(FLIMToolsPanelLayout.createSequentialGroup()
@@ -264,59 +278,9 @@ public class FLIMPanel extends javax.swing.JPanel {
                             .addComponent(autogateButton)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(getDichroic)))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(maxpointPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(17, 17, 17))
         );
-
-        fastBoxCalibratedCheck.setText("Calibrated?");
-
-        scanDelCheck.setText("Enable fast delay sequences?");
-        scanDelCheck.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                scanDelCheckActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout fastCurrentDelayPanelLayout = new javax.swing.GroupLayout(fastCurrentDelayPanel);
-        fastCurrentDelayPanel.setLayout(fastCurrentDelayPanelLayout);
-        fastCurrentDelayPanelLayout.setHorizontalGroup(
-            fastCurrentDelayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 275, Short.MAX_VALUE)
-        );
-        fastCurrentDelayPanelLayout.setVerticalGroup(
-            fastCurrentDelayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 65, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout fastDelayBoxPanelLayout = new javax.swing.GroupLayout(fastDelayBoxPanel);
-        fastDelayBoxPanel.setLayout(fastDelayBoxPanelLayout);
-        fastDelayBoxPanelLayout.setHorizontalGroup(
-            fastDelayBoxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(fastDelayBoxPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(fastDelayBoxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(fastDelayBoxPanelLayout.createSequentialGroup()
-                        .addComponent(fastBoxCalibratedCheck)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(fastDelayBoxPanelLayout.createSequentialGroup()
-                        .addGroup(fastDelayBoxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(scanDelCheck)
-                            .addComponent(fastCurrentDelayPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 317, Short.MAX_VALUE))))
-        );
-        fastDelayBoxPanelLayout.setVerticalGroup(
-            fastDelayBoxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(fastDelayBoxPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(fastBoxCalibratedCheck)
-                .addGap(18, 18, 18)
-                .addComponent(fastCurrentDelayPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
-                .addComponent(scanDelCheck)
-                .addContainerGap())
-        );
-
-        delayBoxTabbedPane.addTab("Fast delay box", fastDelayBoxPanel);
 
         slowBoxCalibrated.setText("Calibrated?");
 
@@ -340,7 +304,7 @@ public class FLIMPanel extends javax.swing.JPanel {
                 .addGroup(slowDelayBoxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(slowBoxCalibrated)
                     .addComponent(slowCurrentDelayPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(247, Short.MAX_VALUE))
+                .addContainerGap(260, Short.MAX_VALUE))
         );
         slowDelayBoxPanelLayout.setVerticalGroup(
             slowDelayBoxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -349,10 +313,150 @@ public class FLIMPanel extends javax.swing.JPanel {
                 .addComponent(slowBoxCalibrated)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(slowCurrentDelayPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(79, Short.MAX_VALUE))
+                .addContainerGap(96, Short.MAX_VALUE))
         );
 
         delayBoxTabbedPane.addTab("Slow delay box", slowDelayBoxPanel);
+
+        fastBoxCalibratedCheck.setText("Calibrated?");
+
+        scanDelCheck.setText("Enable fast delay sequences?");
+        scanDelCheck.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                scanDelCheckActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout fastCurrentDelayPanelLayout = new javax.swing.GroupLayout(fastCurrentDelayPanel);
+        fastCurrentDelayPanel.setLayout(fastCurrentDelayPanelLayout);
+        fastCurrentDelayPanelLayout.setHorizontalGroup(
+            fastCurrentDelayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 275, Short.MAX_VALUE)
+        );
+        fastCurrentDelayPanelLayout.setVerticalGroup(
+            fastCurrentDelayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 65, Short.MAX_VALUE)
+        );
+
+        delaySeqPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Delay sequence"));
+
+        jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {"0"},
+                {"1000"},
+                {"2000"},
+                {"3000"},
+                {"4000"},
+                {null}
+            },
+            new String [] {
+                "Delay"
+            }
+        ));
+        jScrollPane3.setViewportView(jTable1);
+
+        jScrollPane2.setViewportView(jScrollPane3);
+
+        clearDelayButton.setText("Clear delays");
+        clearDelayButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearDelayButtonActionPerformed(evt);
+            }
+        });
+
+        startField.setText("0");
+
+        endField.setText("16000");
+
+        incrementField.setText("25");
+
+        jButton1.setText("Populate delays");
+
+        jLabel2.setText("Start (ps):");
+
+        jLabel3.setText("End (ps):");
+
+        jLabel4.setText("Increment:");
+
+        javax.swing.GroupLayout delaySeqPanelLayout = new javax.swing.GroupLayout(delaySeqPanel);
+        delaySeqPanel.setLayout(delaySeqPanelLayout);
+        delaySeqPanelLayout.setHorizontalGroup(
+            delaySeqPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(delaySeqPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addGroup(delaySeqPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, delaySeqPanelLayout.createSequentialGroup()
+                        .addGroup(delaySeqPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(delaySeqPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(startField)
+                            .addComponent(endField, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                            .addComponent(incrementField)))
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(clearDelayButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        delaySeqPanelLayout.setVerticalGroup(
+            delaySeqPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(delaySeqPanelLayout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(delaySeqPanelLayout.createSequentialGroup()
+                .addComponent(clearDelayButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(delaySeqPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(startField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(delaySeqPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(endField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(delaySeqPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(incrementField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addGap(0, 18, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout fastDelayBoxPanelLayout = new javax.swing.GroupLayout(fastDelayBoxPanel);
+        fastDelayBoxPanel.setLayout(fastDelayBoxPanelLayout);
+        fastDelayBoxPanelLayout.setHorizontalGroup(
+            fastDelayBoxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(fastDelayBoxPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(fastDelayBoxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(fastBoxCalibratedCheck)
+                    .addComponent(fastCurrentDelayPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(scanDelCheck))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(delaySeqPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18))
+        );
+        fastDelayBoxPanelLayout.setVerticalGroup(
+            fastDelayBoxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, fastDelayBoxPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(fastDelayBoxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(fastDelayBoxPanelLayout.createSequentialGroup()
+                        .addComponent(fastBoxCalibratedCheck)
+                        .addGap(18, 18, 18)
+                        .addComponent(fastCurrentDelayPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(scanDelCheck))
+                    .addComponent(delaySeqPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        delayBoxTabbedPane.addTab("Fast delay box", fastDelayBoxPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -361,18 +465,17 @@ public class FLIMPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(delayBoxTabbedPane)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(FLIMToolsPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(HRIControlsPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(FLIMToolsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(HRIControlsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(delayBoxTabbedPane, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 611, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(delayBoxTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(delayBoxTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(FLIMToolsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(HRIControlsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -385,10 +488,6 @@ public class FLIMPanel extends javax.swing.JPanel {
         FLIMTestText.setText("Getting acq params scan, results = " + ( sap_.getUseScanFLIM()? "true":"false" ) );
         
     }//GEN-LAST:event_getDichroicActionPerformed
-
-    private void scanDelCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scanDelCheckActionPerformed
-        sap_ = sap_.setUseScanFLIM(scanDelCheck.isSelected());
-    }//GEN-LAST:event_scanDelCheckActionPerformed
 
     private void inhibitCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inhibitCheckActionPerformed
         FLIMTestText.setText("Inhibit state = " + inhibitCheck.isSelected());
@@ -410,6 +509,14 @@ public class FLIMPanel extends javax.swing.JPanel {
         maxpointGraphPanel.repaint();
         
     }//GEN-LAST:event_maxpointButtonActionPerformed
+
+    private void clearDelayButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearDelayButtonActionPerformed
+        //        delayTable.removeColumn(1);
+    }//GEN-LAST:event_clearDelayButtonActionPerformed
+
+    private void scanDelCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scanDelCheckActionPerformed
+        sap_ = sap_.setUseScanFLIM(scanDelCheck.isSelected());
+    }//GEN-LAST:event_scanDelCheckActionPerformed
 
     private String test(String dev, String prop)
     {
@@ -447,6 +554,8 @@ public class FLIMPanel extends javax.swing.JPanel {
         HRIControlsPanel.revalidate();
         HRIControlsPanel.repaint();
         
+//        delayTable_ = new JTable(1);
+        
         // Set values for other controls based on underlying data to ensure
         // that all controls are in a consistent state. 
         scanDelCheck.setSelected(sap_.getUseScanFLIM());
@@ -471,23 +580,35 @@ public class FLIMPanel extends javax.swing.JPanel {
     private javax.swing.JPanel FLIMToolsPanel;
     private javax.swing.JPanel HRIControlsPanel;
     private javax.swing.JButton autogateButton;
+    private javax.swing.JButton clearDelayButton;
     private javax.swing.JTabbedPane delayBoxTabbedPane;
+    private javax.swing.JPanel delaySeqPanel;
+    private javax.swing.JTextField endField;
     private javax.swing.JCheckBox fastBoxCalibratedCheck;
     private javax.swing.JPanel fastCurrentDelayPanel;
     private javax.swing.JPanel fastDelayBoxPanel;
     private javax.swing.JPanel gatewidthPanel;
     private javax.swing.JButton getDichroic;
+    private javax.swing.JTextField incrementField;
     private javax.swing.JCheckBox inhibitCheck;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTable jTable1;
     private javax.swing.JButton maxpointButton;
     private javax.swing.JPanel maxpointGraphPanel;
+    private javax.swing.JPanel maxpointPanel;
     private javax.swing.JTextField maxpointResolutionField;
     private javax.swing.JPanel mcpVoltagePanel;
     private javax.swing.JCheckBox scanDelCheck;
     private javax.swing.JCheckBox slowBoxCalibrated;
     private javax.swing.JPanel slowCurrentDelayPanel;
     private javax.swing.JPanel slowDelayBoxPanel;
+    private javax.swing.JTextField startField;
     // End of variables declaration//GEN-END:variables
 }
