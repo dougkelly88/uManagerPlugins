@@ -7,6 +7,7 @@
 package com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents;
 
 import com.github.dougkelly88.FLIMPlateReaderGUI.Classes.SeqAcqProps;
+import com.github.dougkelly88.FLIMPlateReaderGUI.Classes.VariableTest;
 import com.google.common.eventbus.Subscribe;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,9 +28,8 @@ public class LightPathControls extends javax.swing.JPanel {
     MMStudio gui_;
     CMMCore core_;
     PropertyChangedEvent event_;
-    SliderControl mcpSlider_;
-    SliderControl gatewidthSlider_;
     private SeqAcqProps sap_;
+    private VariableTest var_;
 //    private SequencedAcquisitionProperties sap_;
     
     /**
@@ -444,6 +444,14 @@ public class LightPathControls extends javax.swing.JPanel {
 
     private void DichroicComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DichroicComboBoxActionPerformed
         int DichState= DichroicComboBox.getSelectedIndex();
+        var_.DichState=DichState;
+        
+        
+        
+        var_.DichroicComboBoxSelectedItem=(String)DichroicComboBox.getSelectedItem();
+        
+        
+        
         try {
             core_.setProperty("CSUX-Dichroic Mirror", "State", DichState);
         } catch (Exception ex) {
