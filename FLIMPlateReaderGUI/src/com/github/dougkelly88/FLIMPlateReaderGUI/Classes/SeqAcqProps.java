@@ -8,6 +8,7 @@ package com.github.dougkelly88.FLIMPlateReaderGUI.Classes;
 
 import java.awt.List;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
@@ -74,6 +75,7 @@ public final class SeqAcqProps {
   }
   public SeqAcqProps setDelaysArray(int ind, ArrayList<Integer> delays){
       
+      delays.removeAll(Collections.singleton(null));    // ensure that there are no null entries
       if (delaysArray.size() > ind)
           // replace existing delays
           delaysArray.set(ind, delays);
@@ -106,6 +108,7 @@ public final class SeqAcqProps {
       return powerMonitoring;
   }
   public ArrayList<ArrayList<Integer>> getDelaysArray(){
+      delaysArray.removeAll(Collections.singleton(null));    // ensure that there are no null entries
       return delaysArray;
   }
 } 

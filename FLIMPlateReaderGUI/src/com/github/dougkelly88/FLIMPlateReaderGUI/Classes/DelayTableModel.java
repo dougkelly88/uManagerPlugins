@@ -6,13 +6,13 @@
 
 package com.github.dougkelly88.FLIMPlateReaderGUI.Classes;
 
-import java.awt.Component;
+import static java.lang.Math.round;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
-import javax.swing.JTable;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableCellRenderer;
+
 //
 ///**
 // *
@@ -126,8 +126,12 @@ import javax.swing.table.DefaultTableCellRenderer;
 //
 //
 public class DelayTableModel extends AbstractTableModel {
-    private List data_ = new ArrayList<Integer>();
+    private ArrayList<Integer> data_ = new ArrayList<Integer>();
     private String[] colNames_ = { "Delays (ps)" };
+    private int max_ = 16666;
+    private int min_ = 0;
+    private int incr_ = 25;
+    private SeqAcqProps sap_;
     
     public DelayTableModel(){}
     
@@ -137,20 +141,41 @@ public class DelayTableModel extends AbstractTableModel {
     
     public DelayTableModel(String[] columnNames, ArrayList<Integer> delays){
         this.colNames_ = columnNames;
+        for (int i = 0; i < delays.size(); i++){
+            delays.set(i, validateData(delays.get(i)));
+        }
         this.data_ = delays;
         fireTableDataChanged();
+        sap_ = SeqAcqProps.getInstance().setDelaysArray(0, delays);
+    }
+    
+    public DelayTableModel(String[] columnNames, ArrayList<Integer> delays, int min, int max, int incr){
+        this.colNames_ = columnNames;
+        this.min_ = min;
+        this.max_ = max;
+        this.incr_ = incr;
+        for (int i = 0; i < delays.size(); i++){
+            delays.set(i, validateData(delays.get(i)));
+        }
+        this.data_ = delays;
+        fireTableDataChanged();
+        sap_ = SeqAcqProps.getInstance().setDelaysArray(0, delays);
     }
  
+    @Override
     public String getColumnName(int col) {
       return colNames_[col];
     }
     
+    @Override
     public Object getValueAt(int row, int col) {
         return ((Integer) data_.get(row));
     }
+    @Override
     public int getColumnCount() {
         return 1;
     }
+    @Override
     public int getRowCount() {
         return data_.size();
     }
@@ -171,7 +196,7 @@ public class DelayTableModel extends AbstractTableModel {
     public boolean hasEmptyRow() {
          if (data_.size() == 0) return false;
          Integer d = ((Integer) data_.get(data_.size() - 1));
-         if (d.equals(""))
+         if (d.equals(null))
             return true;
          
          else return false;
@@ -183,5 +208,74 @@ public class DelayTableModel extends AbstractTableModel {
             data_.size() - 1,
             data_.size() - 1);
      }
+    
+    @Override
+    public boolean isCellEditable(int row, int col){
+        return true;
+    }
+    
+    @Override
+    public void setValueAt(Object value, int row, int col) {
+        
+        int val;
+        
+        if (value.getClass() == String.class){
+            
+            if (value.toString().isEmpty()){
+            val = Integer.parseInt(value.toString());
+            val = validateData(val);
+            data_.set(row, val);
+            }
+            else {
+                data_.set(row, null);
+            }
+            
+        }
+        
+        fireTableCellUpdated(row, col);
+        if (!this.hasEmptyRow())
+        {
+            this.addEmptyRow();
+        }
+    }
+    
+    public void setMinVal(int min){
+        min_ = min;
+    }
+    
+    public void setMaxVal(int max){
+        max_ = max;
+    }
+    
+    public void setIncrVal(int incr){
+        incr_ = incr;
+    }
+    
+    private int validateData(int val){
+//        int out;
+        
+        if (val > max_)
+                val = max_;
+            else if (val < min_)
+                val = min_;
+            val = round(val/incr_)*incr_;
+        
+        return val;
+    }
+
+//    public class DelayTableModelListener implements TableModelListener {
+//        @Override 
+//        public void tableChanged(TableModelEvent evt) {
+//             if (evt.getType() == TableModelEvent.UPDATE) {
+//                 int column = evt.getColumn();
+//                 int row = evt.getFirstRow();
+//                 System.out.println("row: " + row + " column: " + column);
+//                 sap_ = SeqAcqProps.getInstance().setDelaysArray(0, data_);
+//             }
+//         }
+//
+//        
+//     }
+
 }
 

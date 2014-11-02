@@ -66,8 +66,8 @@ public class FLIMPanel extends javax.swing.JPanel {
         gui_ = MMStudio.getInstance();
         sap_ = SeqAcqProps.getInstance().setUseScanFLIM(false);
         try{
-        gui_.registerForEvents(this);
-        core_ = gui_.getCore();
+            gui_.registerForEvents(this);
+            core_ = gui_.getCore();
         }
         catch (Exception e) 
         {
@@ -535,12 +535,12 @@ public class FLIMPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void getDichroicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getDichroicActionPerformed
-        
+
+        ArrayList<Integer> dum = SeqAcqProps.getInstance().getDelaysArray().get(0);
+        int lastseqacqdel = dum.get(dum.size() - 1);
 //        FLIMTestText.setText("Getting acq params scan, results = " + ( sap_.getUseScanFLIM()? "true":"false" ) );
-        FLIMTestText.setText("TAble contains "+tableModel_.getRowCount()+ "rows and " + tableModel_.getColumnCount() + "cols");
-        tableModel_.setValueAt(1000, tableModel_.getRowCount(), 0);
-        tableModel_.fireTableDataChanged();
-        delayTable_.repaint();
+//        FLIMTestText.setText("TAble contains "+tableModel_.getRowCount()+ "rows and " + tableModel_.getColumnCount() + "cols");
+        FLIMTestText.setText("Last entry in seq \n acq del array \n" + lastseqacqdel);
         
     }//GEN-LAST:event_getDichroicActionPerformed
 
@@ -700,9 +700,13 @@ public class FLIMPanel extends javax.swing.JPanel {
         HRIControlsPanel.repaint();
         
         String[] colName = { "Delays (ps)" };
+        int max = 16666;
+        try{max = Integer.parseInt(core_.getProperty("Laser", "Frequency"));}
+        catch (Exception e){}
 //         DelayTable tableModel = new DelayTable(new Vector(), colName});
 //        tableModel_ = new DelayTableModel(colName);
-        tableModel_ = new DelayTableModel(colName, (sap_.getDelaysArray()).get(0));
+        tableModel_ = new DelayTableModel(colName, (sap_.getDelaysArray()).get(0), 0, max, 25);
+//        tableModel.addTableModelListener(new DelayTableModel)
 //         tableModel.addTableModelListener(new InteractiveForm.InteractiveTableModelListener());
          delayTable_ = new JTable(){
              @Override
@@ -717,6 +721,7 @@ public class FLIMPanel extends javax.swing.JPanel {
                         return comp;
                     }
                 
+                    
          };
          delayTable_.setModel(tableModel_);
          delayTable_.setSurrendersFocusOnKeystroke(true);
