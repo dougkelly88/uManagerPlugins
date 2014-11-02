@@ -85,6 +85,9 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         jMenuBar2 = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         quitMenu = new javax.swing.JMenuItem();
+        toolsMenu = new javax.swing.JMenu();
+        advancedMenu = new javax.swing.JMenuItem();
+        calibrationMenu = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         FLIMHCAHelpMenu = new javax.swing.JMenuItem();
         aboutMenu = new javax.swing.JMenuItem();
@@ -125,6 +128,16 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         fileMenu.add(quitMenu);
 
         jMenuBar2.add(fileMenu);
+
+        toolsMenu.setText("Tools");
+
+        advancedMenu.setText("Advanced options...");
+        toolsMenu.add(advancedMenu);
+
+        calibrationMenu.setText("Calibration...");
+        toolsMenu.add(calibrationMenu);
+
+        jMenuBar2.add(toolsMenu);
 
         helpMenu.setText("Help");
 
@@ -240,6 +253,8 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem FLIMHCAHelpMenu;
     private javax.swing.JTabbedPane FLIMPanel;
     private javax.swing.JMenuItem aboutMenu;
+    private javax.swing.JMenuItem advancedMenu;
+    private javax.swing.JMenuItem calibrationMenu;
     private com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.FLIMPanel fLIMPanel1;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JButton getDichroic;
@@ -250,6 +265,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenuItem quitMenu;
     private javax.swing.JTextArea testText;
+    private javax.swing.JMenu toolsMenu;
     // End of variables declaration//GEN-END:variables
 
     private void confirmQuit(){

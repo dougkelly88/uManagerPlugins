@@ -50,6 +50,7 @@ public class HCAFLIMPlugin implements MMPlugin {
       acq_ = gui_.getAcquisitionEngine();
       
       frame_ = new HCAFLIMPluginFrame(core_);
+      frame_.pack();
       
     }
 

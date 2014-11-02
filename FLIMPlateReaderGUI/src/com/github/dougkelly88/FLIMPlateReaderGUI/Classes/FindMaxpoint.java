@@ -10,27 +10,13 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Rectangle;
-import java.awt.Shape;
-import java.awt.geom.Ellipse2D;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.annotations.XYTextAnnotation;
-import org.jfree.chart.axis.DateAxis;
-import org.jfree.chart.axis.DateTickMarkPosition;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.labels.StandardXYToolTipGenerator;
-import org.jfree.chart.plot.DatasetRenderingOrder;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.category.BarRenderer;
-import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
-import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
-import org.jfree.data.xy.IntervalXYDataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
@@ -57,12 +43,12 @@ public class FindMaxpoint {
     private XYDataset createDummyGatingData(){
         
         final XYSeries s1 = new XYSeries("DummyGating");
+        s1.add(0, 0);
         s1.add(1000, 0);
         s1.add(2000, 0);
         s1.add(3000, 0);
         s1.add(4000, 0);
         s1.add(5000, 0);
-        s1.add(6000, 0);
         
         final XYSeriesCollection dataset = new XYSeriesCollection();
         dataset.addSeries(s1);
@@ -73,13 +59,9 @@ public class FindMaxpoint {
     private XYDataset createDummyMaxpointData(int offset){
         
         final XYSeries s1 = new XYSeries("DummyMaxpoint");
-        s1.add(1000, 0 + offset);
-        s1.add(2000, 1000 + offset);
-        s1.add(3000, 4000 + offset);
-        s1.add(4000, 3000 + offset);
-        s1.add(5000, 1000 + offset);
-        s1.add(6000, 500 + offset);
-        s1.add(16000, 100 + offset);
+        for (int i = 0; i < 16666; i++){
+        s1.add(1000*i, 0 + offset);
+        }
         
         final XYSeriesCollection dataset = new XYSeriesCollection();
         dataset.addSeries(s1);
@@ -184,5 +166,7 @@ public class FindMaxpoint {
         dataset.addSeries(s1);
         
         gatePositionData_ = dataset;
+        XYPlot plot = chart_.getXYPlot();
+        plot.setDataset(1, gatePositionData_);
     }
 }

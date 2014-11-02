@@ -6,17 +6,27 @@
 
 package com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents;
 
+import com.github.dougkelly88.FLIMPlateReaderGUI.Classes.DelayTableModel;
 import com.github.dougkelly88.FLIMPlateReaderGUI.Classes.FindMaxpoint;
 import com.github.dougkelly88.FLIMPlateReaderGUI.Classes.SeqAcqProps;
 import com.google.common.eventbus.Subscribe;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.beans.PropertyChangeEvent;
+import static java.lang.Math.round;
+import java.util.ArrayList;
+import java.util.Vector;
 import javax.swing.JButton;
 import javax.swing.JLabel; 
+import javax.swing.JScrollPane; 
 import javax.swing.JTable; 
+import javax.swing.JTextField; 
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel; 
+import javax.swing.table.TableCellRenderer; 
 import mmcorej.CMMCore; 
 import org.jfree.chart.ChartPanel; 
 import org.micromanager.MMStudio; 
@@ -34,6 +44,9 @@ public class FLIMPanel extends javax.swing.JPanel {
     SliderControl mcpSlider_;
     SliderControl gatewidthSlider_;
     JTable delayTable_;
+    DelayTableModel tableModel_;
+    FindMaxpoint fm_;
+    ChartPanel chartPanel_;
     private SeqAcqProps sap_;
     
     @Subscribe
@@ -96,17 +109,15 @@ public class FLIMPanel extends javax.swing.JPanel {
         scanDelCheck = new javax.swing.JCheckBox();
         fastCurrentDelayPanel = new javax.swing.JPanel();
         delaySeqPanel = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         clearDelayButton = new javax.swing.JButton();
-        startField = new javax.swing.JTextField();
         endField = new javax.swing.JTextField();
         incrementField = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        populateDelaysButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        startField = new javax.swing.JFormattedTextField();
+        delayTablePanel = new javax.swing.JPanel();
 
         HRIControlsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("HRI controls"));
 
@@ -304,7 +315,7 @@ public class FLIMPanel extends javax.swing.JPanel {
                 .addGroup(slowDelayBoxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(slowBoxCalibrated)
                     .addComponent(slowCurrentDelayPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(260, Short.MAX_VALUE))
+                .addContainerGap(251, Short.MAX_VALUE))
         );
         slowDelayBoxPanelLayout.setVerticalGroup(
             slowDelayBoxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -340,25 +351,6 @@ public class FLIMPanel extends javax.swing.JPanel {
 
         delaySeqPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Delay sequence"));
 
-        jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"0"},
-                {"1000"},
-                {"2000"},
-                {"3000"},
-                {"4000"},
-                {null}
-            },
-            new String [] {
-                "Delay"
-            }
-        ));
-        jScrollPane3.setViewportView(jTable1);
-
-        jScrollPane2.setViewportView(jScrollPane3);
-
         clearDelayButton.setText("Clear delays");
         clearDelayButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -366,13 +358,41 @@ public class FLIMPanel extends javax.swing.JPanel {
             }
         });
 
-        startField.setText("0");
-
         endField.setText("16000");
+        endField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                endFieldFocusLost(evt);
+            }
+        });
+        endField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                endFieldActionPerformed(evt);
+            }
+        });
+        endField.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                endFieldPropertyChange(evt);
+            }
+        });
 
         incrementField.setText("25");
+        incrementField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                incrementFieldFocusLost(evt);
+            }
+        });
+        incrementField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                incrementFieldActionPerformed(evt);
+            }
+        });
 
-        jButton1.setText("Populate delays");
+        populateDelaysButton.setText("Populate delays");
+        populateDelaysButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                populateDelaysButtonActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Start (ps):");
 
@@ -380,40 +400,68 @@ public class FLIMPanel extends javax.swing.JPanel {
 
         jLabel4.setText("Increment:");
 
+        startField.setText("0");
+        startField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                startFieldFocusLost(evt);
+            }
+        });
+        startField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startFieldActionPerformed(evt);
+            }
+        });
+        startField.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                startFieldPropertyChange(evt);
+            }
+        });
+
+        javax.swing.GroupLayout delayTablePanelLayout = new javax.swing.GroupLayout(delayTablePanel);
+        delayTablePanel.setLayout(delayTablePanelLayout);
+        delayTablePanelLayout.setHorizontalGroup(
+            delayTablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 142, Short.MAX_VALUE)
+        );
+        delayTablePanelLayout.setVerticalGroup(
+            delayTablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 130, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout delaySeqPanelLayout = new javax.swing.GroupLayout(delaySeqPanel);
         delaySeqPanel.setLayout(delaySeqPanelLayout);
         delaySeqPanelLayout.setHorizontalGroup(
             delaySeqPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(delaySeqPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addGroup(delaySeqPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, delaySeqPanelLayout.createSequentialGroup()
+                .addComponent(delayTablePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(delaySeqPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(delaySeqPanelLayout.createSequentialGroup()
+                        .addGroup(delaySeqPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(populateDelaysButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(clearDelayButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())
+                    .addGroup(delaySeqPanelLayout.createSequentialGroup()
                         .addGroup(delaySeqPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3)
                             .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(delaySeqPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(startField)
-                            .addComponent(endField, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-                            .addComponent(incrementField)))
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(clearDelayButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(delaySeqPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(endField)
+                            .addComponent(incrementField)
+                            .addComponent(startField))
+                        .addGap(10, 10, 10))))
         );
         delaySeqPanelLayout.setVerticalGroup(
             delaySeqPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(delaySeqPanelLayout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(delaySeqPanelLayout.createSequentialGroup()
                 .addComponent(clearDelayButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(delaySeqPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(startField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel2)
+                    .addComponent(startField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(delaySeqPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(endField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -423,8 +471,11 @@ public class FLIMPanel extends javax.swing.JPanel {
                     .addComponent(incrementField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addGap(0, 18, Short.MAX_VALUE))
+                .addComponent(populateDelaysButton)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(delaySeqPanelLayout.createSequentialGroup()
+                .addComponent(delayTablePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout fastDelayBoxPanelLayout = new javax.swing.GroupLayout(fastDelayBoxPanel);
@@ -443,17 +494,17 @@ public class FLIMPanel extends javax.swing.JPanel {
         );
         fastDelayBoxPanelLayout.setVerticalGroup(
             fastDelayBoxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, fastDelayBoxPanelLayout.createSequentialGroup()
+            .addGroup(fastDelayBoxPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(fastDelayBoxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(fastDelayBoxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(delaySeqPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(fastDelayBoxPanelLayout.createSequentialGroup()
                         .addComponent(fastBoxCalibratedCheck)
                         .addGap(18, 18, 18)
                         .addComponent(fastCurrentDelayPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(scanDelCheck))
-                    .addComponent(delaySeqPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(scanDelCheck)))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         delayBoxTabbedPane.addTab("Fast delay box", fastDelayBoxPanel);
@@ -474,8 +525,8 @@ public class FLIMPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(delayBoxTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addComponent(delayBoxTabbedPane)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(FLIMToolsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(HRIControlsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -485,7 +536,11 @@ public class FLIMPanel extends javax.swing.JPanel {
 
     private void getDichroicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getDichroicActionPerformed
         
-        FLIMTestText.setText("Getting acq params scan, results = " + ( sap_.getUseScanFLIM()? "true":"false" ) );
+//        FLIMTestText.setText("Getting acq params scan, results = " + ( sap_.getUseScanFLIM()? "true":"false" ) );
+        FLIMTestText.setText("TAble contains "+tableModel_.getRowCount()+ "rows and " + tableModel_.getColumnCount() + "cols");
+        tableModel_.setValueAt(1000, tableModel_.getRowCount(), 0);
+        tableModel_.fireTableDataChanged();
+        delayTable_.repaint();
         
     }//GEN-LAST:event_getDichroicActionPerformed
 
@@ -498,17 +553,63 @@ public class FLIMPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_maxpointResolutionFieldActionPerformed
 
     private void maxpointButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maxpointButtonActionPerformed
-        FindMaxpoint fm = new FindMaxpoint();
-        final ChartPanel chartpanel = new ChartPanel(fm.getChart());
-        chartpanel.setLayout(new BorderLayout());
+        fm_ = new FindMaxpoint();
+        chartPanel_ = new ChartPanel(fm_.getChart());
+        chartPanel_.setLayout(new BorderLayout());
         maxpointGraphPanel.setLayout(new BorderLayout());
-        maxpointGraphPanel.add(chartpanel, BorderLayout.CENTER);
-        chartpanel.setMaximumDrawWidth(maxpointGraphPanel.getWidth());  
-        chartpanel.setPreferredSize(new Dimension(maxpointGraphPanel.getWidth(),maxpointGraphPanel.getHeight()));
+        maxpointGraphPanel.add(chartPanel_, BorderLayout.CENTER);
+        chartPanel_.setMaximumDrawWidth(maxpointGraphPanel.getWidth());  
+        chartPanel_.setPreferredSize(new Dimension(maxpointGraphPanel.getWidth(),maxpointGraphPanel.getHeight()));
         maxpointGraphPanel.validate();
         maxpointGraphPanel.repaint();
-        
+//        fm_.setGatingData((sap_.getDelaysArray()).get(0));
     }//GEN-LAST:event_maxpointButtonActionPerformed
+
+    private void startFieldPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_startFieldPropertyChange
+
+    }//GEN-LAST:event_startFieldPropertyChange
+
+    private void populateDelaysButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_populateDelaysButtonActionPerformed
+        int max;
+        int min;
+        int incr;
+        ArrayList<Integer> dv = new ArrayList<Integer>();
+
+        // deal with case in which start and end have been entered the wrong way round...
+        if (Integer.parseInt(startField.getText()) > Integer.parseInt(endField.getText()))
+        {
+            max = Integer.parseInt(startField.getText());
+            min = Integer.parseInt(endField.getText());
+            startField.setText(String.valueOf(min));
+            endField.setText(String.valueOf(max));
+        }
+        else{
+            max = Integer.parseInt(endField.getText());
+            min = Integer.parseInt(startField.getText());
+        }
+        incr = Integer.parseInt(incrementField.getText());
+
+        for (int i = min; i < max+1; i = i + incr)
+        {
+            dv.add(i);
+        }
+//        DelayTable dt = new DelayTable(dv);
+//        tableModel_.populateFromVector(dv);
+//        Integer rowData = 1000;
+//        tableModel_.addRow(rowData);
+        tableModel_.addWholeData(dv);
+        sap_.setDelaysArray(0, dv);
+        fm_.setGatingData((sap_.getDelaysArray()).get(0));
+        
+    }//GEN-LAST:event_populateDelaysButtonActionPerformed
+
+    private void incrementFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_incrementFieldActionPerformed
+        updateDelayField(incrementField);
+    }//GEN-LAST:event_incrementFieldActionPerformed
+
+    private void endFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_endFieldActionPerformed
+        updateDelayField(endField);
+    }//GEN-LAST:event_endFieldActionPerformed
 
     private void clearDelayButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearDelayButtonActionPerformed
         //        delayTable.removeColumn(1);
@@ -518,6 +619,50 @@ public class FLIMPanel extends javax.swing.JPanel {
         sap_ = sap_.setUseScanFLIM(scanDelCheck.isSelected());
     }//GEN-LAST:event_scanDelCheckActionPerformed
 
+    private void startFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startFieldActionPerformed
+        updateDelayField(startField);
+    }//GEN-LAST:event_startFieldActionPerformed
+
+    private void startFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_startFieldFocusLost
+        updateDelayField(startField);
+    }//GEN-LAST:event_startFieldFocusLost
+
+    private void endFieldPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_endFieldPropertyChange
+        updateDelayField(endField);
+    }//GEN-LAST:event_endFieldPropertyChange
+
+    private void endFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_endFieldFocusLost
+        updateDelayField(endField);
+    }//GEN-LAST:event_endFieldFocusLost
+
+    private void incrementFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_incrementFieldFocusLost
+        updateDelayField(incrementField);
+    }//GEN-LAST:event_incrementFieldFocusLost
+
+    private void updateDelayField(JTextField field){
+        int num = 0;
+        int min = 0;
+        int max = 16666;
+        int inc  = 25;
+        
+        try{max = Integer.parseInt(core_.getProperty("Laser", "Frequency"));}
+        catch (Exception e){}
+        
+        if (!field.getText().isEmpty()){
+            num = Integer.parseInt(field.getText());
+            if (num > max)
+                num = max;
+            else if (num < min)
+                num = min;
+            num = round(num/inc)*inc;
+        }
+        else {
+            num = min;
+        }
+        field.setText(String.valueOf(num));
+    }
+    
+    
     private String test(String dev, String prop)
     {
         String out;
@@ -554,7 +699,47 @@ public class FLIMPanel extends javax.swing.JPanel {
         HRIControlsPanel.revalidate();
         HRIControlsPanel.repaint();
         
-//        delayTable_ = new JTable(1);
+        String[] colName = { "Delays (ps)" };
+//         DelayTable tableModel = new DelayTable(new Vector(), colName});
+//        tableModel_ = new DelayTableModel(colName);
+        tableModel_ = new DelayTableModel(colName, (sap_.getDelaysArray()).get(0));
+//         tableModel.addTableModelListener(new InteractiveForm.InteractiveTableModelListener());
+         delayTable_ = new JTable(){
+             @Override
+                    public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+                        Component comp = super.prepareRenderer(renderer, row, column);
+                        int modelRow = convertRowIndexToModel(row);
+                        int modelColumn = convertColumnIndexToModel(column);
+                        if (modelColumn != 0 && modelRow != 0) {
+                            comp.setBackground(Color.GREEN);
+                        }
+                        
+                        return comp;
+                    }
+                
+         };
+         delayTable_.setModel(tableModel_);
+         delayTable_.setSurrendersFocusOnKeystroke(true);
+         if (!tableModel_.hasEmptyRow()) {
+             tableModel_.addEmptyRow();
+         }
+
+         JScrollPane scroller = new javax.swing.JScrollPane(delayTable_);
+         delayTable_.setPreferredScrollableViewportSize(new java.awt.Dimension(60, 100));
+         delayTablePanel.setLayout(new BorderLayout());
+         delayTablePanel.add(scroller, BorderLayout.CENTER);
+        
+         
+//
+//        fm_ = new FindMaxpoint();
+//        chartPanel_ = new ChartPanel(fm_.getChart());
+//        chartPanel_.setLayout(new BorderLayout());
+//        maxpointGraphPanel.setLayout(new BorderLayout());
+//        maxpointGraphPanel.add(chartPanel_, BorderLayout.CENTER);
+//        chartPanel_.setMaximumDrawWidth(maxpointGraphPanel.getWidth());  
+//        chartPanel_.setPreferredSize(new Dimension(maxpointGraphPanel.getWidth(),maxpointGraphPanel.getHeight()));
+//        maxpointGraphPanel.validate();
+//        maxpointGraphPanel.repaint();
         
         // Set values for other controls based on underlying data to ensure
         // that all controls are in a consistent state. 
@@ -583,6 +768,7 @@ public class FLIMPanel extends javax.swing.JPanel {
     private javax.swing.JButton clearDelayButton;
     private javax.swing.JTabbedPane delayBoxTabbedPane;
     private javax.swing.JPanel delaySeqPanel;
+    private javax.swing.JPanel delayTablePanel;
     private javax.swing.JTextField endField;
     private javax.swing.JCheckBox fastBoxCalibratedCheck;
     private javax.swing.JPanel fastCurrentDelayPanel;
@@ -591,24 +777,22 @@ public class FLIMPanel extends javax.swing.JPanel {
     private javax.swing.JButton getDichroic;
     private javax.swing.JTextField incrementField;
     private javax.swing.JCheckBox inhibitCheck;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton maxpointButton;
     private javax.swing.JPanel maxpointGraphPanel;
     private javax.swing.JPanel maxpointPanel;
     private javax.swing.JTextField maxpointResolutionField;
     private javax.swing.JPanel mcpVoltagePanel;
+    private javax.swing.JButton populateDelaysButton;
     private javax.swing.JCheckBox scanDelCheck;
     private javax.swing.JCheckBox slowBoxCalibrated;
     private javax.swing.JPanel slowCurrentDelayPanel;
     private javax.swing.JPanel slowDelayBoxPanel;
-    private javax.swing.JTextField startField;
+    private javax.swing.JFormattedTextField startField;
     // End of variables declaration//GEN-END:variables
 }
+

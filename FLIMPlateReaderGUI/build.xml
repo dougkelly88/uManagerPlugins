@@ -66,6 +66,10 @@
 
 </target>
 
+<target name="-post-jar">
+        <copy file="${dist.jar}/" tofile="C:\\Program Files (x86)\\Micro-Manager-1.4-32 20 Oct 2014 build\\mmplugins}\\HCAFLIM.jar"/>
+    </target>
+
 
     <!--Another way to customize the build is by overriding existing main targets.
     The targets of interest are: 
