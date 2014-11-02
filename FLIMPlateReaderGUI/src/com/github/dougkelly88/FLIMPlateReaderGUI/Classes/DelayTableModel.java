@@ -184,30 +184,32 @@ public class DelayTableModel extends AbstractTableModel {
         int row = data_.size();
         data_.add(rowData);
         fireTableRowsInserted(row, row);
+        sap_.setDelaysArray(0, data_);
     }
     
     public void addWholeData(ArrayList<Integer> data){
         data_.clear();
         data_.addAll(data);
         fireTableDataChanged();
-        this.addEmptyRow();
+        sap_.setDelaysArray(0, data_);
+//        this.addEmptyRow();
     }
     
-    public boolean hasEmptyRow() {
-         if (data_.size() == 0) return false;
-         Integer d = ((Integer) data_.get(data_.size() - 1));
-         if (d.equals(null))
-            return true;
-         
-         else return false;
-     }
-    
-    public void addEmptyRow() {
-         data_.add(null);
-         fireTableRowsInserted(
-            data_.size() - 1,
-            data_.size() - 1);
-     }
+//    public boolean hasEmptyRow() {
+//         if (data_.size() == 0) return false;
+//         Integer d = ((Integer) data_.get(data_.size() - 1));
+//         if (d.equals(null))
+//            return true;
+//         
+//         else return false;
+//     }
+//    
+//    public void addEmptyRow() {
+//         data_.add(null);
+//         fireTableRowsInserted(
+//            data_.size() - 1,
+//            data_.size() - 1);
+//     }
     
     @Override
     public boolean isCellEditable(int row, int col){
@@ -221,22 +223,24 @@ public class DelayTableModel extends AbstractTableModel {
         
         if (value.getClass() == String.class){
             
-            if (value.toString().isEmpty()){
+            if (!(value.toString().isEmpty())){
             val = Integer.parseInt(value.toString());
             val = validateData(val);
             data_.set(row, val);
             }
             else {
-                data_.set(row, null);
+//                data_.set(row, null);
+                data_.remove(row);
             }
             
         }
         
         fireTableCellUpdated(row, col);
-        if (!this.hasEmptyRow())
-        {
-            this.addEmptyRow();
-        }
+        sap_.setDelaysArray(0, data_);
+//        if (!this.hasEmptyRow())
+//        {
+//            this.addEmptyRow();
+//        }
     }
     
     public void setMinVal(int min){

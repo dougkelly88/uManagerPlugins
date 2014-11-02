@@ -598,8 +598,8 @@ public class FLIMPanel extends javax.swing.JPanel {
 //        Integer rowData = 1000;
 //        tableModel_.addRow(rowData);
         tableModel_.addWholeData(dv);
-        sap_.setDelaysArray(0, dv);
-        fm_.setGatingData((sap_.getDelaysArray()).get(0));
+//        sap_.setDelaysArray(0, dv);
+//        fm_.setGatingData((sap_.getDelaysArray()).get(0));
         
     }//GEN-LAST:event_populateDelaysButtonActionPerformed
 
@@ -725,9 +725,9 @@ public class FLIMPanel extends javax.swing.JPanel {
          };
          delayTable_.setModel(tableModel_);
          delayTable_.setSurrendersFocusOnKeystroke(true);
-         if (!tableModel_.hasEmptyRow()) {
-             tableModel_.addEmptyRow();
-         }
+//         if (!tableModel_.hasEmptyRow()) {
+//             tableModel_.addEmptyRow();
+//         }
 
          JScrollPane scroller = new javax.swing.JScrollPane(delayTable_);
          delayTable_.setPreferredScrollableViewportSize(new java.awt.Dimension(60, 100));
