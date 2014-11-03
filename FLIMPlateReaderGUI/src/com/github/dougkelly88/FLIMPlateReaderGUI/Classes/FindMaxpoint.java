@@ -9,14 +9,19 @@ package com.github.dougkelly88.FLIMPlateReaderGUI.Classes;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.List;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.data.xy.XYDataItem;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
@@ -31,8 +36,13 @@ public class FindMaxpoint {
     
     private JFreeChart chart_;
     private XYDataset findMaxpointData_;
+    private ArrayList<Integer> rawMaxpointData_;
     private XYDataset gatePositionData_;
+    private ArrayList<Integer> rawGateData_;
     private int resolution_ = 200;
+    private int lifetime_;
+    private ArrayList<Integer> delays_;
+    private int maxpointDelay_ = 0;
 //    private XYDataset dataset_;
     
     public FindMaxpoint(){
@@ -61,9 +71,12 @@ public class FindMaxpoint {
         
         final XYSeries s1 = new XYSeries("DummyMaxpoint");
         for (int i = 0; i < 16666; i = i+resolution_){
-        s1.add(i, 0 + offset);
+            if (i==1000)
+                s1.add(i,2*offset);
+            else
+                s1.add(i, 0 + offset);
         }
-        
+//        delays_ = 
         final XYSeriesCollection dataset = new XYSeriesCollection();
         dataset.addSeries(s1);
         
@@ -155,26 +168,80 @@ public class FindMaxpoint {
         }
         final XYSeriesCollection dataset = new XYSeriesCollection();
         dataset.addSeries(s1);
-        
+        rawGateData_ = delays;
         gatePositionData_ = dataset;
         XYPlot plot = chart_.getXYPlot();
         plot.setDataset(1, gatePositionData_);
     }
     
     public void acqMaxpointData(){
-        //instrument interacting fn, currently dummy
+        ArrayList<Integer> signal = new ArrayList<Integer>();
+        ArrayList<Integer> delays = new ArrayList<Integer>();
+ 
+        // instrument interacting fn, currently dummy
+        // REMEMBER TO APPLY THRESHOLD
+        
+        // plot maxpoint data
         findMaxpointData_ = createDummyMaxpointData(500);
         XYPlot plot = chart_.getXYPlot();
         plot.setDataset(0, findMaxpointData_);
-        // automatically calculate lifetime
-    }
-    
-    
+        
+        // assign maxpoint - easier when this is real data...
+        ArrayList<XYDataItem> dummy = new ArrayList<XYDataItem>(((XYSeriesCollection) findMaxpointData_).getSeries(0).getItems());
+        for (XYDataItem dummy1 : dummy) {
+            delays.add((Integer) dummy1.getX().intValue());
+            signal.add((Integer) dummy1.getY().intValue());
+        }
+        
+        int[] res = findMaxIndex(signal);
+        maxpointDelay_ = delays.get(res[0]);
+        
+        // estimate lifetime
+        
+        //place N gates based on lifetime estimate
+                
+    }  
+  
     public void setResolution(int res){
         resolution_ = res;
     }
     
     public int getResolution(){
         return resolution_;
+    }
+    
+    public int estimateLifetime(ArrayList<Integer> delays, ArrayList<Integer> signal){
+        int lifetime = 0;
+        
+        lifetime_ = lifetime;
+        return lifetime;
+    }
+    
+    public void setLifetime(int lifetime){
+        lifetime_ = lifetime;
+    }
+    
+    public int getLifetime(){
+        return lifetime_;
+    }
+    
+    public ArrayList<Integer> genAutogates(int lifetime, int numberGates){
+        ArrayList<Integer> gates = new ArrayList<Integer>();
+        return gates;
+    }
+    
+    private int[] findMaxIndex(ArrayList<Integer> list){
+        int maxIndex = 0;
+        int maxVal = Integer.MIN_VALUE;
+        
+        for(int i=0; i<list.size(); i++){
+            if(list.get(i) > maxVal){
+            maxVal = list.get(i);
+            maxIndex = i;
+            }
+        }
+        
+        int[] ret = {maxIndex, maxVal};
+        return ret;
     }
 }
