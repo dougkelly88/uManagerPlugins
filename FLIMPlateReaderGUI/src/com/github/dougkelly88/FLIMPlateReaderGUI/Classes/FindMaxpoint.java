@@ -9,12 +9,9 @@ package com.github.dougkelly88.FLIMPlateReaderGUI.Classes;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.List;
 import java.awt.Rectangle;
+import static java.lang.Math.log;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
@@ -40,7 +37,7 @@ public class FindMaxpoint {
     private XYDataset gatePositionData_;
     private ArrayList<Integer> rawGateData_;
     private int resolution_ = 200;
-    private int lifetime_;
+    private double lifetime_ = 0;
     private ArrayList<Integer> delays_;
     private int maxpointDelay_ = 0;
 //    private XYDataset dataset_;
@@ -197,9 +194,25 @@ public class FindMaxpoint {
         maxpointDelay_ = delays.get(res[0]);
         
         // estimate lifetime
+        signal = (ArrayList<Integer>) signal.subList(res[0], signal.size());
+        delays = (ArrayList<Integer>) delays.subList(res[0], delays.size());
+        double sumt2 = 0;
+        double sumt = 0;
+        double sumtlnI = 0;
+        double sumlnI = 0;
         
-        //place N gates based on lifetime estimate
-                
+        for (int i = 0; i < signal.size(); i++){
+        
+            sumt2 = sumt2 + delays.get(i) * delays.get(i);
+            sumt = sumt + delays.get(i);
+            sumlnI =  (sumlnI + log((double) signal.get(i)));
+            sumtlnI = sumtlnI + log((double) signal.get(i)) * delays.get(i);
+            
+        }
+        
+        lifetime_ = -(delays.size() * sumt2 - sumt * sumt)/(
+                delays.size() * sumtlnI - sumt * sumlnI);
+        
     }  
   
     public void setResolution(int res){
@@ -217,16 +230,33 @@ public class FindMaxpoint {
         return lifetime;
     }
     
-    public void setLifetime(int lifetime){
+    public void setLifetime(double lifetime){
         lifetime_ = lifetime;
     }
     
-    public int getLifetime(){
+    public double getLifetime(){
         return lifetime_;
     }
     
-    public ArrayList<Integer> genAutogates(int lifetime, int numberGates){
+    public ArrayList<Integer> genAutogates(){
+        // use dialog to get number of gates + rising edge?
+        int N = 5;
         ArrayList<Integer> gates = new ArrayList<Integer>();
+        if (lifetime_ != 0){            // rising edge...
+//            gates.add(maxpointDelay_ - core_.get());  // instrument interacting fn
+            // decay
+            for (int i = 0; i < N-1; i++){
+                gates.add( maxpointDelay_ + 
+                        (int) (lifetime_* log((double) (i + 1))/log((double) 2)));
+            }
+        }
+        else{
+        // show warning dialog
+            for (int i = 0; i < N; i++){
+                gates.add(i*1000);
+            }
+        }
+        
         return gates;
     }
     

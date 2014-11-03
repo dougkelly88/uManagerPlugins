@@ -3,7 +3,7 @@ Ant-Version: Apache Ant 1.9.2
 Created-By: 1.8.0-b132 (Oracle Corporation)
 Bundle-Name: HCA-FLIM
 Bundle-Version: 0.0.1
-Bundle-Date: 2014-11-03 14:48:46 GMT
+Bundle-Date: 2014-11-03 16:21:29 GMT
 Implementation-Title: HCA-FLIM
 Implementation-Version: 0.0.1
 Implementation-URL: http://www.example.com

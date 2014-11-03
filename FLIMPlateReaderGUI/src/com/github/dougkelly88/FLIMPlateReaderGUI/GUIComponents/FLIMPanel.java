@@ -215,6 +215,11 @@ public class FLIMPanel extends javax.swing.JPanel {
         );
 
         autogateButton.setText("Autogating...");
+        autogateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                autogateButtonActionPerformed(evt);
+            }
+        });
 
         maxpointPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
@@ -548,6 +553,8 @@ public class FLIMPanel extends javax.swing.JPanel {
         int lastseqacqdel = dum.get(dum.size() - 1);
 
         FLIMTestText.setText("Last entry in seq \n acq del array \n" + lastseqacqdel);
+        fm_.setLifetime(2000);
+        FLIMTestText.setText("Lifetime = " + fm_.getLifetime());
         
     }//GEN-LAST:event_getDichroicActionPerformed
 
@@ -638,6 +645,10 @@ public class FLIMPanel extends javax.swing.JPanel {
         int num = Integer.parseInt(maxpointResolutionField.getText());
         fm_.setResolution(num);
     }//GEN-LAST:event_maxpointResolutionFieldFocusLost
+
+    private void autogateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autogateButtonActionPerformed
+        tableModel_.addWholeData(fm_.genAutogates());
+    }//GEN-LAST:event_autogateButtonActionPerformed
 
     private void updateDelayField(JTextField field){
         int num = 0;
