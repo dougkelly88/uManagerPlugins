@@ -553,7 +553,7 @@ public class FLIMPanel extends javax.swing.JPanel {
         int lastseqacqdel = dum.get(dum.size() - 1);
 
         FLIMTestText.setText("Last entry in seq \n acq del array \n" + lastseqacqdel);
-        fm_.setLifetime(2000);
+//        fm_.setLifetime(2000);
         FLIMTestText.setText("Lifetime = " + fm_.getLifetime());
         
     }//GEN-LAST:event_getDichroicActionPerformed

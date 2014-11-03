@@ -10,6 +10,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Rectangle;
+import static java.lang.Math.exp;
 import static java.lang.Math.log;
 import java.util.ArrayList;
 import org.jfree.chart.ChartFactory;
@@ -39,7 +40,7 @@ public class FindMaxpoint {
     private int resolution_ = 200;
     private double lifetime_ = 0;
     private ArrayList<Integer> delays_;
-    private int maxpointDelay_ = 0;
+    private int maxpointDelay_ = 1000;
 //    private XYDataset dataset_;
     
     public FindMaxpoint(){
@@ -67,11 +68,15 @@ public class FindMaxpoint {
     private XYDataset createDummyMaxpointData(int offset){
         
         final XYSeries s1 = new XYSeries("DummyMaxpoint");
-        for (int i = 0; i < 16666; i = i+resolution_){
-            if (i==1000)
-                s1.add(i,2*offset);
-            else
-                s1.add(i, 0 + offset);
+        for (int i = 0; i < 16666; i = i + resolution_){
+            if (i<1000)
+                s1.add(i,0);
+            else{
+                int num = (int) (4000 * exp( -( (double) ( (i - maxpointDelay_) )
+                        /(2000)) ));
+                s1.add(i, num);
+            }
+//                s1.add(i, 4000* exp(-((double) (i - maxpointDelay_))));
         }
 //        delays_ = 
         final XYSeriesCollection dataset = new XYSeriesCollection();
@@ -179,7 +184,7 @@ public class FindMaxpoint {
         // REMEMBER TO APPLY THRESHOLD
         
         // plot maxpoint data
-        findMaxpointData_ = createDummyMaxpointData(500);
+        findMaxpointData_ = createDummyMaxpointData(0);
         XYPlot plot = chart_.getXYPlot();
         plot.setDataset(0, findMaxpointData_);
         
@@ -194,12 +199,12 @@ public class FindMaxpoint {
         maxpointDelay_ = delays.get(res[0]);
         
         // estimate lifetime
-        signal = (ArrayList<Integer>) signal.subList(res[0], signal.size());
-        delays = (ArrayList<Integer>) delays.subList(res[0], delays.size());
+        signal = new ArrayList<Integer>( signal.subList(res[0], signal.size()));
+        delays = new ArrayList<Integer>( delays.subList(res[0], delays.size()));
         double sumt2 = 0;
         double sumt = 0;
         double sumtlnI = 0;
-        double sumlnI = 0;
+        double sumlnI = 0; 
         
         for (int i = 0; i < signal.size(); i++){
         

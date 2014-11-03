@@ -96,7 +96,11 @@ public class DelayTableModel extends AbstractTableModel {
     
     public void addWholeData(ArrayList<Integer> data){
         data_.clear();
+        for (int i = 0; i < data.size(); i++){
+            data.set(i, validateData(data.get(i)));
+        }
         data_.addAll(data);
+        
         fireTableDataChanged();
 //        sap_.setDelaysArray(0, data_);
 //        this.addEmptyRow();
