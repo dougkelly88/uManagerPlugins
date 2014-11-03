@@ -228,6 +228,11 @@ public class FLIMPanel extends javax.swing.JPanel {
         });
 
         maxpointResolutionField.setText("200");
+        maxpointResolutionField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                maxpointResolutionFieldFocusLost(evt);
+            }
+        });
         maxpointResolutionField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 maxpointResolutionFieldActionPerformed(evt);
@@ -551,22 +556,13 @@ public class FLIMPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_inhibitCheckActionPerformed
 
     private void maxpointResolutionFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maxpointResolutionFieldActionPerformed
-        // TODO add your handling code here:
+        int num = Integer.parseInt(maxpointResolutionField.getText());
+        fm_.setResolution(num);
     }//GEN-LAST:event_maxpointResolutionFieldActionPerformed
 
     private void maxpointButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maxpointButtonActionPerformed
-        fm_ = new FindMaxpoint();
-        chartPanel_ = new ChartPanel(fm_.getChart());
-        chartPanel_.setLayout(new BorderLayout());
-        maxpointGraphPanel.setLayout(new BorderLayout());
-        maxpointGraphPanel.add(chartPanel_, BorderLayout.CENTER);
-        chartPanel_.setMaximumDrawWidth(maxpointGraphPanel.getWidth());  
-        chartPanel_.setPreferredSize(new Dimension(maxpointGraphPanel.getWidth(),maxpointGraphPanel.getHeight()));
-        int h = maxpointGraphPanel.getHeight();
-        int w = maxpointGraphPanel.getWidth();
-        maxpointGraphPanel.validate();
-        maxpointGraphPanel.repaint();
-//        fm_.setGatingData((sap_.getDelaysArray()).get(0));
+
+        fm_.acqMaxpointData();
     }//GEN-LAST:event_maxpointButtonActionPerformed
 
     private void startFieldPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_startFieldPropertyChange
@@ -637,6 +633,11 @@ public class FLIMPanel extends javax.swing.JPanel {
     private void incrementFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_incrementFieldFocusLost
         updateDelayField(incrementField);
     }//GEN-LAST:event_incrementFieldFocusLost
+
+    private void maxpointResolutionFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_maxpointResolutionFieldFocusLost
+        int num = Integer.parseInt(maxpointResolutionField.getText());
+        fm_.setResolution(num);
+    }//GEN-LAST:event_maxpointResolutionFieldFocusLost
 
     private void updateDelayField(JTextField field){
         int num = 0;

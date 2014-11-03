@@ -32,6 +32,7 @@ public class FindMaxpoint {
     private JFreeChart chart_;
     private XYDataset findMaxpointData_;
     private XYDataset gatePositionData_;
+    private int resolution_ = 200;
 //    private XYDataset dataset_;
     
     public FindMaxpoint(){
@@ -59,7 +60,7 @@ public class FindMaxpoint {
     private XYDataset createDummyMaxpointData(int offset){
         
         final XYSeries s1 = new XYSeries("DummyMaxpoint");
-        for (int i = 0; i < 16666; i = i+1000){
+        for (int i = 0; i < 16666; i = i+resolution_){
         s1.add(i, 0 + offset);
         }
         
@@ -112,24 +113,14 @@ public class FindMaxpoint {
         xaxis.setRange(0,16666);
 
         // deal with visuals
-//        final XYItemRenderer renderer = plot.getRenderer();
-//        if (renderer instanceof StandardXYItemRenderer) {
-//            final StandardXYItemRenderer rr = (StandardXYItemRenderer) renderer;
-//            rr.setSeriesPaint(0, Color.BLACK);
-//            rr.setSeriesStroke(0, new BasicStroke(4));
-//            rr.setBaseShapesVisible(true);
-//            rr.setSeriesShape(0, ShapeUtilities.createDiagonalCross(3, 1));
-//        }
+
         final XYLineAndShapeRenderer renderer1= new XYLineAndShapeRenderer(true, true);
         renderer1.setSeriesPaint(0, Color.RED);
         renderer1.setSeriesStroke(0, new BasicStroke(3));
-//        renderer1.setSeriesShapesFilled(0, Boolean.TRUE);
-        renderer1.setBaseShapesVisible(true);
-        renderer1.setSeriesShape(0, ShapeUtilities.createDiagonalCross(4,1));
-//        renderer1.setShape(ShapeUtilities.createDiagonalCross(3, 3));
-//        renderer1.setOutlineStroke(new BasicStroke(1));
-//        renderer1.setOutlinePaint(Color.GRAY);
-//        renderer1.setUseOutlinePaint(true);
+
+//        renderer1.setBaseShapesVisible(true);
+//        renderer1.setSeriesShape(0, ShapeUtilities.createDiagonalCross(4,1));
+
         plot.setRenderer(0, renderer1);
         
         
@@ -168,5 +159,22 @@ public class FindMaxpoint {
         gatePositionData_ = dataset;
         XYPlot plot = chart_.getXYPlot();
         plot.setDataset(1, gatePositionData_);
+    }
+    
+    public void acqMaxpointData(){
+        //instrument interacting fn, currently dummy
+        findMaxpointData_ = createDummyMaxpointData(500);
+        XYPlot plot = chart_.getXYPlot();
+        plot.setDataset(0, findMaxpointData_);
+        // automatically calculate lifetime
+    }
+    
+    
+    public void setResolution(int res){
+        resolution_ = res;
+    }
+    
+    public int getResolution(){
+        return resolution_;
     }
 }
