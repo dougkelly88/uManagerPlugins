@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.github.dougkelly88.FLIMPlateReaderGUI.Classes;
+package com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses;
 
-import com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.SaveData;
+import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralGUIComponents.SaveData;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;

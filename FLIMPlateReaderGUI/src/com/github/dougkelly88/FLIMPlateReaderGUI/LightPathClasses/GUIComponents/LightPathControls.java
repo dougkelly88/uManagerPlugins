@@ -4,10 +4,10 @@
  * and open the template in the editor.
  */
 
-package com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents;
+package com.github.dougkelly88.FLIMPlateReaderGUI.LightPathClasses.GUIComponents;
 
-import com.github.dougkelly88.FLIMPlateReaderGUI.Classes.SeqAcqProps;
-import com.github.dougkelly88.FLIMPlateReaderGUI.Classes.VariableTest;
+import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.SeqAcqProps;
+import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.VariableTest;
 import com.google.common.eventbus.Subscribe;
 import java.util.logging.Level;
 import java.util.logging.Logger;

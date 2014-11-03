@@ -4,9 +4,9 @@
  * and open the template in the editor.
  */
 
-package com.github.dougkelly88.FLIMPlateReaderGUI.Classes;
+package com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses;
 
-import com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.HCAFLIMPluginFrame;
+import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralGUIComponents.HCAFLIMPluginFrame;
 import javax.swing.JFrame;
 import mmcorej.CMMCore;
 import org.micromanager.MMStudio;

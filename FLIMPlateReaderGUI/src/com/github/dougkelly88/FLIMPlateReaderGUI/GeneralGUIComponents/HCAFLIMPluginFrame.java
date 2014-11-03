@@ -4,10 +4,10 @@
  * and open the template in the editor.
  */
 
-package com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents;
+package com.github.dougkelly88.FLIMPlateReaderGUI.GeneralGUIComponents;
 
-import com.github.dougkelly88.FLIMPlateReaderGUI.Classes.SeqAcqProps;
-import com.github.dougkelly88.FLIMPlateReaderGUI.Classes.VariableTest;
+import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.SeqAcqProps;
+import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.VariableTest;
 import com.google.common.eventbus.Subscribe;
 import java.awt.Desktop;
 import java.awt.Component;
@@ -74,7 +74,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         
         sap_ = SeqAcqProps.getInstance();
 
-        tsi_ = SeqAcqProps.getInstance();
+//        tsi_ = SeqAcqProps.getInstance();
         var_ = VariableTest.getInstance();
 //        sap_ = new SequencedAcquisitionProperties.Builder().useScanFLIM(true).build();
 //        sap_.addPropertyChangeListener(null);
@@ -97,9 +97,9 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         testText = new javax.swing.JTextArea();
         getObjective = new javax.swing.JButton();
         FLIMPanel = new javax.swing.JTabbedPane();
-        fLIMPanel1 = new com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.FLIMPanel();
-        lightPathControls1 = new com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.LightPathControls();
-        saveData1 = new com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.SaveData();
+        fLIMPanel1 = new com.github.dougkelly88.FLIMPlateReaderGUI.FLIMClasses.GUIComponents.FLIMPanel();
+        lightPathControls1 = new com.github.dougkelly88.FLIMPlateReaderGUI.LightPathClasses.GUIComponents.LightPathControls();
+        saveData1 = new com.github.dougkelly88.FLIMPlateReaderGUI.GeneralGUIComponents.SaveData();
         jMenuBar2 = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         quitMenu = new javax.swing.JMenuItem();
@@ -332,7 +332,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem aboutMenu;
     private javax.swing.JMenuItem advancedMenu;
     private javax.swing.JMenuItem calibrationMenu;
-    private com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.FLIMPanel fLIMPanel1;
+    private com.github.dougkelly88.FLIMPlateReaderGUI.FLIMClasses.GUIComponents.FLIMPanel fLIMPanel1;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JButton getDichroic;
     private javax.swing.JButton getObjective;
@@ -340,9 +340,9 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JScrollPane jScrollPane1;
-    private com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.LightPathControls lightPathControls1;
+    private com.github.dougkelly88.FLIMPlateReaderGUI.LightPathClasses.GUIComponents.LightPathControls lightPathControls1;
     private javax.swing.JMenuItem quitMenu;
-    private com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.SaveData saveData1;
+    private com.github.dougkelly88.FLIMPlateReaderGUI.GeneralGUIComponents.SaveData saveData1;
     private javax.swing.JTextArea testText;
     private javax.swing.JMenu toolsMenu;
     private javax.swing.JMenuItem wizardMenu;

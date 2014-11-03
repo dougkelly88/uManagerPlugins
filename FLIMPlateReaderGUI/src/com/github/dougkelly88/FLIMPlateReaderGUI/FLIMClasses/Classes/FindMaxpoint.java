@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.github.dougkelly88.FLIMPlateReaderGUI.Classes;
+package com.github.dougkelly88.FLIMPlateReaderGUI.FLIMClasses.Classes;
 
 import java.awt.BasicStroke;
 import java.awt.Color;

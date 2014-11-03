@@ -4,11 +4,12 @@
  * and open the template in the editor.
  */
 
-package com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents;
+package com.github.dougkelly88.FLIMPlateReaderGUI.FLIMClasses.GUIComponents;
 
-import com.github.dougkelly88.FLIMPlateReaderGUI.Classes.DelayTableModel;
-import com.github.dougkelly88.FLIMPlateReaderGUI.Classes.FindMaxpoint;
-import com.github.dougkelly88.FLIMPlateReaderGUI.Classes.SeqAcqProps;
+import com.github.dougkelly88.FLIMPlateReaderGUI.FLIMClasses.Classes.DelayTableModel;
+import com.github.dougkelly88.FLIMPlateReaderGUI.FLIMClasses.Classes.FindMaxpoint;
+import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralGUIComponents.SliderControl;
+import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.SeqAcqProps;
 import com.google.common.eventbus.Subscribe;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -17,8 +18,8 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import static java.lang.Math.round;
+import java.awt.event.MouseEvent; 
+import static java.lang.Math.round; 
 import java.util.ArrayList;
 import javax.swing.JMenuItem; 
 import javax.swing.JPopupMenu; 
@@ -29,8 +30,8 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener; 
 import javax.swing.table.TableCellRenderer; 
 import mmcorej.CMMCore; 
-import org.jfree.chart.ChartPanel; 
-import org.micromanager.MMStudio; 
+import org.jfree.chart.ChartPanel;
+import org.micromanager.MMStudio;
 import org.micromanager.api.events.PropertyChangedEvent; 
 
 /**

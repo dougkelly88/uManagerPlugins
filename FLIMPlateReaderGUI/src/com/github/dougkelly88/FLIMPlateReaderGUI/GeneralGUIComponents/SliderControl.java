@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents;
+package com.github.dougkelly88.FLIMPlateReaderGUI.GeneralGUIComponents;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

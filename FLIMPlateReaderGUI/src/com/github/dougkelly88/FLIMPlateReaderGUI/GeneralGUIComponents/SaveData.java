@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents;
+package com.github.dougkelly88.FLIMPlateReaderGUI.GeneralGUIComponents;
 
-import com.github.dougkelly88.FLIMPlateReaderGUI.Classes.SeqAcqProps;
+import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.SeqAcqProps;
 import com.google.common.io.Files;
 import java.awt.Component;
 import java.io.BufferedInputStream;

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.github.dougkelly88.FLIMPlateReaderGUI.Classes;
+package com.github.dougkelly88.FLIMPlateReaderGUI.FLIMClasses.Classes;
 
 import static java.lang.Math.round;
 import java.util.ArrayList;
