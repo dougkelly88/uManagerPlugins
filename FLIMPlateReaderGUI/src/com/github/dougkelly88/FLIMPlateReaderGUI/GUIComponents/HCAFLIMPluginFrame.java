@@ -7,21 +7,31 @@
 package com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents;
 
 import com.github.dougkelly88.FLIMPlateReaderGUI.Classes.SeqAcqProps;
+import com.github.dougkelly88.FLIMPlateReaderGUI.Classes.VariableTest;
 import com.google.common.eventbus.Subscribe;
 import java.awt.Desktop;
+import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Image;
 import java.awt.Toolkit; 
 import java.awt.event.WindowAdapter; 
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.URL; 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon; 
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 import mmcorej.CMMCore; 
 import org.micromanager.MMStudio; 
 import org.micromanager.api.events.PropertyChangedEvent; 
+
 
 /**
  *
@@ -31,7 +41,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     CMMCore core_;
     static HCAFLIMPluginFrame frame_;
     private SeqAcqProps sap_;
-//    SequencedAcquisitionProperties sap_;
+    private VariableTest var_;
     
     @Subscribe
     public void onPropertyChanged(PropertyChangedEvent event)
@@ -43,7 +53,6 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
      * Creates new form HCAFLIMPluginFrame
      */
     public HCAFLIMPluginFrame(CMMCore core) {
-
         initComponents();
         ImageIcon icon = new ImageIcon(this.getClass().getResource("../Resources/GFPFishIcon.png"));
         this.setIconImage(icon.getImage());
@@ -65,6 +74,12 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         
         sap_ = SeqAcqProps.getInstance();
 
+        tsi_ = SeqAcqProps.getInstance();
+        var_ = VariableTest.getInstance();
+//        sap_ = new SequencedAcquisitionProperties.Builder().useScanFLIM(true).build();
+//        sap_.addPropertyChangeListener(null);
+//        fLIMPanel1.initSequencedAcquisitionProperties(sap_, frame_);
+//        fLIMPanel1.sap_ = sap_;
     }
 
     /**
@@ -83,13 +98,17 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         getObjective = new javax.swing.JButton();
         FLIMPanel = new javax.swing.JTabbedPane();
         fLIMPanel1 = new com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.FLIMPanel();
+        lightPathControls1 = new com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.LightPathControls();
+        saveData1 = new com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.SaveData();
         jMenuBar2 = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         quitMenu = new javax.swing.JMenuItem();
         toolsMenu = new javax.swing.JMenu();
+        SetBaseFolderMenu = new javax.swing.JMenuItem();
         advancedMenu = new javax.swing.JMenuItem();
         calibrationMenu = new javax.swing.JMenuItem();
         wizardMenu = new javax.swing.JMenuItem();
+        SaveMetadataMenu = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         FLIMHCAHelpMenu = new javax.swing.JMenuItem();
         aboutMenu = new javax.swing.JMenuItem();
@@ -117,6 +136,8 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         });
 
         FLIMPanel.addTab("FLIM panel", fLIMPanel1);
+        FLIMPanel.addTab("Light Path Control", lightPathControls1);
+        FLIMPanel.addTab("tab3", saveData1);
 
         fileMenu.setText("File");
 
@@ -128,6 +149,22 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
             }
         });
         fileMenu.add(quitMenu);
+
+        SetBaseFolderMenu.setText("Set Base Folder");
+        SetBaseFolderMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SetBaseFolderMenuActionPerformed(evt);
+            }
+        });
+        fileMenu.add(SetBaseFolderMenu);
+
+        SaveMetadataMenu.setText("Save Metadata");
+        SaveMetadataMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SaveMetadataMenuActionPerformed(evt);
+            }
+        });
+        fileMenu.add(SaveMetadataMenu);
 
         jMenuBar2.add(fileMenu);
 
@@ -237,6 +274,26 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_FLIMHCAHelpMenuActionPerformed
 
+    private void SetBaseFolderMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SetBaseFolderMenuActionPerformed
+        JFileChooser chooser = new JFileChooser();
+        chooser.setDialogTitle("Select target directory");
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        Component parentFrame = null;
+        int returnVal = chooser.showOpenDialog(parentFrame);
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+        File myFile = chooser.getSelectedFile();
+        } 
+        var_.basepath= chooser.getSelectedFile().getPath();
+        testText.setText("Selected base path: "+var_.basepath);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SetBaseFolderMenuActionPerformed
+
+    private void SaveMetadataMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveMetadataMenuActionPerformed
+        String ok;
+        ok=var_.saveMetadata();
+           // TODO add your handling code here:
+    }//GEN-LAST:event_SaveMetadataMenuActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -270,6 +327,8 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem FLIMHCAHelpMenu;
     private javax.swing.JTabbedPane FLIMPanel;
+    private javax.swing.JMenuItem SaveMetadataMenu;
+    private javax.swing.JMenuItem SetBaseFolderMenu;
     private javax.swing.JMenuItem aboutMenu;
     private javax.swing.JMenuItem advancedMenu;
     private javax.swing.JMenuItem calibrationMenu;
@@ -281,7 +340,9 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JScrollPane jScrollPane1;
+    private com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.LightPathControls lightPathControls1;
     private javax.swing.JMenuItem quitMenu;
+    private com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.SaveData saveData1;
     private javax.swing.JTextArea testText;
     private javax.swing.JMenu toolsMenu;
     private javax.swing.JMenuItem wizardMenu;
