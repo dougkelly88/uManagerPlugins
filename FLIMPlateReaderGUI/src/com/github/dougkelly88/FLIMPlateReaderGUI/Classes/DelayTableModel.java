@@ -158,7 +158,7 @@ public class DelayTableModel extends AbstractTableModel {
         incr_ = incr;
     }
     
-    private int validateData(int val){
+    public int validateData(int val){
 //        int out;
         
         if (val > max_)

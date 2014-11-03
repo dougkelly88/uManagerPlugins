@@ -44,6 +44,8 @@ public class FLIMPanel extends javax.swing.JPanel {
     PropertyChangedEvent event_;
     SliderControl mcpSlider_;
     SliderControl gatewidthSlider_;
+    SliderControl fastDelaySlider_;
+    SliderControl slowDelaySlider_;
     JTable delayTable_;
     DelayTableModel tableModel_;
     FindMaxpoint fm_;
@@ -474,14 +476,16 @@ public class FLIMPanel extends javax.swing.JPanel {
             .addGroup(fastDelayBoxPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(fastDelayBoxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(delaySeqPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(fastDelayBoxPanelLayout.createSequentialGroup()
+                        .addComponent(delaySeqPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(fastDelayBoxPanelLayout.createSequentialGroup()
                         .addComponent(fastBoxCalibratedCheck)
                         .addGap(18, 18, 18)
                         .addComponent(fastCurrentDelayPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(scanDelCheck)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(scanDelCheck)
+                        .addGap(20, 20, 20))))
         );
 
         delayBoxTabbedPane.addTab("Fast delay box", fastDelayBoxPanel);
@@ -513,11 +517,11 @@ public class FLIMPanel extends javax.swing.JPanel {
         slowDelayBoxPanelLayout.setVerticalGroup(
             slowDelayBoxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(slowDelayBoxPanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(11, 11, 11)
                 .addComponent(slowBoxCalibrated)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(slowCurrentDelayPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
 
         delayBoxTabbedPane.addTab("Slow delay box", slowDelayBoxPanel);
@@ -684,32 +688,6 @@ public class FLIMPanel extends javax.swing.JPanel {
     
     private void setControlDefaults(){
         
-        // Set up slider controls
-        mcpSlider_ = new SliderControl("MCP voltage (V)",300,850,750);
-        mcpVoltagePanel.setLayout(new BorderLayout());
-        mcpVoltagePanel.add(mcpSlider_, BorderLayout.SOUTH);
-        mcpSlider_.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-
-            @Override
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                mcpSliderPropertyChange(evt);
-            }
-        });
-        
-        gatewidthSlider_ = new SliderControl("Gate width (ps)", 200, 7000, 3000);
-        gatewidthPanel.setLayout(new BorderLayout());
-        gatewidthPanel.add(gatewidthSlider_, BorderLayout.SOUTH);
-        gatewidthSlider_.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-
-            @Override
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                gatewidthSliderPropertyChange(evt);
-            }
-        });
-        
-        HRIControlsPanel.revalidate();
-        HRIControlsPanel.repaint();
-        
         String[] colName = { "Delays (ps)" };
         int max = 16666;
         try{max = Integer.parseInt(core_.getProperty("Laser", "Frequency"));}
@@ -790,7 +768,59 @@ public class FLIMPanel extends javax.swing.JPanel {
             }
         });
          
+        // Set up slider controls
+        mcpSlider_ = new SliderControl("MCP voltage (V)",300,850,750);
+        mcpVoltagePanel.setLayout(new BorderLayout());
+        mcpVoltagePanel.add(mcpSlider_, BorderLayout.SOUTH);
+        mcpSlider_.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
 
+            @Override
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                mcpSliderPropertyChange(evt);
+            }
+        });
+        
+        gatewidthSlider_ = new SliderControl("Gate width (ps)", 200, 7000, 3000);
+        gatewidthPanel.setLayout(new BorderLayout());
+        gatewidthPanel.add(gatewidthSlider_, BorderLayout.SOUTH);
+        gatewidthSlider_.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                gatewidthSliderPropertyChange(evt);
+            }
+        });
+        
+        HRIControlsPanel.revalidate();
+        HRIControlsPanel.repaint();
+        
+        slowDelaySlider_ = new SliderControl("Current delay setting (ps)",0,20000,0);
+        slowCurrentDelayPanel.setLayout(new BorderLayout());
+        slowCurrentDelayPanel.add(slowDelaySlider_, BorderLayout.SOUTH);
+        slowDelaySlider_.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                slowDelaySlider_.setValue(tableModel_.validateData(slowDelaySlider_.getValue().intValue()));
+                slowDelaySliderPropertyChange(evt);
+            }
+        });
+        
+        fastDelaySlider_ = new SliderControl("Current delay setting (ps)",0,20000,0);
+        fastCurrentDelayPanel.setLayout(new BorderLayout());
+        fastCurrentDelayPanel.add(fastDelaySlider_, BorderLayout.SOUTH);
+        fastDelaySlider_.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                fastDelaySlider_.setValue(tableModel_.validateData(fastDelaySlider_.getValue().intValue()));
+                fastDelaySliderPropertyChange(evt);
+            }
+        });
+        
+        delayBoxTabbedPane.revalidate();
+        delayBoxTabbedPane.repaint();
+        
         fm_ = new FindMaxpoint();
         maxpointGraphPanel.setLayout(new BorderLayout());
         chartPanel_ = new ChartPanel(fm_.getChart());
@@ -818,7 +848,21 @@ public class FLIMPanel extends javax.swing.JPanel {
 
         FLIMTestText.setText("Gatewidth value = " + gatewidthSlider_.getValue());
         
-    }                                        
+    }        
+    
+    private void fastDelaySliderPropertyChange(java.beans.PropertyChangeEvent evt){
+    
+        FLIMTestText.setText("Fast delay value = " + fastDelaySlider_.getValue());
+        
+    }
+    
+     private void slowDelaySliderPropertyChange(java.beans.PropertyChangeEvent evt){
+    
+        FLIMTestText.setText("Slow delay value = " + slowDelaySlider_.getValue());
+        
+    }
+    
+    
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
