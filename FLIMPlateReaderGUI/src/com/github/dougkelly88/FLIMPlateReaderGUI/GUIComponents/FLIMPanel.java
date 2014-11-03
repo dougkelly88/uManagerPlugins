@@ -600,7 +600,7 @@ public class FLIMPanel extends javax.swing.JPanel {
 
         tableModel_.addWholeData(dv);
 
-        fm_.setGatingData((sap_.getDelaysArray()).get(0));
+//        fm_.setGatingData((sap_.getDelaysArray()).get(0));
         
     }//GEN-LAST:event_populateDelaysButtonActionPerformed
 
@@ -614,7 +614,7 @@ public class FLIMPanel extends javax.swing.JPanel {
 
     private void clearDelayButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearDelayButtonActionPerformed
         tableModel_.clearAllData();
-        fm_.setGatingData((sap_.getDelaysArray()).get(0));
+//        fm_.setGatingData((sap_.getDelaysArray()).get(0));
     }//GEN-LAST:event_clearDelayButtonActionPerformed
 
     private void scanDelCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scanDelCheckActionPerformed
@@ -744,7 +744,7 @@ public class FLIMPanel extends javax.swing.JPanel {
             public void actionPerformed(ActionEvent e) {
                 int r = delayTable_.getSelectedRow();
                 tableModel_.removeRow(r);
-                fm_.setGatingData((sap_.getDelaysArray()).get(0));
+//                fm_.setGatingData((sap_.getDelaysArray()).get(0));
             }            
         });
         JMenuItem addItem = new JMenuItem("Add delay");
@@ -754,7 +754,7 @@ public class FLIMPanel extends javax.swing.JPanel {
             public void actionPerformed(ActionEvent e) {
                 int r = delayTable_.getSelectedRow();
                 tableModel_.insertRow(r+1, 0);
-                fm_.setGatingData((sap_.getDelaysArray()).get(0));
+//                fm_.setGatingData((sap_.getDelaysArray()).get(0));
             }            
         });
         popupMenu.add(addItem);
