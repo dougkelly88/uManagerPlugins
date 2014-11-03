@@ -10,6 +10,16 @@
 <project name="FLIMPlateReaderGUI" default="default" basedir=".">
     <description>Builds, tests, and runs the project FLIMPlateReaderGUI.</description>
     <import file="nbproject/build-impl.xml"/>
+    
+    <!--machine specific
+    <target name="-post-jar">
+        <copy file="C:/Users/dk1109/repositories/uManagerPlugins/FLIMPlateReaderGUI/dist/FLIMPlateReaderGUI.jar" flatten="true" todir="C:/Program Files (x86)/Micro-Manager-1.4-32 20 Oct 2014 build/mmplugins/"/>
+    </target>
+     general -->
+    <target name="-post-jar">
+        <copy file="${dist.jar}" flatten="true" todir="C:/Program Files (x86)/Micro-Manager-1.4-32 20 Oct 2014 build/mmplugins/"/>
+    </target>
+    
     <!--
 
     There exist several targets which are by default empty and which can be 
@@ -66,9 +76,9 @@
 
 </target>
 
-<target name="-post-jar">
+<!--<target name="-post-jar">
         <copy file="${dist.jar}/" tofile="C:\\Program Files (x86)\\Micro-Manager-1.4-32 20 Oct 2014 build\\mmplugins}\\HCAFLIM.jar"/>
-    </target>
+    </target>-->
 
 
     <!--Another way to customize the build is by overriding existing main targets.
