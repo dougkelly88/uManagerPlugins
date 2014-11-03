@@ -195,6 +195,12 @@ public class DelayTableModel extends AbstractTableModel {
 //        this.addEmptyRow();
     }
     
+    public void clearAllData(){
+        data_.clear();
+        fireTableDataChanged();
+        sap_.setDelaysArray(0, data_);
+    }
+    
 //    public boolean hasEmptyRow() {
 //         if (data_.size() == 0) return false;
 //         Integer d = ((Integer) data_.get(data_.size() - 1));

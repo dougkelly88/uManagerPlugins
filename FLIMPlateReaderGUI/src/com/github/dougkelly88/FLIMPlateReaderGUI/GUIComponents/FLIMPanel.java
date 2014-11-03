@@ -612,7 +612,7 @@ public class FLIMPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_endFieldActionPerformed
 
     private void clearDelayButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearDelayButtonActionPerformed
-        //        delayTable.removeColumn(1);
+        tableModel_.clearAllData();
     }//GEN-LAST:event_clearDelayButtonActionPerformed
 
     private void scanDelCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scanDelCheckActionPerformed
