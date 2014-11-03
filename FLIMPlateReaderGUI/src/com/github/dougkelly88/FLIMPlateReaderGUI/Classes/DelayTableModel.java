@@ -8,123 +8,14 @@ package com.github.dougkelly88.FLIMPlateReaderGUI.Classes;
 
 import static java.lang.Math.round;
 import java.util.ArrayList;
-import java.util.List;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 
-//
-///**
-// *
-// * @author dk1109
-// */
-//public class DelayTableModel extends AbstractTableModel {
-//
-//    public String[] colNames_ = { "Delays (ps)" };
-//    public Class[] colTypes = { Integer.class };
-//    Vector delays_;
-//   
-//    public static final int DELAY_INDEX = 0;
-//
-//    public DelayTableModel(String[] columnNames) {
-//         this.colNames_ = columnNames;
-//         delays_ = new Vector();
-//     }
-//    public int getColumnCount() {
-//      return colNames_.length;
-//    }
-//    public int getRowCount() {
-//      return delays_.size();
-//    }
-//     public void setValueAt(Object value, int row, int column) {
-//         Data data_ = (Data)delays_.get(row);
-//         switch (column) {
-//             case DELAY_INDEX:
-//                data_.setDelay((Integer)value);
-//                break;
-////             case ARTIST_INDEX:
-////                data_.setDelayrtist((String)value);
-////                break;
-////             case ALBUM_INDEX:
-////                data_.setDelaylbum((String)value);
-////                break;
-//             default:
-//                System.out.println("invalid index");
-//         }
-//         fireTableCellUpdated(row, column);
-//     }
-//
-//    public String getColumnName(int col) {
-//      return colNames_[col];
-//    }
-//
-//    public Class getColumnClass(int col) {
-//      return colTypes[col];
-//    }
-//    public Object getValueAt(int row, int col) {
-//      Data macData = (Data) (delays_.elementAt(row));
-//
-//      switch (col) {
-//      case 0:
-//        return macData.getDelay();
-//
-//      }
-//
-//      return new String();
-//    }
-//    
-//    public boolean hasEmptyRow() {
-//         if (delays_.size() == 0) return false;
-//         Data data_ = (Data)delays_.get(delays_.size() - 1);
-//         if (data_.getDelay().equals(""))
-//            return true;
-//         
-//         else return false;
-//     }
-//
-//     public void addEmptyRow() {
-//         delays_.add(new Data());
-//         fireTableRowsInserted(
-//            delays_.size() - 1,
-//            delays_.size() - 1);
-//     }
-//     
-//     public void populateFromVector(Vector delayArray){
-//        delays_ = (Vector) delayArray;
-//        int row = delayArray.size();
-//        int column = 0;
-//        fireTableCellUpdated(row, column);
-////        for (int i = 0; i < delayArray.size(); i++)
-////        {
-////            
-////        }
-//     }
-//  }
-//
-//
-//
-//class Data {
-//  private Integer a;
-//
-//  public Data() {
-//  }
-//
-//  public Data(Integer aa) {
-//    a = aa;
-//
-//  }
-//
-//  public Integer getDelay() {
-//    return a;
-//  }
-//
-//  public void setDelay(Integer aa) {
-//    a = aa;
-//  }
-//
-//}
-//
-//
+
+/**
+ *
+ * @author dk1109
+ */
+
 public class DelayTableModel extends AbstractTableModel {
     private ArrayList<Integer> data_ = new ArrayList<Integer>();
     private String[] colNames_ = { "Delays (ps)" };
@@ -213,22 +104,7 @@ public class DelayTableModel extends AbstractTableModel {
         sap_.setDelaysArray(0, data_);
     }
     
-//    public boolean hasEmptyRow() {
-//         if (data_.size() == 0) return false;
-//         Integer d = ((Integer) data_.get(data_.size() - 1));
-//         if (d.equals(null))
-//            return true;
-//         
-//         else return false;
-//     }
-//    
-//    public void addEmptyRow() {
-//         data_.add(null);
-//         fireTableRowsInserted(
-//            data_.size() - 1,
-//            data_.size() - 1);
-//     }
-    
+   
     @Override
     public boolean isCellEditable(int row, int col){
         return true;
@@ -285,19 +161,6 @@ public class DelayTableModel extends AbstractTableModel {
         return val;
     }
 
-//    public class DelayTableModelListener implements TableModelListener {
-//        @Override 
-//        public void tableChanged(TableModelEvent evt) {
-//             if (evt.getType() == TableModelEvent.UPDATE) {
-//                 int column = evt.getColumn();
-//                 int row = evt.getFirstRow();
-//                 System.out.println("row: " + row + " column: " + column);
-//                 sap_ = SeqAcqProps.getInstance().setDelaysArray(0, data_);
-//             }
-//         }
-//
-//        
-//     }
 
 }
 
