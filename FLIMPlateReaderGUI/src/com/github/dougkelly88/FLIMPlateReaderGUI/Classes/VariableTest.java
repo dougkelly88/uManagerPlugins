@@ -67,7 +67,7 @@ public StrVector convertComboBoxtoStrVector(){
         writer.println("Dichroic: "+DichroicComboBoxSelectedItem);
         writer.close();
         }
-        String ok=DichroicComboBox.get(DichState);
+        String ok="OK!";
         return ok;
   }
 }

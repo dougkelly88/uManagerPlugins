@@ -98,6 +98,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         FLIMPanel = new javax.swing.JTabbedPane();
         fLIMPanel1 = new com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.FLIMPanel();
         lightPathControls1 = new com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.LightPathControls();
+        saveData1 = new com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.SaveData();
         jMenuBar2 = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         quitMenu = new javax.swing.JMenuItem();
@@ -131,6 +132,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
 
         FLIMPanel.addTab("FLIM instruments", fLIMPanel1);
         FLIMPanel.addTab("Light Path Control", lightPathControls1);
+        FLIMPanel.addTab("tab3", saveData1);
 
         fileMenu.setText("File");
 
@@ -307,6 +309,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.LightPathControls lightPathControls1;
     private javax.swing.JMenuItem quitMenu;
+    private com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.SaveData saveData1;
     private javax.swing.JTextArea testText;
     // End of variables declaration//GEN-END:variables
 

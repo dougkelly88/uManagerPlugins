@@ -39,6 +39,7 @@ public class LightPathControls extends javax.swing.JPanel {
         initComponents();
         gui_ = MMStudio.getInstance();
         sap_ = SeqAcqProps.getInstance();
+        var_ = VariableTest.getInstance();
         try{
         gui_.registerForEvents(this);
         core_ = gui_.getCore();
@@ -63,7 +64,8 @@ public class LightPathControls extends javax.swing.JPanel {
         TestButton = new javax.swing.JButton();
         TestField = new javax.swing.JTextField();
         LaserON = new javax.swing.JToggleButton();
-        LoadConfigButton = new javax.swing.JButton();
+        LoadHardwareConfigButton = new javax.swing.JButton();
+        TestField2 = new javax.swing.JTextField();
         Filters = new javax.swing.JPanel();
         NDFWComboBox = new javax.swing.JComboBox();
         ExcitationComboBox = new javax.swing.JComboBox();
@@ -97,10 +99,10 @@ public class LightPathControls extends javax.swing.JPanel {
             }
         });
 
-        LoadConfigButton.setText("LoadConfig");
-        LoadConfigButton.addActionListener(new java.awt.event.ActionListener() {
+        LoadHardwareConfigButton.setText("LoadHardwareConfig");
+        LoadHardwareConfigButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LoadConfigButtonActionPerformed(evt);
+                LoadHardwareConfigButtonActionPerformed(evt);
             }
         });
 
@@ -111,14 +113,17 @@ public class LightPathControls extends javax.swing.JPanel {
             .addGroup(GeneralLayout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addComponent(LaserON, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(GeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(TestField, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(GeneralLayout.createSequentialGroup()
+                        .addComponent(TestField, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(TestField2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(GeneralLayout.createSequentialGroup()
                         .addComponent(TestButton, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
-                        .addComponent(LoadConfigButton)))
-                .addGap(179, 179, 179))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(LoadHardwareConfigButton)))
+                .addGap(201, 201, 201))
         );
         GeneralLayout.setVerticalGroup(
             GeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,9 +133,11 @@ public class LightPathControls extends javax.swing.JPanel {
                         .addGap(2, 2, 2)
                         .addGroup(GeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(TestButton)
-                            .addComponent(LoadConfigButton))
+                            .addComponent(LoadHardwareConfigButton))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(TestField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(GeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(TestField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TestField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(GeneralLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(LaserON, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -301,7 +308,7 @@ public class LightPathControls extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void TestButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TestButtonActionPerformed
-       try {
+      /* try {
            TestField.setText(core_.getProperty("Dichroic", "Label"));
            
            //Write Dichroic Label ComboBox
@@ -309,10 +316,19 @@ public class LightPathControls extends javax.swing.JPanel {
            // TODO add your handling code here:
        } catch (Exception ex) {
            Logger.getLogger(LightPathControls.class.getName()).log(Level.SEVERE, null, ex);
-       }
+       }*/ 
+              
+        
+       
+        //var_.DichroicComboBoxSelectedItem=(String)DichroicComboBox.getSelectedItem();
+        TestField.setText("Item: "+(String) DichroicComboBox.getSelectedItem());
+        //var_.tet1=(String) DichroicComboBox.getSelectedItem();
+        TestField2.setText("Item: "+var_.tet1);
+
+        
     }//GEN-LAST:event_TestButtonActionPerformed
 
-    private void LoadConfigButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoadConfigButtonActionPerformed
+    private void LoadHardwareConfigButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoadHardwareConfigButtonActionPerformed
 //Intensity (NDFW) Load
         // Read allowed values for Label
         StrVector NDFWBox = null;
@@ -419,7 +435,7 @@ public class LightPathControls extends javax.swing.JPanel {
         }        
                         
                 // TODO add your handling code here:
-    }//GEN-LAST:event_LoadConfigButtonActionPerformed
+    }//GEN-LAST:event_LoadHardwareConfigButtonActionPerformed
 
     private void LaserONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LaserONActionPerformed
 
@@ -443,21 +459,15 @@ public class LightPathControls extends javax.swing.JPanel {
     }//GEN-LAST:event_LaserONActionPerformed
 
     private void DichroicComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DichroicComboBoxActionPerformed
-        int DichState= DichroicComboBox.getSelectedIndex();
-        var_.DichState=DichState;
-        
-        
-        
-        var_.DichroicComboBoxSelectedItem=(String)DichroicComboBox.getSelectedItem();
-        
-        
-        
+        int DichState= DichroicComboBox.getSelectedIndex(); 
         try {
             core_.setProperty("CSUX-Dichroic Mirror", "State", DichState);
         } catch (Exception ex) {
             Logger.getLogger(LightPathControls.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        TestField.setText("Item: "+(String) DichroicComboBox.getSelectedItem());
+        var_.DichroicComboBoxSelectedItem=(String)DichroicComboBox.getSelectedItem();
+        TestField2.setText("Item: "+var_.DichroicComboBoxSelectedItem);
         // TODO add your handling code here:
     }//GEN-LAST:event_DichroicComboBoxActionPerformed
 
@@ -529,7 +539,7 @@ public class LightPathControls extends javax.swing.JPanel {
     private javax.swing.JPanel Filters;
     private javax.swing.JPanel General;
     private javax.swing.JToggleButton LaserON;
-    private javax.swing.JButton LoadConfigButton;
+    private javax.swing.JButton LoadHardwareConfigButton;
     private javax.swing.JComboBox NDFWComboBox;
     private javax.swing.JComboBox ObjectiveComboBox;
     private javax.swing.JLabel ObjectiveLabel;
@@ -537,6 +547,7 @@ public class LightPathControls extends javax.swing.JPanel {
     private javax.swing.JComboBox SwitchPortComboBox;
     private javax.swing.JButton TestButton;
     private javax.swing.JTextField TestField;
+    private javax.swing.JTextField TestField2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
