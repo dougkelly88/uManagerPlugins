@@ -22,7 +22,7 @@ public class DelayTableModel extends AbstractTableModel {
     private int max_ = 16666;
     private int min_ = 0;
     private int incr_ = 25;
-    private SeqAcqProps sap_;
+//    private SeqAcqProps sap_;
     
     public DelayTableModel(){}
     
@@ -37,7 +37,7 @@ public class DelayTableModel extends AbstractTableModel {
         }
         this.data_ = delays;
         fireTableDataChanged();
-        sap_ = SeqAcqProps.getInstance().setDelaysArray(0, delays);
+//        sap_ = SeqAcqProps.getInstance().setDelaysArray(0, delays);
     }
     
     public DelayTableModel(String[] columnNames, ArrayList<Integer> delays, int min, int max, int incr){
@@ -50,7 +50,7 @@ public class DelayTableModel extends AbstractTableModel {
         }
         this.data_ = delays;
         fireTableDataChanged();
-        sap_ = SeqAcqProps.getInstance().setDelaysArray(0, delays);
+//        sap_ = SeqAcqProps.getInstance().setDelaysArray(0, delays);
     }
  
     @Override
@@ -70,38 +70,42 @@ public class DelayTableModel extends AbstractTableModel {
     public int getRowCount() {
         return data_.size();
     }
+    
+    public ArrayList<Integer> getData(){
+        return data_;
+    }
  
     public void addRow(Integer rowData) {
         int row = data_.size();
         data_.add(rowData);
         fireTableRowsInserted(row, row);
-        sap_.setDelaysArray(0, data_);
+//        sap_.setDelaysArray(0, data_);
     }
     
     public void insertRow(int index, Integer rowData){
         data_.add(index, rowData);
         fireTableRowsInserted(data_.size() - 1, data_.size() - 1);
-        sap_.setDelaysArray(0, data_);
+//        sap_.setDelaysArray(0, data_);
     }
     
     public void removeRow(int row) {
         data_.remove(row);
         fireTableRowsDeleted(row, row);
-        sap_.setDelaysArray(0, data_);
+//        sap_.setDelaysArray(0, data_);
     }
     
     public void addWholeData(ArrayList<Integer> data){
         data_.clear();
         data_.addAll(data);
         fireTableDataChanged();
-        sap_.setDelaysArray(0, data_);
+//        sap_.setDelaysArray(0, data_);
 //        this.addEmptyRow();
     }
     
     public void clearAllData(){
         data_.clear();
         fireTableDataChanged();
-        sap_.setDelaysArray(0, data_);
+//        sap_.setDelaysArray(0, data_);
     }
     
    
@@ -131,7 +135,7 @@ public class DelayTableModel extends AbstractTableModel {
         
         fireTableCellUpdated(row, col);
         
-        sap_.setDelaysArray(0, data_);
+//        sap_.setDelaysArray(0, data_);
 //        if (!this.hasEmptyRow())
 //        {
 //            this.addEmptyRow();
