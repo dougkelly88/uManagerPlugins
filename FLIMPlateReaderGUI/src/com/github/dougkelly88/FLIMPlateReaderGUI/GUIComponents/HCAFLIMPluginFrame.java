@@ -8,6 +8,7 @@ package com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents;
 
 import com.github.dougkelly88.FLIMPlateReaderGUI.Classes.SeqAcqProps;
 import com.google.common.eventbus.Subscribe;
+import java.awt.Desktop;
 import java.awt.Dialog;
 import java.awt.Image;
 import java.awt.Toolkit; 
@@ -88,6 +89,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         toolsMenu = new javax.swing.JMenu();
         advancedMenu = new javax.swing.JMenuItem();
         calibrationMenu = new javax.swing.JMenuItem();
+        wizardMenu = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         FLIMHCAHelpMenu = new javax.swing.JMenuItem();
         aboutMenu = new javax.swing.JMenuItem();
@@ -137,12 +139,20 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         calibrationMenu.setText("Calibration...");
         toolsMenu.add(calibrationMenu);
 
+        wizardMenu.setText("FLIMWizard...");
+        toolsMenu.add(wizardMenu);
+
         jMenuBar2.add(toolsMenu);
 
         helpMenu.setText("Help");
 
         FLIMHCAHelpMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
         FLIMHCAHelpMenu.setText("Help");
+        FLIMHCAHelpMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FLIMHCAHelpMenuActionPerformed(evt);
+            }
+        });
         helpMenu.add(FLIMHCAHelpMenu);
 
         aboutMenu.setText("About");
@@ -180,7 +190,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(360, Short.MAX_VALUE)
+                .addContainerGap(391, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
@@ -218,6 +228,14 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     private void quitMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitMenuActionPerformed
         confirmQuit();
     }//GEN-LAST:event_quitMenuActionPerformed
+
+    private void FLIMHCAHelpMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FLIMHCAHelpMenuActionPerformed
+        try {
+            Desktop.getDesktop().browse(new URL("https://github.com/dougkelly88/uManagerPlugins/wiki").toURI());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_FLIMHCAHelpMenuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -266,6 +284,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem quitMenu;
     private javax.swing.JTextArea testText;
     private javax.swing.JMenu toolsMenu;
+    private javax.swing.JMenuItem wizardMenu;
     // End of variables declaration//GEN-END:variables
 
     private void confirmQuit(){
