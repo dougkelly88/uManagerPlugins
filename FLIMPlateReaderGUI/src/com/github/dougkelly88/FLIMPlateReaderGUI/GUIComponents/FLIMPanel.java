@@ -15,12 +15,19 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import static java.lang.Math.round;
 import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.JButton;
 import javax.swing.JLabel; 
+import javax.swing.JMenuItem; 
+import javax.swing.JOptionPane; 
+import javax.swing.JPopupMenu; 
 import javax.swing.JScrollPane; 
 import javax.swing.JTable; 
 import javax.swing.JTextField; 
@@ -720,11 +727,10 @@ public class FLIMPanel extends javax.swing.JPanel {
                         
                         return comp;
                     }
-                
-                    
          };
          delayTable_.setModel(tableModel_);
          delayTable_.setSurrendersFocusOnKeystroke(true);
+         
 //         if (!tableModel_.hasEmptyRow()) {
 //             tableModel_.addEmptyRow();
 //         }
@@ -734,6 +740,48 @@ public class FLIMPanel extends javax.swing.JPanel {
          delayTablePanel.setLayout(new BorderLayout());
          delayTablePanel.add(scroller, BorderLayout.CENTER);
         
+        final JPopupMenu popupMenu = new JPopupMenu();
+        JMenuItem deleteItem = new JMenuItem("Delete delay");
+        deleteItem.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String s = e.paramString();
+            }            
+        });
+        JMenuItem addItem = new JMenuItem("Add delay");
+        addItem.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String s = e.paramString();
+            }            
+        });
+        popupMenu.add(addItem);
+        popupMenu.add(deleteItem);
+//        delayTable_.setComponentPopupMenu(popupMenu);
+        delayTable_.addMouseListener( new MouseAdapter()
+        {
+            public void mousePressed(MouseEvent e)
+            {
+                System.out.println("pressed");
+            }
+
+            public void mouseReleased(MouseEvent e)
+            {
+                if (e.isPopupTrigger())
+                {
+                    JTable source = (JTable)e.getSource();
+                    int row = source.rowAtPoint( e.getPoint() );
+                    int column = source.columnAtPoint( e.getPoint() );
+
+                    if (! source.isRowSelected(row))
+                        source.changeSelection(row, column, false, false);
+
+                    popupMenu.show(e.getComponent(), e.getX(), e.getY());
+                }
+            }
+        });
          
 //
 //        fm_ = new FindMaxpoint();
