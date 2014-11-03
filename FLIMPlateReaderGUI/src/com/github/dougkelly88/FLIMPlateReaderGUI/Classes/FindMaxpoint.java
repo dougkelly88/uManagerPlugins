@@ -59,8 +59,8 @@ public class FindMaxpoint {
     private XYDataset createDummyMaxpointData(int offset){
         
         final XYSeries s1 = new XYSeries("DummyMaxpoint");
-        for (int i = 0; i < 16666; i++){
-        s1.add(1000*i, 0 + offset);
+        for (int i = 0; i < 16666; i = i+1000){
+        s1.add(i, 0 + offset);
         }
         
         final XYSeriesCollection dataset = new XYSeriesCollection();
@@ -76,7 +76,7 @@ public class FindMaxpoint {
      * 
      * @return a chart.
      */
-    private JFreeChart createChart() {
+    public JFreeChart createChart() {
         
         //http://www.java2s.com/Code/Java/Chart/JFreeChartDualAxisDemo2.htm
         String xlabel = "Delay (ps)";

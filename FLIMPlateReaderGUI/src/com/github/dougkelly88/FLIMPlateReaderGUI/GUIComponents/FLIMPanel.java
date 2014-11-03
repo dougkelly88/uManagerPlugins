@@ -25,6 +25,8 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane; 
 import javax.swing.JTable; 
 import javax.swing.JTextField; 
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener; 
 import javax.swing.table.TableCellRenderer; 
 import mmcorej.CMMCore; 
 import org.jfree.chart.ChartPanel; 
@@ -198,6 +200,8 @@ public class FLIMPanel extends javax.swing.JPanel {
 
         maxpointGraphPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         maxpointGraphPanel.setMaximumSize(new java.awt.Dimension(630, 204));
+        maxpointGraphPanel.setMinimumSize(new java.awt.Dimension(500, 100));
+        maxpointGraphPanel.setPreferredSize(new java.awt.Dimension(579, 204));
 
         javax.swing.GroupLayout maxpointGraphPanelLayout = new javax.swing.GroupLayout(maxpointGraphPanel);
         maxpointGraphPanel.setLayout(maxpointGraphPanelLayout);
@@ -258,9 +262,9 @@ public class FLIMPanel extends javax.swing.JPanel {
         FLIMToolsPanel.setLayout(FLIMToolsPanelLayout);
         FLIMToolsPanelLayout.setHorizontalGroup(
             FLIMToolsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FLIMToolsPanelLayout.createSequentialGroup()
+            .addGroup(FLIMToolsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(FLIMToolsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(FLIMToolsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(maxpointGraphPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(FLIMToolsPanelLayout.createSequentialGroup()
                         .addComponent(maxpointPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -558,6 +562,8 @@ public class FLIMPanel extends javax.swing.JPanel {
         maxpointGraphPanel.add(chartPanel_, BorderLayout.CENTER);
         chartPanel_.setMaximumDrawWidth(maxpointGraphPanel.getWidth());  
         chartPanel_.setPreferredSize(new Dimension(maxpointGraphPanel.getWidth(),maxpointGraphPanel.getHeight()));
+        int h = maxpointGraphPanel.getHeight();
+        int w = maxpointGraphPanel.getWidth();
         maxpointGraphPanel.validate();
         maxpointGraphPanel.repaint();
 //        fm_.setGatingData((sap_.getDelaysArray()).get(0));
@@ -594,7 +600,7 @@ public class FLIMPanel extends javax.swing.JPanel {
 
         tableModel_.addWholeData(dv);
 
-//        fm_.setGatingData((sap_.getDelaysArray()).get(0));
+        fm_.setGatingData((sap_.getDelaysArray()).get(0));
         
     }//GEN-LAST:event_populateDelaysButtonActionPerformed
 
@@ -608,6 +614,7 @@ public class FLIMPanel extends javax.swing.JPanel {
 
     private void clearDelayButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearDelayButtonActionPerformed
         tableModel_.clearAllData();
+        fm_.setGatingData((sap_.getDelaysArray()).get(0));
     }//GEN-LAST:event_clearDelayButtonActionPerformed
 
     private void scanDelCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scanDelCheckActionPerformed
@@ -700,6 +707,12 @@ public class FLIMPanel extends javax.swing.JPanel {
         catch (Exception e){}
 
         tableModel_ = new DelayTableModel(colName, (sap_.getDelaysArray()).get(0), 0, max, 25);
+        tableModel_.addTableModelListener(new TableModelListener() {
+           @Override
+            public void tableChanged(TableModelEvent e) {
+                fm_.setGatingData((sap_.getDelaysArray()).get(0));
+            }
+        });
          delayTable_ = new JTable(){
              @Override
                     public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
@@ -715,6 +728,7 @@ public class FLIMPanel extends javax.swing.JPanel {
          };
          delayTable_.setModel(tableModel_);
          delayTable_.setSurrendersFocusOnKeystroke(true);
+         delayTable_.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
          
 
          JScrollPane scroller = new javax.swing.JScrollPane(delayTable_);
@@ -730,6 +744,7 @@ public class FLIMPanel extends javax.swing.JPanel {
             public void actionPerformed(ActionEvent e) {
                 int r = delayTable_.getSelectedRow();
                 tableModel_.removeRow(r);
+                fm_.setGatingData((sap_.getDelaysArray()).get(0));
             }            
         });
         JMenuItem addItem = new JMenuItem("Add delay");
@@ -739,6 +754,7 @@ public class FLIMPanel extends javax.swing.JPanel {
             public void actionPerformed(ActionEvent e) {
                 int r = delayTable_.getSelectedRow();
                 tableModel_.insertRow(r+1, 0);
+                fm_.setGatingData((sap_.getDelaysArray()).get(0));
             }            
         });
         popupMenu.add(addItem);
@@ -766,16 +782,17 @@ public class FLIMPanel extends javax.swing.JPanel {
             }
         });
          
-//
-//        fm_ = new FindMaxpoint();
-//        chartPanel_ = new ChartPanel(fm_.getChart());
-//        chartPanel_.setLayout(new BorderLayout());
-//        maxpointGraphPanel.setLayout(new BorderLayout());
-//        maxpointGraphPanel.add(chartPanel_, BorderLayout.CENTER);
-//        chartPanel_.setMaximumDrawWidth(maxpointGraphPanel.getWidth());  
-//        chartPanel_.setPreferredSize(new Dimension(maxpointGraphPanel.getWidth(),maxpointGraphPanel.getHeight()));
-//        maxpointGraphPanel.validate();
-//        maxpointGraphPanel.repaint();
+
+        fm_ = new FindMaxpoint();
+        maxpointGraphPanel.setLayout(new BorderLayout());
+        chartPanel_ = new ChartPanel(fm_.getChart());
+        maxpointGraphPanel.add(chartPanel_, BorderLayout.NORTH);
+        // for some reason maxpointGraphPanel's height and width are returned 0
+        // so hardcode for now...
+        chartPanel_.setMaximumDrawWidth(500);
+        chartPanel_.setMaximumDrawHeight(200);
+        chartPanel_.setPreferredSize(new Dimension(500,200));
+     
         
         // Set values for other controls based on underlying data to ensure
         // that all controls are in a consistent state. 

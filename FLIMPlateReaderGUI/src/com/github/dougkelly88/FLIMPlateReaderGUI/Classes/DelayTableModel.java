@@ -130,6 +130,7 @@ public class DelayTableModel extends AbstractTableModel {
         }
         
         fireTableCellUpdated(row, col);
+        
         sap_.setDelaysArray(0, data_);
 //        if (!this.hasEmptyRow())
 //        {
