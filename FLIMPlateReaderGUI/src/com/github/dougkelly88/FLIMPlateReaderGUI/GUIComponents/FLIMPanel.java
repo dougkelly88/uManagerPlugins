@@ -746,7 +746,8 @@ public class FLIMPanel extends javax.swing.JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                String s = e.paramString();
+                int r = delayTable_.getSelectedRow();
+                tableModel_.removeRow(r);
             }            
         });
         JMenuItem addItem = new JMenuItem("Add delay");
@@ -754,7 +755,8 @@ public class FLIMPanel extends javax.swing.JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                String s = e.paramString();
+                int r = delayTable_.getSelectedRow();
+                tableModel_.insertRow(r+1, 0);
             }            
         });
         popupMenu.add(addItem);
@@ -764,7 +766,7 @@ public class FLIMPanel extends javax.swing.JPanel {
         {
             public void mousePressed(MouseEvent e)
             {
-                System.out.println("pressed");
+//                System.out.println("pressed");
             }
 
             public void mouseReleased(MouseEvent e)

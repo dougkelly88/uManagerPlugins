@@ -187,6 +187,18 @@ public class DelayTableModel extends AbstractTableModel {
         sap_.setDelaysArray(0, data_);
     }
     
+    public void insertRow(int index, Integer rowData){
+        data_.add(index, rowData);
+        fireTableRowsInserted(data_.size() - 1, data_.size() - 1);
+        sap_.setDelaysArray(0, data_);
+    }
+    
+    public void removeRow(int row) {
+        data_.remove(row);
+        fireTableRowsDeleted(row, row);
+        sap_.setDelaysArray(0, data_);
+    }
+    
     public void addWholeData(ArrayList<Integer> data){
         data_.clear();
         data_.addAll(data);
