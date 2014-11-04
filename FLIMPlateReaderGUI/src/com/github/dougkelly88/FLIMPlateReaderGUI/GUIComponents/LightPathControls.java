@@ -530,6 +530,10 @@ public class LightPathControls extends javax.swing.JPanel {
         }        // TODO add your handling code here:
     }//GEN-LAST:event_SwitchPortComboBoxActionPerformed
 
+    
+    public void setLoadedValues(int obj){
+        DichroicComboBox.setSelectedIndex(obj);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox DichroicComboBox;

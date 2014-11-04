@@ -29,6 +29,7 @@ import org.micromanager.MMStudio;
 import org.micromanager.api.events.PropertyChangedEvent;
 import java.util.Arrays;
 import java.util.Scanner;
+import com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.LightPathControls;
 
 /**
  *
@@ -212,6 +213,8 @@ public class SaveData extends javax.swing.JPanel {
         }
         String Property="Dichroic";
         SavedDataField.setText(var_.findLabelOfProperty(entireFileText, Property));
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
