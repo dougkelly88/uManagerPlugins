@@ -224,7 +224,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 
-            
+       
     private void getDichroicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getDichroicActionPerformed
         testText.setText("Getting acq params scan, results = " + ( tsi_.getUseScanFLIM()? "true":"false" ) );
     }//GEN-LAST:event_getDichroicActionPerformed
@@ -242,7 +242,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     private void quitMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitMenuActionPerformed
         confirmQuit();
     }//GEN-LAST:event_quitMenuActionPerformed
-
+    public String basepath; 
     private void SetBaseFolderMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SetBaseFolderMenuActionPerformed
         JFileChooser chooser = new JFileChooser();
         chooser.setDialogTitle("Select target directory");
@@ -252,14 +252,13 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         if(returnVal == JFileChooser.APPROVE_OPTION) {
         File myFile = chooser.getSelectedFile();
         } 
-        var_.basepath= chooser.getSelectedFile().getPath();
-        testText.setText("Selected base path: "+var_.basepath);
+        basepath= chooser.getSelectedFile().getPath();
+        testText.setText("Selected base path: "+basepath);
         // TODO add your handling code here:
     }//GEN-LAST:event_SetBaseFolderMenuActionPerformed
 
     private void SaveMetadataMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveMetadataMenuActionPerformed
-        String ok;
-        ok=var_.saveMetadata();
+        var_.saveMetadata(basepath);
            // TODO add your handling code here:
     }//GEN-LAST:event_SaveMetadataMenuActionPerformed
 
