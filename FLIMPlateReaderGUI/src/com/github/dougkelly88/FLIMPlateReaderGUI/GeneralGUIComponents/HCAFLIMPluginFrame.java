@@ -8,6 +8,7 @@ package com.github.dougkelly88.FLIMPlateReaderGUI.GeneralGUIComponents;
 
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.SeqAcqProps;
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.VariableTest;
+import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.PlateProperties;
 import com.google.common.eventbus.Subscribe;
 import java.awt.Desktop;
 import java.awt.Component;
@@ -42,6 +43,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     static HCAFLIMPluginFrame frame_;
     private SeqAcqProps sap_;
     private VariableTest var_;
+    private PlateProperties pp_;
     
     @Subscribe
     public void onPropertyChanged(PropertyChangedEvent event)
@@ -73,6 +75,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         });
         
         sap_ = SeqAcqProps.getInstance();
+        pp_ = new PlateProperties();
 
 //        tsi_ = SeqAcqProps.getInstance();
         var_ = VariableTest.getInstance();
@@ -210,7 +213,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
 
         fileMenu.setText("File");
 
-        loadPlateConfigMenu.setText("Load plate config...");
+        loadPlateConfigMenu.setText("Load plate properties...");
         loadPlateConfigMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loadPlateConfigMenuActionPerformed(evt);
@@ -364,6 +367,8 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
 
     private void loadPlateConfigMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadPlateConfigMenuActionPerformed
         xYZPanel1.onPlateConfigLoaded(true);
+        pp_ = pp_.loadProperties("dummy");
+        
     }//GEN-LAST:event_loadPlateConfigMenuActionPerformed
 
     /**

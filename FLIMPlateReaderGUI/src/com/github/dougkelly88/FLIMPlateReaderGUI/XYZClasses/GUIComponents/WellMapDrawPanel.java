@@ -11,6 +11,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
@@ -20,8 +22,7 @@ import javax.swing.JPanel;
  *
  * @author dk1109
  */
-public 
-    class WellMapDrawPanel extends JPanel {
+public class WellMapDrawPanel extends JPanel {
 
         int currentX_ = 128;    
         int currentY_ = 128;    
@@ -29,7 +30,7 @@ public
         int currentFOVh_ = 16;
         int r_ = 127;
         String currentWell_ = "C4";
-        String welltype = "circle";
+        String welltype = "Round";
         double wellSizeUm = 9000;
         double conversionFactor_ = wellSizeUm/r_;
         boolean enabled_ = false;   // start up disabled, enable upon loading plate stuff. 
@@ -38,7 +39,7 @@ public
             // set a preferred size for the custom panel.
             setPreferredSize(new Dimension(255,255));
             
-            this.setEnabled(false);     
+//            this.setEnabled(false);     
             addMouseListener(new MouseAdapter() {
                 
                 @Override
@@ -52,7 +53,7 @@ public
                         boolean inBounds = false;
                         Point p = e.getPoint();
                         // check if point is within bounds of well...
-                        if (welltype == "circle"){
+                        if (welltype == "Round"){
                             inBounds = ( Math.pow((p.x + currentFOVw_/2 - r_),2) +
                                     Math.pow((p.y + currentFOVh_/2 - r_),2) < r_*r_ );
                         }
@@ -95,7 +96,9 @@ public
             g.setColor(Color.RED);
             g.drawRect((currentX_-currentFOVw_/2), (currentY_-currentFOVh_/2), 
                     currentFOVw_, currentFOVh_);
-            
+        
+            g.setColor(Color.GREEN);
+            // draw saved FOVs
             
         }
         
@@ -135,5 +138,19 @@ public
         public boolean isEnabled(){
             return enabled_;
         }
+        
+//        public class PlateActionListener implements ActionListener{
+//            int cx;
+//
+//            public PlateActionListener(int cx){
+//                currentX_ = cx;
+//            }
+//            
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                currentX_ = this.cx;
+//            }
+//        
+//        }
     }
 

@@ -11,7 +11,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="loadPlateConfigMenu">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Load plate config..."/>
+                <Property name="text" type="java.lang.String" value="Load plate properties..."/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="loadPlateConfigMenuActionPerformed"/>
