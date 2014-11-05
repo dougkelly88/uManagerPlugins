@@ -62,8 +62,6 @@ public class LightPathControls extends javax.swing.JPanel {
 
         General = new javax.swing.JPanel();
         LaserON = new javax.swing.JToggleButton();
-        LoadHardwareConfigButton = new javax.swing.JButton();
-        TestField2 = new javax.swing.JTextField();
         Filters = new javax.swing.JPanel();
         NDFWComboBox = new javax.swing.JComboBox();
         ExcitationComboBox = new javax.swing.JComboBox();
@@ -90,13 +88,6 @@ public class LightPathControls extends javax.swing.JPanel {
             }
         });
 
-        LoadHardwareConfigButton.setText("LoadHardwareConfig");
-        LoadHardwareConfigButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LoadHardwareConfigButtonActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout GeneralLayout = new javax.swing.GroupLayout(General);
         General.setLayout(GeneralLayout);
         GeneralLayout.setHorizontalGroup(
@@ -104,28 +95,14 @@ public class LightPathControls extends javax.swing.JPanel {
             .addGroup(GeneralLayout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addComponent(LaserON, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(GeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(GeneralLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(TestField2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(GeneralLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
-                        .addComponent(LoadHardwareConfigButton)))
-                .addGap(201, 201, 201))
+                .addContainerGap(441, Short.MAX_VALUE))
         );
         GeneralLayout.setVerticalGroup(
             GeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(GeneralLayout.createSequentialGroup()
-                .addGroup(GeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(GeneralLayout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(LoadHardwareConfigButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(TestField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(GeneralLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(LaserON, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(LaserON, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         Filters.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Filters"));
@@ -187,7 +164,7 @@ public class LightPathControls extends javax.swing.JPanel {
                 .addGroup(FiltersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addComponent(EmissionComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(122, Short.MAX_VALUE))
         );
 
         FiltersLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {DichroicComboBox, EmissionComboBox, ExcitationComboBox, NDFWComboBox});
@@ -291,115 +268,6 @@ public class LightPathControls extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void LoadHardwareConfigButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoadHardwareConfigButtonActionPerformed
-//Intensity (NDFW) Load
-        // Read allowed values for Label
-        StrVector NDFWBox = null;
-        try {
-            NDFWBox = core_.getAllowedPropertyValues("NDFW", "Label");
-        } catch (Exception ex) {
-            Logger.getLogger(LightPathControls.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        //Write Dichroic Label ComboBox
-        NDFWComboBox.removeAllItems();
-        for(String str : NDFWBox) {
-        NDFWComboBox.addItem(str);
-        }
-        
-//Excitation (SpectralFW) Load
-        // Read allowed values for Label
-        StrVector ExciBox = null;
-        try {
-            ExciBox = core_.getAllowedPropertyValues("SpectralFW", "Label");
-        } catch (Exception ex) {
-            Logger.getLogger(LightPathControls.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        //Write Dichroic Label ComboBox
-        ExcitationComboBox.removeAllItems();
-        for(String str : ExciBox) {
-        ExcitationComboBox.addItem(str);
-        }
-        
-//Dichroic Load
-        // Read allowed values for Label
-        StrVector DichBox = null;
-        try {
-            DichBox = core_.getAllowedPropertyValues("CSUX-Dichroic Mirror", "Label");
-        } catch (Exception ex) {
-            Logger.getLogger(LightPathControls.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        //Write Dichroic Label ComboBox
-        DichroicComboBox.removeAllItems();
-        for(String str : DichBox) {
-        DichroicComboBox.addItem(str);
-        }      
-        
-//Emission Load
-        // Read allowed values for Label
-        StrVector EmisBox = null;
-        try {
-            EmisBox = core_.getAllowedPropertyValues("CSUX-Filter Wheel", "Label");
-        } catch (Exception ex) {
-            Logger.getLogger(LightPathControls.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        //Write Dichroic Label ComboBox
-        EmissionComboBox.removeAllItems();
-        for(String str : EmisBox) {
-        EmissionComboBox.addItem(str);
-        }    
-        
-//FilterCube Load
-        // Read allowed values for Label
-        StrVector CubeBox = null;
-        try {
-            CubeBox = core_.getAllowedPropertyValues("FilterCube", "Label");
-        } catch (Exception ex) {
-            Logger.getLogger(LightPathControls.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        //Write Dichroic Label ComboBox
-        FilterCubeComboBox.removeAllItems();
-        for(String str : CubeBox) {
-        FilterCubeComboBox.addItem(str);
-        }
-        
- //Objective Load
-        // Read allowed values for Label
-        StrVector ObjeBox = null;
-        try {
-            ObjeBox = core_.getAllowedPropertyValues("Objective", "Label");
-        } catch (Exception ex) {
-            Logger.getLogger(LightPathControls.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        //Write Dichroic Label ComboBox
-        ObjectiveComboBox.removeAllItems();
-        for(String str : ObjeBox) {
-        ObjectiveComboBox.addItem(str);
-        }  
-        
- //SwitchProt Load
-        // Read allowed values for Label
-        StrVector SwPoBox = null;
-        try {
-            SwPoBox = core_.getAllowedPropertyValues("LightPathPrism", "Label");
-        } catch (Exception ex) {
-            Logger.getLogger(LightPathControls.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        //Write Dichroic Label ComboBox
-        SwitchPortComboBox.removeAllItems();
-        for(String str : ObjeBox) {
-        SwitchPortComboBox.addItem(str);
-        }        
-                        
-                // TODO add your handling code here:
-    }//GEN-LAST:event_LoadHardwareConfigButtonActionPerformed
-
     private void LaserONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LaserONActionPerformed
 
             if (LaserON.isSelected()){
@@ -435,6 +303,7 @@ public class LightPathControls extends javax.swing.JPanel {
     }//GEN-LAST:event_DichroicComboBoxActionPerformed
 
     private void NDFWComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NDFWComboBoxActionPerformed
+        // description see Dichroic as example
         int NDFWState= NDFWComboBox.getSelectedIndex();
         try {
             core_.setProperty("NDFW", "State", NDFWState);
@@ -446,6 +315,7 @@ public class LightPathControls extends javax.swing.JPanel {
     }//GEN-LAST:event_NDFWComboBoxActionPerformed
 
     private void ExcitationComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExcitationComboBoxActionPerformed
+        // description see Dichroic as example
         int ExciState= ExcitationComboBox.getSelectedIndex();
         try {
             core_.setProperty("SpectralFW", "State", ExciState);
@@ -457,6 +327,7 @@ public class LightPathControls extends javax.swing.JPanel {
     }//GEN-LAST:event_ExcitationComboBoxActionPerformed
 
     private void EmissionComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmissionComboBoxActionPerformed
+     // description see Dichroic as example
         int EmisState= EmissionComboBox.getSelectedIndex();
         try {
             core_.setProperty("CSUX-Filter Wheel", "State", EmisState);
@@ -467,6 +338,7 @@ public class LightPathControls extends javax.swing.JPanel {
     }//GEN-LAST:event_EmissionComboBoxActionPerformed
 
     private void ObjectiveComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ObjectiveComboBoxActionPerformed
+    // description see Dichroic as example
         int ObjeState= ObjectiveComboBox.getSelectedIndex();
         try {
             core_.setProperty("Objective", "State", ObjeState);
@@ -478,6 +350,7 @@ public class LightPathControls extends javax.swing.JPanel {
     }//GEN-LAST:event_ObjectiveComboBoxActionPerformed
 
     private void FilterCubeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FilterCubeComboBoxActionPerformed
+    // description see Dichroic as example
         int CubeState= FilterCubeComboBox.getSelectedIndex();
         try {
             core_.setProperty("FilterCube", "State", CubeState);
@@ -489,6 +362,7 @@ public class LightPathControls extends javax.swing.JPanel {
     }//GEN-LAST:event_FilterCubeComboBoxActionPerformed
 
     private void SwitchPortComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SwitchPortComboBoxActionPerformed
+    // description see Dichroic as example
         int SwPoState= SwitchPortComboBox.getSelectedIndex();
         try {
             core_.setProperty("LightPathPrism", "State", SwPoState);
@@ -500,9 +374,8 @@ public class LightPathControls extends javax.swing.JPanel {
     }//GEN-LAST:event_SwitchPortComboBoxActionPerformed
 
     
-    public void setLoadedValues(){
-        //String Property="Dichroic";
-        //TestField.setText(var_.findLabelOfProperty(Property));
+    public void setLoadedSoftwareValues(){
+        // searching label of prperty in SoftwareConfig and set values in LightPathControls
         DichroicComboBox.setSelectedItem(var_.findLabelOfProperty("Dichroic"));
         EmissionComboBox.setSelectedItem(var_.findLabelOfProperty("Emission"));
         NDFWComboBox.setSelectedItem(var_.findLabelOfProperty("Neutral Density Filter"));
@@ -510,6 +383,113 @@ public class LightPathControls extends javax.swing.JPanel {
         ObjectiveComboBox.setSelectedItem(var_.findLabelOfProperty("Objective"));
         FilterCubeComboBox.setSelectedItem(var_.findLabelOfProperty("Filter Cube"));
         SwitchPortComboBox.setSelectedItem(var_.findLabelOfProperty("Light Path Prism"));
+    }
+    
+    public void setLoadedHardwareValues(){
+    //Intensity (NDFW) Load
+        // Read allowed values for Label
+        StrVector NDFWBox = null;
+        try {
+            NDFWBox = core_.getAllowedPropertyValues("NDFW", "Label");
+        } catch (Exception ex) {
+            Logger.getLogger(LightPathControls.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //Write Dichroic Label ComboBox
+        NDFWComboBox.removeAllItems();
+        for(String str : NDFWBox) {
+        NDFWComboBox.addItem(str);
+        }
+        
+    //Excitation (SpectralFW) Load
+        // Read allowed values for Label
+        StrVector ExciBox = null;
+        try {
+            ExciBox = core_.getAllowedPropertyValues("SpectralFW", "Label");
+        } catch (Exception ex) {
+            Logger.getLogger(LightPathControls.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //Write Dichroic Label ComboBox
+        ExcitationComboBox.removeAllItems();
+        for(String str : ExciBox) {
+        ExcitationComboBox.addItem(str);
+        }
+        
+    //Dichroic Load
+        // Read allowed values for Label
+        StrVector DichBox = null;
+        try {
+            DichBox = core_.getAllowedPropertyValues("CSUX-Dichroic Mirror", "Label");
+        } catch (Exception ex) {
+            Logger.getLogger(LightPathControls.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //Write Dichroic Label ComboBox
+        DichroicComboBox.removeAllItems();
+        for(String str : DichBox) {
+        DichroicComboBox.addItem(str);
+        }      
+        
+    //Emission Load
+        // Read allowed values for Label
+        StrVector EmisBox = null;
+        try {
+            EmisBox = core_.getAllowedPropertyValues("CSUX-Filter Wheel", "Label");
+        } catch (Exception ex) {
+            Logger.getLogger(LightPathControls.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //Write Dichroic Label ComboBox
+        EmissionComboBox.removeAllItems();
+        for(String str : EmisBox) {
+        EmissionComboBox.addItem(str);
+        }    
+        
+    //FilterCube Load
+        // Read allowed values for Label
+        StrVector CubeBox = null;
+        try {
+            CubeBox = core_.getAllowedPropertyValues("FilterCube", "Label");
+        } catch (Exception ex) {
+            Logger.getLogger(LightPathControls.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //Write Dichroic Label ComboBox
+        FilterCubeComboBox.removeAllItems();
+        for(String str : CubeBox) {
+        FilterCubeComboBox.addItem(str);
+        }
+        
+    //Objective Load
+        // Read allowed values for Label
+        StrVector ObjeBox = null;
+        try {
+            ObjeBox = core_.getAllowedPropertyValues("Objective", "Label");
+        } catch (Exception ex) {
+            Logger.getLogger(LightPathControls.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //Write Dichroic Label ComboBox
+        ObjectiveComboBox.removeAllItems();
+        for(String str : ObjeBox) {
+        ObjectiveComboBox.addItem(str);
+        }  
+        
+    //SwitchProt Load
+        // Read allowed values for Label
+        StrVector SwPoBox = null;
+        try {
+            SwPoBox = core_.getAllowedPropertyValues("LightPathPrism", "Label");
+        } catch (Exception ex) {
+            Logger.getLogger(LightPathControls.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //Write Dichroic Label ComboBox
+        SwitchPortComboBox.removeAllItems();
+        for(String str : ObjeBox) {
+        SwitchPortComboBox.addItem(str);
+        }        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -520,13 +500,11 @@ public class LightPathControls extends javax.swing.JPanel {
     private javax.swing.JPanel Filters;
     private javax.swing.JPanel General;
     private javax.swing.JToggleButton LaserON;
-    private javax.swing.JButton LoadHardwareConfigButton;
     private javax.swing.JComboBox NDFWComboBox;
     private javax.swing.JComboBox ObjectiveComboBox;
     private javax.swing.JLabel ObjectiveLabel;
     private javax.swing.JPanel Olympus;
     private javax.swing.JComboBox SwitchPortComboBox;
-    private javax.swing.JTextField TestField2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
