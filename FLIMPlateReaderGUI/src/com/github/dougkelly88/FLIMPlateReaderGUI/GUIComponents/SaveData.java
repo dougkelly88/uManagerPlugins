@@ -197,7 +197,7 @@ public class SaveData extends javax.swing.JPanel {
                 }    
         File allConfigFile=null;
         allConfigFile=new File("C:\\Users\\Frederik\\Desktop\\ConfigSoftware.txt");
-        String entireFileText=null;
+        /*String entireFileText=null;
         try {
             entireFileText = new Scanner(new File("C:\\Users\\Frederik\\Desktop\\ConfigSoftware.txt"))
                     .useDelimiter("\\A").next();
@@ -207,12 +207,13 @@ public class SaveData extends javax.swing.JPanel {
             String substr=entireFileText.substring(a);
             int b=substr.indexOf(";");
             String substr1=substr.substring(c+1, b);
-            SavedDataField.setText(substr1);*/
+            SavedDataField.setText(substr1);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(SaveData.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
+
         String Property="Dichroic";
-        SavedDataField.setText(var_.findLabelOfProperty(entireFileText, Property));
+        SavedDataField.setText(var_.findLabelOfProperty(Property));
         
         
     }//GEN-LAST:event_jButton1ActionPerformed

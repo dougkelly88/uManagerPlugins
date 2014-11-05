@@ -17,6 +17,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URL; 
@@ -98,7 +99,6 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         FLIMPanel = new javax.swing.JTabbedPane();
         fLIMPanel1 = new com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.FLIMPanel();
         lightPathControls1 = new com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.LightPathControls();
-        saveData1 = new com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.SaveData();
         jMenuBar2 = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         quitMenu = new javax.swing.JMenuItem();
@@ -133,7 +133,6 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
 
         FLIMPanel.addTab("FLIM instruments", fLIMPanel1);
         FLIMPanel.addTab("Light Path Control", lightPathControls1);
-        FLIMPanel.addTab("tab3", saveData1);
 
         fileMenu.setText("File");
 
@@ -203,9 +202,9 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(getDichroic)
                             .addComponent(getObjective))
-                        .addGap(91, 91, 91)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(169, 169, 169))
+                        .addGap(13, 13, 13)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(296, 296, 296))))
@@ -213,14 +212,17 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(349, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(getDichroic)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(getObjective)))
-                .addGap(183, 183, 183)
+                        .addComponent(getObjective)
+                        .addGap(227, 227, 227))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(142, 142, 142)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 449, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)))
                 .addComponent(jLabel1)
                 .addGap(117, 117, 117))
             .addGroup(layout.createSequentialGroup()
@@ -251,7 +253,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     private void quitMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitMenuActionPerformed
         confirmQuit();
     }//GEN-LAST:event_quitMenuActionPerformed
-    public String basepath; 
+ 
     private void SetBaseFolderMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SetBaseFolderMenuActionPerformed
         JFileChooser chooser = new JFileChooser();
         chooser.setDialogTitle("Select target directory");
@@ -261,25 +263,36 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         if(returnVal == JFileChooser.APPROVE_OPTION) {
         File myFile = chooser.getSelectedFile();
         } 
-        basepath= chooser.getSelectedFile().getPath();
-        testText.setText("Selected base path: "+basepath);
+        var_.basepath= chooser.getSelectedFile().getPath();
+        testText.setText("Selected base path: "+var_.basepath);
         // TODO add your handling code here:
     }//GEN-LAST:event_SetBaseFolderMenuActionPerformed
 
     private void SaveMetadataMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveMetadataMenuActionPerformed
-        var_.saveMetadata(basepath);
+        var_.saveMetadata();
            // TODO add your handling code here:
     }//GEN-LAST:event_SaveMetadataMenuActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        lightPathControls1.setLoadedValues(3);
+    // Load ConfigSoftware in testText and set loaded values in all panels
+        // load ConfigSoftware in testText
+        FileReader allConfig = null ;   
+        try {
+            allConfig = new FileReader(var_.basepath+"\\ConfigSoftware.txt");
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(SaveData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+                    testText.read(allConfig, null);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                } 
+        // set loaded values in all panels
+        lightPathControls1.setLoadedValues();
 // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void dummy(){
-        lightPathControls1.setLoadedValues(3);
-        
-    }
+
     
     /**
      * @param args the command line arguments
@@ -328,7 +341,6 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.LightPathControls lightPathControls1;
     private javax.swing.JMenuItem quitMenu;
-    private com.github.dougkelly88.FLIMPlateReaderGUI.GUIComponents.SaveData saveData1;
     private javax.swing.JTextArea testText;
     // End of variables declaration//GEN-END:variables
 
