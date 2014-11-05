@@ -111,9 +111,10 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         xYSequencing1 = new com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.GUIComponents.XYSequencing();
         jMenuBar2 = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
-        quitMenu = new javax.swing.JMenuItem();
+        loadPlateConfigMenu = new javax.swing.JMenuItem();
         SetBaseFolderMenu = new javax.swing.JMenuItem();
         SaveMetadataMenu = new javax.swing.JMenuItem();
+        quitMenu = new javax.swing.JMenuItem();
         toolsMenu = new javax.swing.JMenu();
         advancedMenu = new javax.swing.JMenuItem();
         calibrationMenu = new javax.swing.JMenuItem();
@@ -209,14 +210,13 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
 
         fileMenu.setText("File");
 
-        quitMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
-        quitMenu.setText("Quit");
-        quitMenu.addActionListener(new java.awt.event.ActionListener() {
+        loadPlateConfigMenu.setText("Load plate config...");
+        loadPlateConfigMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                quitMenuActionPerformed(evt);
+                loadPlateConfigMenuActionPerformed(evt);
             }
         });
-        fileMenu.add(quitMenu);
+        fileMenu.add(loadPlateConfigMenu);
 
         SetBaseFolderMenu.setText("Set Base Folder");
         SetBaseFolderMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -233,6 +233,15 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
             }
         });
         fileMenu.add(SaveMetadataMenu);
+
+        quitMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
+        quitMenu.setText("Quit");
+        quitMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                quitMenuActionPerformed(evt);
+            }
+        });
+        fileMenu.add(quitMenu);
 
         jMenuBar2.add(fileMenu);
 
@@ -353,6 +362,10 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_currentBasePathFieldActionPerformed
 
+    private void loadPlateConfigMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadPlateConfigMenuActionPerformed
+        xYZPanel1.onPlateConfigLoaded(true);
+    }//GEN-LAST:event_loadPlateConfigMenuActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -403,6 +416,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane2;
     private com.github.dougkelly88.FLIMPlateReaderGUI.LightPathClasses.GUIComponents.LightPathControls lightPathControls1;
+    private javax.swing.JMenuItem loadPlateConfigMenu;
     private javax.swing.JMenuItem quitMenu;
     private com.github.dougkelly88.FLIMPlateReaderGUI.GeneralGUIComponents.SaveData saveData1;
     private javax.swing.JTabbedPane sequenceSetupTabbedPane;

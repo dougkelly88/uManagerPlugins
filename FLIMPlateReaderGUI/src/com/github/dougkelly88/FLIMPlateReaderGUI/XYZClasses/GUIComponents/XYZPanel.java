@@ -10,6 +10,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 
 /**
@@ -18,6 +21,7 @@ import javax.swing.JPanel;
  */
 public class XYZPanel extends javax.swing.JPanel {
 
+    private WellMapDrawPanel dp_;
     /**
      * Creates new form XYZPanel
      */
@@ -50,10 +54,9 @@ public class XYZPanel extends javax.swing.JPanel {
         ddButton = new javax.swing.JButton();
         uuButon = new javax.swing.JButton();
         wellMapPanel = new javax.swing.JPanel();
-        wellDrawingPanel = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        wellField = new javax.swing.JTextField();
+        goToWellButton = new javax.swing.JButton();
         ZPanel = new javax.swing.JPanel();
         zPanel = new javax.swing.JPanel();
         zStepSizeLabel = new javax.swing.JLabel();
@@ -245,39 +248,35 @@ public class XYZPanel extends javax.swing.JPanel {
         );
 
         wellMapPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Well map"));
-
-        javax.swing.GroupLayout wellDrawingPanelLayout = new javax.swing.GroupLayout(wellDrawingPanel);
-        wellDrawingPanel.setLayout(wellDrawingPanelLayout);
-        wellDrawingPanelLayout.setHorizontalGroup(
-            wellDrawingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 290, Short.MAX_VALUE)
-        );
-        wellDrawingPanelLayout.setVerticalGroup(
-            wellDrawingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+        wellMapPanel.setEnabled(false);
 
         javax.swing.GroupLayout wellMapPanelLayout = new javax.swing.GroupLayout(wellMapPanel);
         wellMapPanel.setLayout(wellMapPanelLayout);
         wellMapPanelLayout.setHorizontalGroup(
             wellMapPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(wellDrawingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGap(0, 290, Short.MAX_VALUE)
         );
         wellMapPanelLayout.setVerticalGroup(
             wellMapPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(wellDrawingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         jLabel3.setText("Go to well:");
 
-        jTextField1.setText("C4");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        wellField.setText("C4");
+        wellField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                wellFieldActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Go");
+        goToWellButton.setText("Go");
+        goToWellButton.setEnabled(false);
+        goToWellButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                goToWellButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout XYPanelLayout = new javax.swing.GroupLayout(XYPanel);
         XYPanel.setLayout(XYPanelLayout);
@@ -293,9 +292,9 @@ public class XYZPanel extends javax.swing.JPanel {
                 .addGap(47, 47, 47)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(wellField, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
+                .addComponent(goToWellButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         XYPanelLayout.setVerticalGroup(
@@ -303,8 +302,8 @@ public class XYZPanel extends javax.swing.JPanel {
             .addGroup(XYPanelLayout.createSequentialGroup()
                 .addGap(4, 4, 4)
                 .addGroup(XYPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jButton1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(goToWellButton)
+                    .addComponent(wellField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addGap(18, 18, 18)
                 .addGroup(XYPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -528,9 +527,9 @@ public class XYZPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_afOffsetFieldActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void wellFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wellFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_wellFieldActionPerformed
 
     private void manStageCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manStageCheckActionPerformed
         // TODO add your handling code here:
@@ -576,35 +575,24 @@ public class XYZPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_zDButtonActionPerformed
 
+    private void goToWellButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goToWellButtonActionPerformed
+        // TODO: validate well string
+        dp_.setCurrentWell(wellField.getText());
+    }//GEN-LAST:event_goToWellButtonActionPerformed
+
     private void setControlDefaults(){
         
-        DrawPanel dp = new DrawPanel();
-        wellDrawingPanel.setLayout(new BorderLayout());
-        wellDrawingPanel.add(dp, BorderLayout.CENTER);
+        dp_ = new WellMapDrawPanel();
+        wellMapPanel.setLayout(new BorderLayout());
+        wellMapPanel.add(dp_, BorderLayout.CENTER);
         
     }
     
-    class DrawPanel extends JPanel {
-
-        DrawPanel() {
-            // set a preferred size for the custom panel.
-            setPreferredSize(new Dimension(255,255));
-        }
-
-        @Override
-        public void paintComponent(Graphics g) {
-            super.paintComponent(g);
-
-            g.drawString("C4", 128, 128);
-//            g.drawRect(200, 200, 200, 2000);
-//            g.fillOval(128, 128, 128, 128);
-            g.setColor(Color.CYAN);
-            g.drawOval(0, 0, 255, 255);
-            g.setColor(Color.RED);
-            g.drawRect(128-6, 128-8, 12, 16);
-        }
+    public void onPlateConfigLoaded(boolean enable){
+        dp_.setEnabled(enable);
+        goToWellButton.setEnabled(enable);
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel XYPanel;
     private javax.swing.JPanel ZPanel;
@@ -612,13 +600,12 @@ public class XYZPanel extends javax.swing.JPanel {
     private javax.swing.JFormattedTextField afOffsetField;
     private javax.swing.JButton dButton;
     private javax.swing.JButton ddButton;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton goToWellButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JCheckBox keyboardStageCheck;
     private javax.swing.JButton lButton;
     private javax.swing.JButton llButton;
@@ -634,7 +621,7 @@ public class XYZPanel extends javax.swing.JPanel {
     private javax.swing.JPanel twoXPanningPanel;
     private javax.swing.JButton uButton;
     private javax.swing.JButton uuButon;
-    private javax.swing.JPanel wellDrawingPanel;
+    private javax.swing.JTextField wellField;
     private javax.swing.JPanel wellMapPanel;
     private javax.swing.JButton zDButton;
     private javax.swing.JPanel zPanel;
