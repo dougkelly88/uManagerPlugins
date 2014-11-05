@@ -6,6 +6,7 @@
 
 package com.github.dougkelly88.FLIMPlateReaderGUI.XYZClasses.GUIComponents;
 
+import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.PlateProperties;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -30,10 +31,11 @@ public class WellMapDrawPanel extends JPanel {
         int currentFOVh_ = 16;
         int r_ = 127;
         String currentWell_ = "C4";
-        String welltype = "Round";
+        String wellShape_ = "Square";
         double wellSizeUm = 9000;
-        double conversionFactor_ = wellSizeUm/r_;
         boolean enabled_ = false;   // start up disabled, enable upon loading plate stuff. 
+        PlateProperties pp_ = new PlateProperties();
+        double conversionFactor_ = pp_.getWellSize()/r_;
         
         WellMapDrawPanel() {
             // set a preferred size for the custom panel.
@@ -53,7 +55,7 @@ public class WellMapDrawPanel extends JPanel {
                         boolean inBounds = false;
                         Point p = e.getPoint();
                         // check if point is within bounds of well...
-                        if (welltype == "Round"){
+                        if (pp_.getWellShape() == "Round"){
                             inBounds = ( Math.pow((p.x + currentFOVw_/2 - r_),2) +
                                     Math.pow((p.y + currentFOVh_/2 - r_),2) < r_*r_ );
                         }
@@ -88,7 +90,7 @@ public class WellMapDrawPanel extends JPanel {
 
             g.setColor(Color.CYAN);
             
-            if (welltype == "square")
+            if ("Square".equals(pp_.getWellShape()))
                 g.drawRect(0, 0, 2*r_, 2*r_);
             else 
                 g.drawOval(0, 0, (1 + 2*r_), (1 + 2*r_));
@@ -129,9 +131,12 @@ public class WellMapDrawPanel extends JPanel {
             repaint();
         }
         
-        @Override
-        public void setEnabled(boolean enabled){
+        public void setEnabled(boolean enabled, PlateProperties pp){
             enabled_ = enabled;
+            pp_ = pp;
+            // update conversion factor based on plate...
+            conversionFactor_ = pp_.getWellSize()/r_;
+            repaint();
         }
         
         @Override
@@ -140,17 +145,18 @@ public class WellMapDrawPanel extends JPanel {
         }
         
 //        public class PlateActionListener implements ActionListener{
-//            int cx;
+//            String s;
 //
-//            public PlateActionListener(int cx){
-//                currentX_ = cx;
+//            public PlateActionListener(String shape){
+//                s = shape;
 //            }
 //            
 //            @Override
 //            public void actionPerformed(ActionEvent e) {
-//                currentX_ = this.cx;
+//                wellShape_ = this.s;
 //            }
 //        
 //        }
-    }
+
+     }
 

@@ -6,6 +6,7 @@
 
 package com.github.dougkelly88.FLIMPlateReaderGUI.XYZClasses.GUIComponents;
 
+import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.PlateProperties;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -22,6 +23,7 @@ import javax.swing.JPanel;
 public class XYZPanel extends javax.swing.JPanel {
 
     private WellMapDrawPanel dp_;
+    private PlateProperties pp_;
     /**
      * Creates new form XYZPanel
      */
@@ -588,8 +590,9 @@ public class XYZPanel extends javax.swing.JPanel {
         
     }
     
-    public void onPlateConfigLoaded(boolean enable){
-        dp_.setEnabled(enable);
+    public void onPlateConfigLoaded(boolean enable, PlateProperties pp){
+        dp_.setEnabled(enable, pp);
+        pp_ = pp;
         goToWellButton.setEnabled(enable);
     }
     

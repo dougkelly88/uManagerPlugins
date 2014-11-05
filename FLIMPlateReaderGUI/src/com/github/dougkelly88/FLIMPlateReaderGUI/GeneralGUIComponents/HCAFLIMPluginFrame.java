@@ -6,16 +6,17 @@
 
 package com.github.dougkelly88.FLIMPlateReaderGUI.GeneralGUIComponents;
 
+import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.PlateProperties;
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.SeqAcqProps;
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.VariableTest;
-import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.PlateProperties;
 import com.google.common.eventbus.Subscribe;
-import java.awt.Desktop;
 import java.awt.Component;
+import java.awt.Desktop;
 import java.awt.Dialog;
 import java.awt.Image;
 import java.awt.Toolkit; 
-import java.awt.event.WindowAdapter; 
+import java.awt.event.ActionListener; 
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -32,6 +33,7 @@ import javax.swing.WindowConstants;
 import mmcorej.CMMCore; 
 import org.micromanager.MMStudio; 
 import org.micromanager.api.events.PropertyChangedEvent; 
+import com.github.dougkelly88.FLIMPlateReaderGUI.XYZClasses.GUIComponents.WellMapDrawPanel;
 
 
 /**
@@ -79,6 +81,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
 
 //        tsi_ = SeqAcqProps.getInstance();
         var_ = VariableTest.getInstance();
+        
 //        sap_ = new SequencedAcquisitionProperties.Builder().useScanFLIM(true).build();
 //        sap_.addPropertyChangeListener(null);
 //        fLIMPanel1.initSequencedAcquisitionProperties(sap_, frame_);
@@ -366,8 +369,20 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_currentBasePathFieldActionPerformed
 
     private void loadPlateConfigMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadPlateConfigMenuActionPerformed
-        xYZPanel1.onPlateConfigLoaded(true);
-        pp_ = pp_.loadProperties("dummy");
+        final JFileChooser fc = new JFileChooser("C:/Program Files (x86)/Micro-Manager-1.4-32 20 Oct 2014 build/mmplugins/OpenHCAFLIM/XPLT");   // for debug, make more general
+        int returnVal = fc.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = fc.getSelectedFile();
+            try {
+                pp_ = pp_.loadProperties(file);
+                xYZPanel1.onPlateConfigLoaded(true, pp_);
+            } catch (Exception e) {
+                System.out.println("problem accessing file"+file.getAbsolutePath());
+            }
+        } else {
+            System.out.println("File access cancelled by user.");
+        }
+        
         
     }//GEN-LAST:event_loadPlateConfigMenuActionPerformed
 

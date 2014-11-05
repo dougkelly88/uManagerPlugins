@@ -20,6 +20,7 @@ import java.io.File;
  * @author dk1109
  * Defines plate properties. 
  * Reads plate properties from XPLT files
+ * For now, implement as singleton...
  * 
  */
 public class PlateProperties {
@@ -28,7 +29,7 @@ public class PlateProperties {
     String plateName = "Greiner uClear";
     int rows = 8;
     int cols = 12;
-    String wellShape = "circle";
+    String wellShape = "Square";
     
     double wellSizeUm = 6500;
     double wellSpacingVUm = 9000;
@@ -41,12 +42,12 @@ public class PlateProperties {
     
     }
      
-    public PlateProperties loadProperties(String path){
+    public PlateProperties loadProperties(File fXmlFile){
         // source: http://www.mkyong.com/java/how-to-read-xml-file-in-java-dom-parser/
         // more general than necessary, but useful as reference...
         try {
             
-	File fXmlFile = new File("C:/Program Files (x86)/Micro-Manager-1.4-32 20 Oct 2014 build/mmplugins/OpenHCAFLIM/XPLT/Greiner uClear.xplt");
+//	File fXmlFile = new File("C:/Program Files (x86)/Micro-Manager-1.4-32 20 Oct 2014 build/mmplugins/OpenHCAFLIM/XPLT/Greiner uClear.xplt");
 	DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 	DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 	Document doc = dBuilder.parse(fXmlFile);
