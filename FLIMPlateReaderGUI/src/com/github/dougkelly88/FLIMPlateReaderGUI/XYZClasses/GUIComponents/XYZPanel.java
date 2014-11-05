@@ -6,6 +6,12 @@
 
 package com.github.dougkelly88.FLIMPlateReaderGUI.XYZClasses.GUIComponents;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import javax.swing.JPanel;
+
 /**
  *
  * @author dk1109
@@ -17,6 +23,7 @@ public class XYZPanel extends javax.swing.JPanel {
      */
     public XYZPanel() {
         initComponents();
+        setControlDefaults();
     }
 
     /**
@@ -43,16 +50,16 @@ public class XYZPanel extends javax.swing.JPanel {
         ddButton = new javax.swing.JButton();
         uuButon = new javax.swing.JButton();
         wellMapPanel = new javax.swing.JPanel();
-        canvas1 = new java.awt.Canvas();
+        wellDrawingPanel = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         ZPanel = new javax.swing.JPanel();
         zPanel = new javax.swing.JPanel();
-        zuButton = new javax.swing.JButton();
-        zdButton = new javax.swing.JButton();
         zStepSizeLabel = new javax.swing.JLabel();
         zStepSizeField = new javax.swing.JFormattedTextField();
+        zUButton = new javax.swing.JButton();
+        zDButton = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         afObjectiveCombo = new javax.swing.JComboBox();
@@ -77,23 +84,28 @@ public class XYZPanel extends javax.swing.JPanel {
             }
         });
 
-        dButton.setText("D");
+        dButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/down.png"))); // NOI18N
+        dButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
         dButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 dButtonActionPerformed(evt);
             }
         });
 
-        uButton.setText("U");
+        uButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/up.png"))); // NOI18N
+        uButton.setIconTextGap(0);
+        uButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
 
-        lButton.setText("L");
+        lButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/left.png"))); // NOI18N
+        lButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
         lButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 lButtonActionPerformed(evt);
             }
         });
 
-        rButton.setText("R");
+        rButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/right.png"))); // NOI18N
+        rButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
         rButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rButtonActionPerformed(evt);
@@ -105,12 +117,11 @@ public class XYZPanel extends javax.swing.JPanel {
         oneXPanningPanelLayout.setHorizontalGroup(
             oneXPanningPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(oneXPanningPanelLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(oneXPanningPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(dButton)
                     .addGroup(oneXPanningPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(dButton))
-                    .addGroup(oneXPanningPanelLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(lButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(uButton)))
@@ -129,32 +140,35 @@ public class XYZPanel extends javax.swing.JPanel {
                         .addGroup(oneXPanningPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(rButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(dButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        llButton.setText("L");
+        llButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/leftleft.png"))); // NOI18N
+        llButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
         llButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 llButtonActionPerformed(evt);
             }
         });
 
-        rrButton.setText("R");
+        rrButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/rightright.png"))); // NOI18N
+        rrButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
         rrButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rrButtonActionPerformed(evt);
             }
         });
 
-        ddButton.setText("D");
+        ddButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/downdown.png"))); // NOI18N
+        ddButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
         ddButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ddButtonActionPerformed(evt);
             }
         });
 
-        uuButon.setText("U");
+        uuButon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/upup.png"))); // NOI18N
+        uuButon.setMargin(new java.awt.Insets(0, 0, 0, 0));
         uuButon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 uuButonActionPerformed(evt);
@@ -165,21 +179,20 @@ public class XYZPanel extends javax.swing.JPanel {
         twoXPanningPanel.setLayout(twoXPanningPanelLayout);
         twoXPanningPanelLayout.setHorizontalGroup(
             twoXPanningPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, twoXPanningPanelLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(uuButon)
-                .addGap(109, 109, 109))
             .addGroup(twoXPanningPanelLayout.createSequentialGroup()
                 .addGroup(twoXPanningPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(twoXPanningPanelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(llButton)
-                        .addGap(10, 10, 10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(oneXPanningPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(rrButton))
                     .addGroup(twoXPanningPanelLayout.createSequentialGroup()
-                        .addGap(110, 110, 110)
+                        .addGap(100, 100, 100)
+                        .addComponent(uuButon))
+                    .addGroup(twoXPanningPanelLayout.createSequentialGroup()
+                        .addGap(100, 100, 100)
                         .addComponent(ddButton)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -188,14 +201,15 @@ public class XYZPanel extends javax.swing.JPanel {
             .addGroup(twoXPanningPanelLayout.createSequentialGroup()
                 .addGroup(twoXPanningPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(twoXPanningPanelLayout.createSequentialGroup()
+                        .addGap(12, 12, 12)
                         .addComponent(uuButon, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(1, 1, 1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(oneXPanningPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(twoXPanningPanelLayout.createSequentialGroup()
-                        .addGap(76, 76, 76)
+                        .addGap(97, 97, 97)
                         .addComponent(llButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(twoXPanningPanelLayout.createSequentialGroup()
-                        .addGap(77, 77, 77)
+                        .addGap(93, 93, 93)
                         .addComponent(rrButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -232,21 +246,26 @@ public class XYZPanel extends javax.swing.JPanel {
 
         wellMapPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Well map"));
 
+        javax.swing.GroupLayout wellDrawingPanelLayout = new javax.swing.GroupLayout(wellDrawingPanel);
+        wellDrawingPanel.setLayout(wellDrawingPanelLayout);
+        wellDrawingPanelLayout.setHorizontalGroup(
+            wellDrawingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 290, Short.MAX_VALUE)
+        );
+        wellDrawingPanelLayout.setVerticalGroup(
+            wellDrawingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout wellMapPanelLayout = new javax.swing.GroupLayout(wellMapPanel);
         wellMapPanel.setLayout(wellMapPanelLayout);
         wellMapPanelLayout.setHorizontalGroup(
             wellMapPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(wellMapPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+            .addComponent(wellDrawingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         wellMapPanelLayout.setVerticalGroup(
             wellMapPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(wellMapPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(wellDrawingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jLabel3.setText("Go to well:");
@@ -267,7 +286,7 @@ public class XYZPanel extends javax.swing.JPanel {
             .addGroup(XYPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panningPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(wellMapPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(XYPanelLayout.createSequentialGroup()
@@ -298,21 +317,24 @@ public class XYZPanel extends javax.swing.JPanel {
 
         zPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Z focus"));
 
-        zuButton.setText("U");
-
-        zdButton.setText("D");
-        zdButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                zdButtonActionPerformed(evt);
-            }
-        });
-
         zStepSizeLabel.setText("Step size (um)");
 
-        zStepSizeField.setText("9000");
+        zStepSizeField.setText("1");
         zStepSizeField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 zStepSizeFieldActionPerformed(evt);
+            }
+        });
+
+        zUButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/up.png"))); // NOI18N
+        zUButton.setIconTextGap(0);
+        zUButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
+
+        zDButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/down.png"))); // NOI18N
+        zDButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        zDButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                zDButtonActionPerformed(evt);
             }
         });
 
@@ -325,22 +347,29 @@ public class XYZPanel extends javax.swing.JPanel {
                 .addGroup(zPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(zStepSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(zStepSizeLabel)
-                    .addComponent(zdButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(zuButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(zUButton))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(zPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(zPanelLayout.createSequentialGroup()
+                    .addGap(25, 25, 25)
+                    .addComponent(zDButton)
+                    .addContainerGap(26, Short.MAX_VALUE)))
         );
         zPanelLayout.setVerticalGroup(
             zPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(zPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(zuButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(zdButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(zUButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(95, 95, 95)
                 .addComponent(zStepSizeLabel)
                 .addGap(2, 2, 2)
                 .addComponent(zStepSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addGroup(zPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(zPanelLayout.createSequentialGroup()
+                    .addGap(76, 76, 76)
+                    .addComponent(zDButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(77, Short.MAX_VALUE)))
         );
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Autofocus"));
@@ -368,10 +397,10 @@ public class XYZPanel extends javax.swing.JPanel {
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(afObjectiveCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(afObjectiveCombo, 0, 83, Short.MAX_VALUE)
                     .addComponent(afOffsetField))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(237, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -491,10 +520,6 @@ public class XYZPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_stepSizeFieldActionPerformed
 
-    private void zdButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zdButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_zdButtonActionPerformed
-
     private void zStepSizeFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zStepSizeFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_zStepSizeFieldActionPerformed
@@ -518,10 +543,6 @@ public class XYZPanel extends javax.swing.JPanel {
     private void keyboardStageCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_keyboardStageCheckActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_keyboardStageCheckActionPerformed
-
-    private void uuButonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uuButonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_uuButonActionPerformed
 
     private void ddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ddButtonActionPerformed
         // TODO add your handling code here:
@@ -547,13 +568,48 @@ public class XYZPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_dButtonActionPerformed
 
+    private void uuButonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uuButonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_uuButonActionPerformed
+
+    private void zDButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zDButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_zDButtonActionPerformed
+
+    private void setControlDefaults(){
+        
+        DrawPanel dp = new DrawPanel();
+        wellDrawingPanel.setLayout(new BorderLayout());
+        wellDrawingPanel.add(dp, BorderLayout.CENTER);
+        
+    }
+    
+    class DrawPanel extends JPanel {
+
+        DrawPanel() {
+            // set a preferred size for the custom panel.
+            setPreferredSize(new Dimension(255,255));
+        }
+
+        @Override
+        public void paintComponent(Graphics g) {
+            super.paintComponent(g);
+
+            g.drawString("C4", 128, 128);
+//            g.drawRect(200, 200, 200, 2000);
+//            g.fillOval(128, 128, 128, 128);
+            g.setColor(Color.CYAN);
+            g.drawOval(0, 0, 255, 255);
+            g.setColor(Color.RED);
+            g.drawRect(128-6, 128-8, 12, 16);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel XYPanel;
     private javax.swing.JPanel ZPanel;
     private javax.swing.JComboBox afObjectiveCombo;
     private javax.swing.JFormattedTextField afOffsetField;
-    private java.awt.Canvas canvas1;
     private javax.swing.JButton dButton;
     private javax.swing.JButton ddButton;
     private javax.swing.JButton jButton1;
@@ -578,11 +634,12 @@ public class XYZPanel extends javax.swing.JPanel {
     private javax.swing.JPanel twoXPanningPanel;
     private javax.swing.JButton uButton;
     private javax.swing.JButton uuButon;
+    private javax.swing.JPanel wellDrawingPanel;
     private javax.swing.JPanel wellMapPanel;
+    private javax.swing.JButton zDButton;
     private javax.swing.JPanel zPanel;
     private javax.swing.JFormattedTextField zStepSizeField;
     private javax.swing.JLabel zStepSizeLabel;
-    private javax.swing.JButton zdButton;
-    private javax.swing.JButton zuButton;
+    private javax.swing.JButton zUButton;
     // End of variables declaration//GEN-END:variables
 }

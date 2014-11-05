@@ -46,7 +46,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     @Subscribe
     public void onPropertyChanged(PropertyChangedEvent event)
     {
-        testText.setText("google eventbus triggered in device " + event.getDevice() + "\n with property " + event.getProperty() + "\n changed to value " + event.getValue());
+//        testText.setText("google eventbus triggered in device " + event.getDevice() + "\n with property " + event.getProperty() + "\n changed to value " + event.getValue());
     }
 
     /**
@@ -279,7 +279,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(FLIMPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2)
                     .addComponent(flimAcquisitionPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -339,7 +339,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         File myFile = chooser.getSelectedFile();
         } 
         var_.basepath= chooser.getSelectedFile().getPath();
-        testText.setText("Selected base path: "+var_.basepath);
+//        testText.setText("Selected base path: "+var_.basepath);
         // TODO add your handling code here:
     }//GEN-LAST:event_SetBaseFolderMenuActionPerformed
 
