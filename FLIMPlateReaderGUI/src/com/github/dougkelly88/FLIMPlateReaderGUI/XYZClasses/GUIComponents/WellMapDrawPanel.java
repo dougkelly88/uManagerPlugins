@@ -35,7 +35,7 @@ public class WellMapDrawPanel extends JPanel {
         double wellSizeUm = 9000;
         boolean enabled_ = false;   // start up disabled, enable upon loading plate stuff. 
         PlateProperties pp_ = new PlateProperties();
-        double conversionFactor_ = pp_.getWellSize()/r_;
+        double conversionFactor_ = pp_.getWellSize()/r_;    //N.B. might be useful to have this as 1x2 array with x, y conv, which could be negative...
         
         WellMapDrawPanel() {
             // set a preferred size for the custom panel.
@@ -104,10 +104,10 @@ public class WellMapDrawPanel extends JPanel {
             
         }
         
-        public void setCurrentX(int stagex){
+        public void setCurrentX(double stagex){
             // identify which well we're (now) in, and position relative to 
             // centre of well, converting from um to pixels
-            currentX_ = stagex;
+            currentX_ = (int) stagex;
             repaint();
         }
         
@@ -115,10 +115,10 @@ public class WellMapDrawPanel extends JPanel {
             return currentX_;
         }
         
-        public void setCurrentY(int stagey){
+        public void setCurrentY(double stagey){
             // identify which well we're (now) in, and position relative to 
             // centre of well, converting from um to pixels
-            currentY_ = stagey;
+            currentY_ = (int) stagey;
             repaint();
         }
         

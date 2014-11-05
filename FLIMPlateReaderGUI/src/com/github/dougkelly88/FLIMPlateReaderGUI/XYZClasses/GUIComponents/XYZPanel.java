@@ -24,6 +24,8 @@ public class XYZPanel extends javax.swing.JPanel {
 
     private WellMapDrawPanel dp_;
     private PlateProperties pp_;
+    private double currentXUm_ = 128;
+    private double currentYUm_ = 128;
     /**
      * Creates new form XYZPanel
      */
@@ -100,6 +102,11 @@ public class XYZPanel extends javax.swing.JPanel {
         uButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/up.png"))); // NOI18N
         uButton.setIconTextGap(0);
         uButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        uButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                uButtonActionPerformed(evt);
+            }
+        });
 
         lButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/left.png"))); // NOI18N
         lButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
@@ -546,31 +553,38 @@ public class XYZPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_keyboardStageCheckActionPerformed
 
     private void ddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ddButtonActionPerformed
-        // TODO add your handling code here:
+        currentYUm_ = currentYUm_ + 2*Double.parseDouble(stepSizeField.getText());
+        dp_.setCurrentY(currentYUm_);
     }//GEN-LAST:event_ddButtonActionPerformed
 
     private void rrButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rrButtonActionPerformed
-        // TODO add your handling code here:
+        currentXUm_ = currentXUm_ + 2*Double.parseDouble(stepSizeField.getText());
+        dp_.setCurrentX(currentXUm_);
     }//GEN-LAST:event_rrButtonActionPerformed
 
     private void llButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_llButtonActionPerformed
-        // TODO add your handling code here:
+        currentXUm_ = currentXUm_ - 2*Double.parseDouble(stepSizeField.getText());
+        dp_.setCurrentX(currentXUm_);
     }//GEN-LAST:event_llButtonActionPerformed
 
     private void rButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rButtonActionPerformed
-        // TODO add your handling code here:
+        currentXUm_ = currentXUm_ + Double.parseDouble(stepSizeField.getText());
+        dp_.setCurrentX(currentXUm_);
     }//GEN-LAST:event_rButtonActionPerformed
 
     private void lButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lButtonActionPerformed
-        // TODO add your handling code here:
+        currentXUm_ = currentXUm_ - Double.parseDouble(stepSizeField.getText());
+        dp_.setCurrentX(currentXUm_);
     }//GEN-LAST:event_lButtonActionPerformed
 
     private void dButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dButtonActionPerformed
-        // TODO add your handling code here:
+        currentYUm_ = currentYUm_ + Double.parseDouble(stepSizeField.getText());
+        dp_.setCurrentY(currentYUm_);
     }//GEN-LAST:event_dButtonActionPerformed
 
     private void uuButonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uuButonActionPerformed
-        // TODO add your handling code here:
+        currentYUm_ = currentYUm_ - 2*Double.parseDouble(stepSizeField.getText());
+        dp_.setCurrentY(currentYUm_);
     }//GEN-LAST:event_uuButonActionPerformed
 
     private void zDButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zDButtonActionPerformed
@@ -581,6 +595,11 @@ public class XYZPanel extends javax.swing.JPanel {
         // TODO: validate well string
         dp_.setCurrentWell(wellField.getText());
     }//GEN-LAST:event_goToWellButtonActionPerformed
+
+    private void uButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uButtonActionPerformed
+        currentYUm_ = currentYUm_ - Double.parseDouble(stepSizeField.getText());
+        dp_.setCurrentY(currentYUm_);
+    }//GEN-LAST:event_uButtonActionPerformed
 
     private void setControlDefaults(){
         
