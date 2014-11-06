@@ -52,6 +52,7 @@ public class VariableTest {
     public double gatewidthSlider;
     public double fastDelaySlider;
     public double slowDelaySlider;
+    public boolean scanDelCheck;
     
     
   public static VariableTest getInstance() {
@@ -98,6 +99,7 @@ public class VariableTest {
         writer.println("Gate Width: "+gatewidthSlider+";");
         writer.println("Fast Current Delay Setting: "+fastDelaySlider+";");
         writer.println("Slow Current Delay Setting: "+slowDelaySlider+";");
+        writer.println("Enable Fast Delay Sequences?: "+scanDelCheck+";");
         writer.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(SaveData.class.getName()).log(Level.SEVERE, null, ex);

@@ -621,6 +621,7 @@ public class FLIMPanel extends javax.swing.JPanel {
 
     private void scanDelCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scanDelCheckActionPerformed
         sap_ = sap_.setUseScanFLIM(scanDelCheck.isSelected());
+        var_.scanDelCheck=scanDelCheck.isSelected();
     }//GEN-LAST:event_scanDelCheckActionPerformed
 
     private void startFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startFieldActionPerformed
@@ -868,7 +869,8 @@ public class FLIMPanel extends javax.swing.JPanel {
         gatewidthSlider_.setValue((int) Double.parseDouble((var_.findLabelOfProperty("Gate Width"))));
         fastDelaySlider_.setValue((int) Double.parseDouble((var_.findLabelOfProperty("Fast Current Delay Setting"))));
         slowDelaySlider_.setValue((int) Double.parseDouble((var_.findLabelOfProperty("Slow Current Delay Settinge"))));
-        
+        scanDelCheck.setSelected(Boolean.parseBoolean("true"));
+        //(boolean) Boolean.getBoolean(var_.findLabelOfProperty("Enable Fast Delay Sequences"))
     }
 
     
