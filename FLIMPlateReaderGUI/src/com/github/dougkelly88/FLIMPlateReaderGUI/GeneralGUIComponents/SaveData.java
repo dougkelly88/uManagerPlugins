@@ -6,6 +6,7 @@
 package com.github.dougkelly88.FLIMPlateReaderGUI.GeneralGUIComponents;
 
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.SeqAcqProps;
+import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.VariableTest;
 import com.google.common.io.Files;
 import java.awt.Component;
 import java.io.BufferedInputStream;
@@ -27,6 +28,8 @@ import mmcorej.CMMCore;
 import org.micromanager.MMStudio;
 import org.micromanager.api.events.PropertyChangedEvent;
 import java.util.Arrays;
+import java.util.Scanner;
+import com.github.dougkelly88.FLIMPlateReaderGUI.LightPathControls.GUIComponents.LightPathControls;
 
 /**
  *
@@ -37,6 +40,7 @@ public class SaveData extends javax.swing.JPanel {
     CMMCore core_;
     PropertyChangedEvent event_;
     private SeqAcqProps sap_;
+    private VariableTest var_;
     String path=null;
     /**
      * Creates new form SaveData
@@ -45,6 +49,7 @@ public class SaveData extends javax.swing.JPanel {
         initComponents();
         gui_ = MMStudio.getInstance();
         sap_ = SeqAcqProps.getInstance();
+        var_ = VariableTest.getInstance();
         try{
         gui_.registerForEvents(this);
         core_ = gui_.getCore();
@@ -179,7 +184,7 @@ public class SaveData extends javax.swing.JPanel {
     }//GEN-LAST:event_SelectPathButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        FileReader allConfig = null ;   
+       FileReader allConfig = null ;   
         try {
             allConfig = new FileReader("C:\\Users\\Frederik\\Desktop\\ConfigSoftware.txt");
         } catch (FileNotFoundException ex) {
@@ -190,42 +195,27 @@ public class SaveData extends javax.swing.JPanel {
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }    
-        
-        
-        /*
-            File file = new File("C:\\Users\\Frederik\\Desktop\\ConfigSoftware.txt");
-            FileInputStream fis = null;
-            BufferedInputStream bis = null;
-            DataInputStream dis = null;
-            
-            try {
-            fis = new FileInputStream(file);
-            
-            // Here BufferedInputStream is added for fast reading.
-            bis = new BufferedInputStream(fis);
-            dis = new DataInputStream(bis);
-            
-            // dis.available() returns 0 if the file does not have more lines.
-            while (dis.available() != 0) {
-            
-            // this statement reads the line from the file and print it to
-            // the console.
-            
-            TextArea.setText(dis.readLine());
-            
-            }
-            
-            // dispose all the resources after using them.
-            fis.close();
-            bis.close();
-            dis.close();
-            
-            } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            } catch (IOException e) {
-            e.printStackTrace();
+        File allConfigFile=null;
+        allConfigFile=new File("C:\\Users\\Frederik\\Desktop\\ConfigSoftware.txt");
+        /*String entireFileText=null;
+        try {
+            entireFileText = new Scanner(new File("C:\\Users\\Frederik\\Desktop\\ConfigSoftware.txt"))
+                    .useDelimiter("\\A").next();
+            /*String dc="Dichroic:";
+            int c=dc.length();
+            int a=entireFileText.indexOf(dc);
+            String substr=entireFileText.substring(a);
+            int b=substr.indexOf(";");
+            String substr1=substr.substring(c+1, b);
+            SavedDataField.setText(substr1);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(SaveData.class.getName()).log(Level.SEVERE, null, ex);
         }*/
-    
+
+        String Property="Dichroic";
+        SavedDataField.setText(var_.findLabelOfProperty(Property));
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
