@@ -29,7 +29,7 @@ import org.micromanager.MMStudio;
 import org.micromanager.api.events.PropertyChangedEvent;
 import java.util.Arrays;
 import java.util.Scanner;
-import com.github.dougkelly88.FLIMPlateReaderGUI.LightPathControls.GUIComponents.LightPathControls;
+
 
 /**
  *

@@ -34,6 +34,7 @@ import mmcorej.CMMCore;
 import org.micromanager.MMStudio; 
 import org.micromanager.api.events.PropertyChangedEvent; 
 import com.github.dougkelly88.FLIMPlateReaderGUI.XYZClasses.GUIComponents.WellMapDrawPanel;
+import java.io.FileReader;
 
 
 /**
@@ -50,7 +51,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     @Subscribe
     public void onPropertyChanged(PropertyChangedEvent event)
     {
-//        testText.setText("google eventbus triggered in device " + event.getDevice() + "\n with property " + event.getProperty() + "\n changed to value " + event.getValue());
+        statusTextArea.setText("google eventbus triggered in device " + event.getDevice() + "\n with property " + event.getProperty() + "\n changed to value " + event.getValue());
     }
 
     /**
@@ -117,10 +118,12 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         xYSequencing1 = new com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.GUIComponents.XYSequencing();
         jMenuBar2 = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
+        LoadHardwareConfig = new javax.swing.JMenuItem();
         loadPlateConfigMenu = new javax.swing.JMenuItem();
         SetBaseFolderMenu = new javax.swing.JMenuItem();
         SaveMetadataMenu = new javax.swing.JMenuItem();
         quitMenu = new javax.swing.JMenuItem();
+        LoadSoftwareConfig = new javax.swing.JMenuItem();
         toolsMenu = new javax.swing.JMenu();
         advancedMenu = new javax.swing.JMenuItem();
         calibrationMenu = new javax.swing.JMenuItem();
@@ -211,10 +214,18 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(sequenceSetupTabbedPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(sequenceSetupTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
 
         fileMenu.setText("File");
+
+        LoadHardwareConfig.setText("Load Hardware Config...");
+        LoadHardwareConfig.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LoadHardwareConfigActionPerformed(evt);
+            }
+        });
+        fileMenu.add(LoadHardwareConfig);
 
         loadPlateConfigMenu.setText("Load plate properties...");
         loadPlateConfigMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -248,6 +259,14 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
             }
         });
         fileMenu.add(quitMenu);
+
+        LoadSoftwareConfig.setText("Load Software Config...");
+        LoadSoftwareConfig.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LoadSoftwareConfigActionPerformed(evt);
+            }
+        });
+        fileMenu.add(LoadSoftwareConfig);
 
         jMenuBar2.add(fileMenu);
 
@@ -354,14 +373,11 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         File myFile = chooser.getSelectedFile();
         } 
         var_.basepath= chooser.getSelectedFile().getPath();
-//        testText.setText("Selected base path: "+var_.basepath);
-        // TODO add your handling code here:
+        statusTextArea.setText("Selected base path: "+var_.basepath);
     }//GEN-LAST:event_SetBaseFolderMenuActionPerformed
 
     private void SaveMetadataMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveMetadataMenuActionPerformed
-        String ok;
-        ok=var_.saveMetadata();
-           // TODO add your handling code here:
+        var_.saveMetadata();
     }//GEN-LAST:event_SaveMetadataMenuActionPerformed
 
     private void currentBasePathFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_currentBasePathFieldActionPerformed
@@ -385,6 +401,28 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_loadPlateConfigMenuActionPerformed
+
+    private void LoadHardwareConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoadHardwareConfigActionPerformed
+        lightPathControls1.setLoadedHardwareValues();
+    }//GEN-LAST:event_LoadHardwareConfigActionPerformed
+
+    private void LoadSoftwareConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoadSoftwareConfigActionPerformed
+        // Load ConfigSoftware in testText and set loaded values in all panels
+        // load ConfigSoftware in testText
+        FileReader allConfig = null ;   
+        try {
+            allConfig = new FileReader(var_.basepath+"\\ConfigSoftware.txt");
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(SaveData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+                    statusTextArea.read(allConfig, null);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                } 
+        // set loaded values in all panels
+        lightPathControls1.setLoadedSoftwareValues();
+    }//GEN-LAST:event_LoadSoftwareConfigActionPerformed
 
     /**
      * @param args the command line arguments
@@ -419,6 +457,8 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem FLIMHCAHelpMenu;
     private javax.swing.JTabbedPane FLIMPanel;
+    private javax.swing.JMenuItem LoadHardwareConfig;
+    private javax.swing.JMenuItem LoadSoftwareConfig;
     private javax.swing.JMenuItem SaveMetadataMenu;
     private javax.swing.JMenuItem SetBaseFolderMenu;
     private javax.swing.JMenuItem aboutMenu;

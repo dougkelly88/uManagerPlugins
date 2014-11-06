@@ -9,6 +9,14 @@
             <Property name="text" type="java.lang.String" value="File"/>
           </Properties>
           <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="LoadHardwareConfig">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Load Hardware Config..."/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="LoadHardwareConfigActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="loadPlateConfigMenu">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Load plate properties..."/>
@@ -42,6 +50,14 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="quitMenuActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="LoadSoftwareConfig">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Load Software Config..."/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="LoadSoftwareConfigActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -328,7 +344,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="sequenceSetupTabbedPane" alignment="1" pref="0" max="32767" attributes="0"/>
+              <Component id="sequenceSetupTabbedPane" alignment="0" pref="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>

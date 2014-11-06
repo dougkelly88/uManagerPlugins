@@ -71,13 +71,8 @@ public class VariableTest {
         else{
         PrintWriter writer=null;
         try {
-            writer = new PrintWriter(basepath+"\\ConfigSoftware.txt", "UTF-8");
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(SaveData.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(SaveData.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        //Data to write. Please write in the form [writer.println("Label: "+PropertyToSave+";");]. This structure is important for the loading process.
+            writer = new PrintWriter(basepath+"\\ConfigSoftware.txt", "UTF-8"); 
+//Data to write. Please write in the form [writer.println("Label: "+PropertyToSave+";");]. This structure is important for the loading process.
         writer.println("Data Document");
         writer.println();
         writer.println();
@@ -93,6 +88,12 @@ public class VariableTest {
         writer.println("Filter Cube: "+FilterCubeComboBoxSelectedItem+";");
         writer.println("Light Path Prism: "+SwitchPortComboBoxSelectedItem+";");
         writer.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(SaveData.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(SaveData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
         }
         String ok="OK!";
         return ok;
