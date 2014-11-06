@@ -16,9 +16,9 @@
         <copy file="C:/Users/dk1109/repositories/uManagerPlugins/FLIMPlateReaderGUI/dist/FLIMPlateReaderGUI.jar" flatten="true" todir="C:/Program Files (x86)/Micro-Manager-1.4-32 20 Oct 2014 build/mmplugins/"/>
     </target>
      general -->
-    <target name="-post-jar">
+<!--    <target name="-post-jar">
         <copy file="${dist.jar}" flatten="true" todir="C:/Program Files (x86)/Micro-Manager-1.4-32 20 Oct 2014 build/mmplugins/"/>
-    </target>
+    </target>-->
     
     <!--
 
