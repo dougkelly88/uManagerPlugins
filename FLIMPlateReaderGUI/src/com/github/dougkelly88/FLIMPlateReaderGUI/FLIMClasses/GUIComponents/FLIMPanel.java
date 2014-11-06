@@ -10,6 +10,7 @@ import com.github.dougkelly88.FLIMPlateReaderGUI.FLIMClasses.Classes.DelayTableM
 import com.github.dougkelly88.FLIMPlateReaderGUI.FLIMClasses.Classes.FindMaxpoint;
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralGUIComponents.SliderControl;
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.SeqAcqProps;
+import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.VariableTest;
 import com.google.common.eventbus.Subscribe;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -52,6 +53,7 @@ public class FLIMPanel extends javax.swing.JPanel {
     FindMaxpoint fm_;
     ChartPanel chartPanel_;
     private SeqAcqProps sap_;
+    private VariableTest var_;
     
     @Subscribe
     public PropertyChangedEvent onPropertyChanged(PropertyChangedEvent event)
@@ -69,6 +71,7 @@ public class FLIMPanel extends javax.swing.JPanel {
         
         gui_ = MMStudio.getInstance();
         sap_ = SeqAcqProps.getInstance().setUseScanFLIM(false);
+        var_= VariableTest.getInstance();
         try{
             gui_.registerForEvents(this);
             core_ = gui_.getCore();
@@ -834,30 +837,39 @@ public class FLIMPanel extends javax.swing.JPanel {
     }
     
     private void mcpSliderPropertyChange(java.beans.PropertyChangeEvent evt) {
-
+        var_.mcpSlider= mcpSlider_.getValue();
         FLIMTestText.setText("MCP slider value = " + mcpSlider_.getValue());
         
     }                                        
     
     private void gatewidthSliderPropertyChange(java.beans.PropertyChangeEvent evt) {
-
+        var_.gatewidthSlider= gatewidthSlider_.getValue();
         FLIMTestText.setText("Gatewidth value = " + gatewidthSlider_.getValue());
         
     }        
     
     private void fastDelaySliderPropertyChange(java.beans.PropertyChangeEvent evt){
-    
+        var_.fastDelaySlider= fastDelaySlider_.getValue();
         FLIMTestText.setText("Fast delay value = " + fastDelaySlider_.getValue());
         
     }
     
-     private void slowDelaySliderPropertyChange(java.beans.PropertyChangeEvent evt){
-    
-        FLIMTestText.setText("Slow delay value = " + slowDelaySlider_.getValue());
-        
+    private void slowDelaySliderPropertyChange(java.beans.PropertyChangeEvent evt){
+        var_.slowDelaySlider= slowDelaySlider_.getValue();
+        //FLIMTestText.setText("Slow delay value = " + slowDelaySlider_.getValue());
+        double a=Double.valueOf(var_.findLabelOfProperty("MCP Voltage"));
+        mcpSlider_.setValue((int)a);
+        FLIMTestText.setText(""+a);
     }
     
-    
+    public void setLoadedSoftwareValues(){
+        // searching label of property in SoftwareConfig and set values in FLIMPanle
+        mcpSlider_.setValue((int) Double.parseDouble(var_.findLabelOfProperty("MCP Voltage")));
+        gatewidthSlider_.setValue((int) Double.parseDouble((var_.findLabelOfProperty("Gate Width"))));
+        fastDelaySlider_.setValue((int) Double.parseDouble((var_.findLabelOfProperty("Fast Current Delay Setting"))));
+        slowDelaySlider_.setValue((int) Double.parseDouble((var_.findLabelOfProperty("Slow Current Delay Settinge"))));
+        
+    }
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

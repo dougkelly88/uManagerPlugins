@@ -47,6 +47,12 @@ public class VariableTest {
     public StrVector SwitchPortComboBox;
     public String SwitchPortComboBoxSelectedItem;
     
+    //FLIMPanel:
+    public double mcpSlider;
+    public double gatewidthSlider;
+    public double fastDelaySlider;
+    public double slowDelaySlider;
+    
     
   public static VariableTest getInstance() {
      return fINSTANCE;
@@ -77,7 +83,7 @@ public class VariableTest {
         writer.println();
         writer.println();
         writer.println("General");
-        writer.println("Base path: "+basepath);
+        writer.println("Base path: "+basepath+";");
         writer.println();
         writer.println("LightPathControl:");
         writer.println("Dichroic: "+DichroicComboBoxSelectedItem+";");
@@ -87,6 +93,11 @@ public class VariableTest {
         writer.println("Objective: "+ObjectiveComboBoxSelectedItem+";");
         writer.println("Filter Cube: "+FilterCubeComboBoxSelectedItem+";");
         writer.println("Light Path Prism: "+SwitchPortComboBoxSelectedItem+";");
+        writer.println("FLIM:");
+        writer.println("MCP Voltage: "+mcpSlider+";");
+        writer.println("Gate Width: "+gatewidthSlider+";");
+        writer.println("Fast Current Delay Setting: "+fastDelaySlider+";");
+        writer.println("Slow Current Delay Setting: "+slowDelaySlider+";");
         writer.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(SaveData.class.getName()).log(Level.SEVERE, null, ex);
