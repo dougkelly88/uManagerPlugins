@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -55,6 +56,7 @@ public class VariableTest {
     public boolean scanDelCheck;
     public boolean fastBoxCalibratedCheck;
     public boolean slowBoxCalibratedCheck;
+    public ArrayList<Integer> delays;
     
     
     
@@ -106,6 +108,7 @@ public class VariableTest {
         writer.println("Calibrate? (fastBox): "+fastBoxCalibratedCheck+";");
         writer.println("Fast Current Delay Setting: "+fastDelaySlider+";");
         writer.println("Enable Fast Delay Sequences?: "+scanDelCheck+";");
+        writer.println("Delay Sequence in [ps]: "+delays+";");
         writer.println();
         writer.println("Slow Delay Box:");
         writer.println("Calibrate? (slowBox): "+slowBoxCalibratedCheck+";");
@@ -152,5 +155,64 @@ public class VariableTest {
             label=substr.substring(lengthProperty+2, b);
         }
         return label; 
+  }
+    public ArrayList<Integer> findLabelOfPropertyForArrays(String searchedProperty){
+            //String entireFileText= new Scanner(new File("C:\\Users\\Frederik\\Desktop\\ConfigSoftware.txt"))
+             // .useDelimiter("\\A").next();
+        String label=null;
+        ArrayList<Integer> delays=null;
+        int count=0;
+      // Check if basepath is defined. If yes contiue, if not open dialog.        
+        if (basepath==null){
+        JOptionPane.showMessageDialog(null,"Please choose a base path!");
+        }
+        else{
+        PrintWriter writer=null;
+            try {
+               
+                entireFileText = new Scanner(new File(basepath+"\\ConfigSoftware.txt"))
+                .useDelimiter("\\A").next();
+        
+            } catch (FileNotFoundException ex) {
+                    Logger.getLogger(SaveData.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            int lengthProperty2=searchedProperty.length();
+            int aa=entireFileText.indexOf(searchedProperty);
+            String subStrAll=entireFileText.substring(aa);
+            String findStr = ",";
+            int lastIndex = 0;
+            while(lastIndex != -1){
+
+                lastIndex = subStrAll.indexOf(findStr,lastIndex);
+
+                if( lastIndex != -1){
+                  count ++;
+                    lastIndex+=findStr.length();
+                }
+            }
+            
+            
+            int b=subStrAll.indexOf(":");
+            int bb=subStrAll.indexOf(";");
+            int bbb=0;
+            int labelInt=0;
+            String subStr1=subStrAll.substring(b+3,bb-1);
+            for(int i=0; i<count; i++)
+            {
+                bbb=subStr1.indexOf(",");
+                label=subStr1.substring(0,bbb);
+                labelInt=(int) Double.parseDouble(label);
+                delays.add(labelInt);
+                subStr1=subStr1.substring(bbb+2);
+                               
+              
+            }
+            label=subStr1;
+            labelInt=(int) Double.parseDouble(label);
+            delays.add(count+1,labelInt);
+        }
+        //label=Integer.toString(labelInt);
+        return delays; 
   }
 }

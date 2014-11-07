@@ -6,6 +6,7 @@
 
 package com.github.dougkelly88.FLIMPlateReaderGUI.FLIMClasses.Classes;
 
+import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.VariableTest;
 import static java.lang.Math.round;
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
@@ -22,9 +23,12 @@ public class DelayTableModel extends AbstractTableModel {
     private int max_ = 16666;
     private int min_ = 0;
     private int incr_ = 25;
+    private VariableTest var_;
 //    private SeqAcqProps sap_;
     
-    public DelayTableModel(){}
+    public DelayTableModel(){
+    var_= VariableTest.getInstance();
+    }
     
     public DelayTableModel(String[] columnNames) {
          this.colNames_ = columnNames;
@@ -36,6 +40,7 @@ public class DelayTableModel extends AbstractTableModel {
             delays.set(i, validateData(delays.get(i)));
         }
         this.data_ = delays;
+        
         fireTableDataChanged();
 //        sap_ = SeqAcqProps.getInstance().setDelaysArray(0, delays);
     }
