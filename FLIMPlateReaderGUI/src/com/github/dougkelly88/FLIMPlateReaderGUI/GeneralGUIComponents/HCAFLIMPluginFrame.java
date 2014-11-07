@@ -80,13 +80,8 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         sap_ = SeqAcqProps.getInstance();
         pp_ = new PlateProperties();
 
-//        tsi_ = SeqAcqProps.getInstance();
         var_ = VariableTest.getInstance();
-        
-//        sap_ = new SequencedAcquisitionProperties.Builder().useScanFLIM(true).build();
-//        sap_.addPropertyChangeListener(null);
-//        fLIMPanel1.initSequencedAcquisitionProperties(sap_, frame_);
-//        fLIMPanel1.sap_ = sap_;
+        currentBasePathField.setText(var_.basepath);
     }
 
     /**
@@ -378,7 +373,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         try {
             Desktop.getDesktop().browse(new URL("https://github.com/dougkelly88/uManagerPlugins/wiki/0-Home").toURI());
         } catch (Exception e) {
-            e.printStackTrace();
+            statusTextArea.setText("Problem displaying the help wiki: " + e.getMessage());
         }
     }//GEN-LAST:event_FLIMHCAHelpMenuActionPerformed
 
@@ -389,10 +384,11 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         Component parentFrame = null;
         int returnVal = chooser.showOpenDialog(parentFrame);
         if(returnVal == JFileChooser.APPROVE_OPTION) {
-        File myFile = chooser.getSelectedFile();
+            var_.basepath= chooser.getSelectedFile().getPath();
         } 
-        var_.basepath= chooser.getSelectedFile().getPath();
-        statusTextArea.setText("Selected base path: "+var_.basepath);
+        
+        statusTextArea.setText("Selected base path: " + var_.basepath);
+        currentBasePathField.setText(var_.basepath);
     }//GEN-LAST:event_SetBaseFolderMenuActionPerformed
 
     private void SaveMetadataMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveMetadataMenuActionPerformed
@@ -411,8 +407,11 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
             try {
                 pp_ = pp_.loadProperties(file);
                 xYZPanel1.onPlateConfigLoaded(true, pp_);
+                xYSequencing1.onPlateConfigLoaded(true, pp_);
             } catch (Exception e) {
                 System.out.println("problem accessing file"+file.getAbsolutePath());
+                statusTextArea.setText("Problem accessing plate config at " + file.getAbsolutePath() 
+                        + " resulting in error: " + e.getMessage());
             }
         } else {
             System.out.println("File access cancelled by user.");

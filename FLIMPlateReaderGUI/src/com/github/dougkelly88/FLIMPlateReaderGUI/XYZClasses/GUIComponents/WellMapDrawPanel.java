@@ -12,8 +12,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
@@ -32,7 +30,7 @@ public class WellMapDrawPanel extends JPanel {
         int r_ = 127;
         String currentWell_ = "C4";
         String wellShape_ = "Square";
-        double wellSizeUm = 9000;
+        double wellSizeUm = 6500;
         boolean enabled_ = false;   // start up disabled, enable upon loading plate stuff. 
         PlateProperties pp_ = new PlateProperties();
         double conversionFactor_ = pp_.getWellSize()/r_;    //N.B. might be useful to have this as 1x2 array with x, y conv, which could be negative...
@@ -55,7 +53,7 @@ public class WellMapDrawPanel extends JPanel {
                         boolean inBounds = false;
                         Point p = e.getPoint();
                         // check if point is within bounds of well...
-                        if (pp_.getWellShape() == "Round"){
+                        if ("Round".equals(pp_.getWellShape())){
                             inBounds = ( Math.pow((p.x + currentFOVw_/2 - r_),2) +
                                     Math.pow((p.y + currentFOVh_/2 - r_),2) < r_*r_ );
                         }
@@ -80,14 +78,12 @@ public class WellMapDrawPanel extends JPanel {
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
 
-            g.setFont((new Font("Dialog", Font.PLAIN, 16)));
-            g.drawString(currentWell_, (r_+1 - 8), (r_+1 + 8)); // fix - see below
-            
-//            g.setFont(new Font("Dialog", Font.PLAIN, 32));
-//            
-//            Rectangle2D bounds = g.getFontMetrics().getStringBounds(currentWell_, g);
-//            g.drawString(currentWell_, (int) ((r_ - bounds.getWidth()) / 2), r_);     
-
+            Font font = g.getFont();
+            g.setFont(font.deriveFont(Font.PLAIN, 40));
+            Rectangle2D bounds = g.getFontMetrics().getStringBounds(currentWell_, g);
+            g.drawString(currentWell_, (r_+1 - (int)(bounds.getWidth()/2)), 
+                    (r_+1 + (int)(bounds.getHeight()/4))); // fix - see below
+    
             g.setColor(Color.CYAN);
             
             if ("Square".equals(pp_.getWellShape()))

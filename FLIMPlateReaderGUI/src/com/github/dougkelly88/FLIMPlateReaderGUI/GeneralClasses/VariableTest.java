@@ -28,7 +28,7 @@ public class VariableTest {
     public int tet2;
     
     // General variables:
-    public String basepath="C:\\Users\\Frederik\\Desktop";//Default basepath
+    public String basepath=basepath = System.getProperty("user.home");//Default basepath
     public String entireFileText;
     
     // LightPathControl variables:
@@ -49,7 +49,8 @@ public class VariableTest {
     
     
   public static VariableTest getInstance() {
-     return fINSTANCE;
+      
+      return fINSTANCE;
   }
 
   // PRIVATE
