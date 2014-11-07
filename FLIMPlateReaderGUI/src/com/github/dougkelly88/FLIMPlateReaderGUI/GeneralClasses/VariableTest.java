@@ -53,6 +53,9 @@ public class VariableTest {
     public double fastDelaySlider;
     public double slowDelaySlider;
     public boolean scanDelCheck;
+    public boolean fastBoxCalibratedCheck;
+    public boolean slowBoxCalibratedCheck;
+    
     
     
   public static VariableTest getInstance() {
@@ -79,13 +82,14 @@ public class VariableTest {
         PrintWriter writer=null;
         try {
             writer = new PrintWriter(basepath+"\\ConfigSoftware.txt", "UTF-8"); 
-//Data to write. Please write in the form [writer.println("Label: "+PropertyToSave+";");]. This structure is important for the loading process.
+    //Data to write. Please write in the form [writer.println("Label: "+PropertyToSave+";");]. This structure is important for the loading process.
         writer.println("Data Document");
         writer.println();
-        writer.println();
+        writer.println("-----------------------------------------------------------------------------");
         writer.println("General");
         writer.println("Base path: "+basepath+";");
         writer.println();
+        writer.println("-----------------------------------------------------------------------------");
         writer.println("LightPathControl:");
         writer.println("Dichroic: "+DichroicComboBoxSelectedItem+";");
         writer.println("Emission: "+EmissionComboBoxSelectedItem+";");
@@ -94,12 +98,23 @@ public class VariableTest {
         writer.println("Objective: "+ObjectiveComboBoxSelectedItem+";");
         writer.println("Filter Cube: "+FilterCubeComboBoxSelectedItem+";");
         writer.println("Light Path Prism: "+SwitchPortComboBoxSelectedItem+";");
+        writer.println();
+        writer.println("-----------------------------------------------------------------------------");
         writer.println("FLIM:");
+        writer.println();
+        writer.println("Fast Delay Box:");
+        writer.println("Calibrate? (fastBox): "+fastBoxCalibratedCheck+";");
+        writer.println("Fast Current Delay Setting: "+fastDelaySlider+";");
+        writer.println("Enable Fast Delay Sequences?: "+scanDelCheck+";");
+        writer.println();
+        writer.println("Slow Delay Box:");
+        writer.println("Calibrate? (slowBox): "+slowBoxCalibratedCheck+";");
+        writer.println("Slow Current Delay Setting: "+slowDelaySlider+";");
+        writer.println();
+        writer.println("HRI Controls:");
         writer.println("MCP Voltage: "+mcpSlider+";");
         writer.println("Gate Width: "+gatewidthSlider+";");
-        writer.println("Fast Current Delay Setting: "+fastDelaySlider+";");
-        writer.println("Slow Current Delay Setting: "+slowDelaySlider+";");
-        writer.println("Enable Fast Delay Sequences?: "+scanDelCheck+";");
+        writer.println("-----------------------------------------------------------------------------");
         writer.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(SaveData.class.getName()).log(Level.SEVERE, null, ex);
@@ -114,7 +129,7 @@ public class VariableTest {
   public String findLabelOfProperty(String searchedProperty){
             //String entireFileText= new Scanner(new File("C:\\Users\\Frederik\\Desktop\\ConfigSoftware.txt"))
              // .useDelimiter("\\A").next();
-      String label=null;
+        String label=null;
       // Check if basepath is defined. If yes contiue, if not open dialog.        
         if (basepath==null){
         JOptionPane.showMessageDialog(null,"Please choose a base path!");
