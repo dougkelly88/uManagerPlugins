@@ -36,6 +36,7 @@ public class PlateMapDrawPanel extends JPanel {
         Rectangle selection_;
         boolean isSelecting_ = false;
         ArrayList<ArrayList<Boolean>> wellsSelected_;
+        Color transRed = new Color(128, 0, 0, 64);
         
         int[] plateSizePixels = {470, 313};
         String currentWell_ = "C4";
@@ -62,12 +63,12 @@ public class PlateMapDrawPanel extends JPanel {
 
                 @Override
                 public void mouseReleased(MouseEvent e) {
-                    if (enabled_){
+//                    if (enabled_){
                         isSelecting_ = false;
                         selectionEnd_ = e.getPoint();
                         getSelectedWells();
                         repaint();
-                    }
+//                    }
                 }              
                 
             });
@@ -81,14 +82,16 @@ public class PlateMapDrawPanel extends JPanel {
                             e.getPoint().x - selectionStart_.x,
                             e.getPoint().y - selectionStart_.y
                     );
+//                    getSelectedWells();
                     repaint();
                 }
+                
             });
             
             wellsSelected_ = new ArrayList<ArrayList<Boolean>>();
-            for (int cols = 0; cols < pp_.getPlateRows(); cols++){
+            for (int cols = 0; cols < pp_.getPlateColumns(); cols++){
                 ArrayList<Boolean> temp = new ArrayList<Boolean>();
-                for (int rows = 0; rows < pp_.getPlateColumns(); rows++){
+                for (int rows = 0; rows < pp_.getPlateRows(); rows++){
                     temp.add(false);
                 }
                 wellsSelected_.add(temp);
@@ -126,11 +129,19 @@ public class PlateMapDrawPanel extends JPanel {
                     int x = (int)(wellSpaceH/2) + cols*wellSpaceH - (int) (wellSize/2);
                     int y = (int)(wellSpaceV/2) + rows*wellSpaceV - (int) (wellSize/2);
                     if ("Square".equals(pp_.getWellShape())){
-                        if (temp.get(rows)){g.fillRect(x, y, wellSize - 2, wellSize - 2);}
+                        if (temp.get(rows)){
+                            g.setColor(transRed);
+                            g.fillRect(x + 1, y + 1, wellSize - 2, wellSize - 2);
+                        }
+                        g.setColor(Color.CYAN);
                         g.drawRect(x, y, wellSize, wellSize);
                     }
                     else {
-                        if (temp.get(rows)){g.fillOval(x, y, wellSize - 2, wellSize - 2);}
+                        if (temp.get(rows)){
+                            g.setColor(transRed);
+                            g.fillOval(x + 1, y + 1, wellSize - 2, wellSize - 2);
+                        }
+                        g.setColor(Color.CYAN);
                         g.drawOval(x, y, wellSize, wellSize);
                     }
                     
@@ -139,7 +150,7 @@ public class PlateMapDrawPanel extends JPanel {
             }
             
             if (isSelecting_) {
-                g.setColor(new Color(128, 0, 0, 64));
+                g.setColor(transRed);
                 g.fillRect(selection_.x, selection_.y, 
                         selection_.width, selection_.height);
                 
@@ -156,17 +167,18 @@ public class PlateMapDrawPanel extends JPanel {
             int wellSpaceV = (int) (pp_.getWellSpacingV()/conversionFactor_);
             int wellSize = (int) (pp_.getWellSize()/conversionFactor_);
             
-            for (int rows = 0; rows < pp_.getPlateRows(); rows++){
-                ArrayList<Boolean> temp = wellsSelected_.get(rows);
-                int wellYPixels = (int)(wellSpaceV/2) + rows*wellSpaceV;
-                for (int cols = 0; cols < pp_.getPlateColumns(); cols++){
+            for (int cols = 0; cols < pp_.getPlateColumns(); cols++){
+                ArrayList<Boolean> temp = wellsSelected_.get(cols);
+                for (int rows = 0; rows < pp_.getPlateRows(); rows++){
+                    int wellYPixels = (int)(wellSpaceV/2) + rows*wellSpaceV;
                     int wellXPixels = (int)(wellSpaceH/2) + cols*wellSpaceH;
                     
                     if (selection_.contains(wellXPixels, wellYPixels)){
-                        temp.set(cols, true);
+                        
+                        temp.set(rows, !(temp.get(rows)));
                     }
                 }
-                wellsSelected_.set(rows, temp);
+                wellsSelected_.set(cols, temp);
             }
         }
         
