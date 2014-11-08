@@ -7,16 +7,22 @@
 package com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.GUIComponents;
 
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.PlateProperties;
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.List;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 import javax.swing.JPanel;
 
 /**
@@ -25,6 +31,12 @@ import javax.swing.JPanel;
  */
 public class PlateMapDrawPanel extends JPanel {
 
+        Point selectionStart_;
+        Point selectionEnd_;
+        Rectangle selection_;
+        boolean isSelecting_ = false;
+        ArrayList<ArrayList<Boolean>> wellsSelected_;
+        
         int[] plateSizePixels = {470, 313};
         String currentWell_ = "C4";
         String wellShape_ = "Square";
@@ -44,22 +56,49 @@ public class PlateMapDrawPanel extends JPanel {
                 
                 @Override
                 public void mousePressed(MouseEvent e) {
-
+                    selectionStart_ = e.getPoint();
+                    isSelecting_ = true;
                 }
 
                 @Override
                 public void mouseReleased(MouseEvent e) {
                     if (enabled_){
-                        // handle stuff - move well, select wells?
-                        // check paint demo for select with ROI
+                        isSelecting_ = false;
+                        selectionEnd_ = e.getPoint();
+                        getSelectedWells();
+                        repaint();
                     }
+                }              
+                
+            });
+            
+            addMouseMotionListener(new MouseMotionAdapter(){
+                @Override
+                public void mouseDragged(MouseEvent e){
+                    selection_ = new Rectangle(
+                            selectionStart_.x,
+                            selectionStart_.y,
+                            e.getPoint().x - selectionStart_.x,
+                            e.getPoint().y - selectionStart_.y
+                    );
+                    repaint();
                 }
             });
+            
+            wellsSelected_ = new ArrayList<ArrayList<Boolean>>();
+            for (int cols = 0; cols < pp_.getPlateRows(); cols++){
+                ArrayList<Boolean> temp = new ArrayList<Boolean>();
+                for (int rows = 0; rows < pp_.getPlateColumns(); rows++){
+                    temp.add(false);
+                }
+                wellsSelected_.add(temp);
+            }
         }
 
         @Override
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
+            
             int wellSpaceH = (int) (pp_.getWellSpacingH()/conversionFactor_);
             int wellSpaceV = (int) (pp_.getWellSpacingV()/conversionFactor_);
             int wellSize = (int) (pp_.getWellSize()/conversionFactor_);
@@ -69,11 +108,12 @@ public class PlateMapDrawPanel extends JPanel {
             
             for (int cols = 0; cols < pp_.getPlateColumns(); cols++){
                 
+                ArrayList<Boolean> temp = wellsSelected_.get(cols);
+                
                 for (int rows = 0; rows < pp_.getPlateRows(); rows++){
 
                     g.setColor(Color.BLACK);
-                    
-                    
+
                     String wellString = Character.toString((char) (65 + rows)) + Integer.toString(cols+1);
                     Rectangle2D bounds = g.getFontMetrics().getStringBounds(wellString, g);
                     
@@ -83,22 +123,52 @@ public class PlateMapDrawPanel extends JPanel {
                     
                     g.setColor(Color.CYAN);
                     
-                    if ("Square".equals(pp_.getWellShape()))
-                        g.drawRect((int)(wellSpaceH/2) + cols*wellSpaceH - (int) (wellSize/2),
-                                (int)(wellSpaceV/2) + rows*wellSpaceV - (int) (wellSize/2), 
-                                wellSize, wellSize);
-                    else 
-                        g.drawOval((int)(wellSpaceH/2) + cols*wellSpaceH - (int) (wellSize/2),
-                                (int)(wellSpaceV/2) + rows*wellSpaceV - (int) (wellSize/2), 
-                                wellSize, wellSize);
+                    int x = (int)(wellSpaceH/2) + cols*wellSpaceH - (int) (wellSize/2);
+                    int y = (int)(wellSpaceV/2) + rows*wellSpaceV - (int) (wellSize/2);
+                    if ("Square".equals(pp_.getWellShape())){
+                        if (temp.get(rows)){g.fillRect(x, y, wellSize - 2, wellSize - 2);}
+                        g.drawRect(x, y, wellSize, wellSize);
+                    }
+                    else {
+                        if (temp.get(rows)){g.fillOval(x, y, wellSize - 2, wellSize - 2);}
+                        g.drawOval(x, y, wellSize, wellSize);
+                    }
                     
                 }
             
             }
-           
+            
+            if (isSelecting_) {
+                g.setColor(new Color(128, 0, 0, 64));
+                g.fillRect(selection_.x, selection_.y, 
+                        selection_.width, selection_.height);
+                
+            }
+            
         }
         
-       
+        private void getSelectedWells(){
+            // convert selected region into list of selected wells
+            // TODO: currently selects well IFF centre of well is enclosed in
+            //      selection rectangle. Update such that well is selected if 
+            //      any part is enclosed. 
+            int wellSpaceH = (int) (pp_.getWellSpacingH()/conversionFactor_);
+            int wellSpaceV = (int) (pp_.getWellSpacingV()/conversionFactor_);
+            int wellSize = (int) (pp_.getWellSize()/conversionFactor_);
+            
+            for (int rows = 0; rows < pp_.getPlateRows(); rows++){
+                ArrayList<Boolean> temp = wellsSelected_.get(rows);
+                int wellYPixels = (int)(wellSpaceV/2) + rows*wellSpaceV;
+                for (int cols = 0; cols < pp_.getPlateColumns(); cols++){
+                    int wellXPixels = (int)(wellSpaceH/2) + cols*wellSpaceH;
+                    
+                    if (selection_.contains(wellXPixels, wellYPixels)){
+                        temp.set(cols, true);
+                    }
+                }
+                wellsSelected_.set(rows, temp);
+            }
+        }
         
         public void setCurrentWell(String well){
             currentWell_ = well;
@@ -111,6 +181,16 @@ public class PlateMapDrawPanel extends JPanel {
             // update conversion factor based on plate...
             conversionFactor_ = ((pp_.getPlateColumns() + 1) * 
                 pp_.getWellSpacingH())/plateSizePixels[0];
+            
+            wellsSelected_.clear();
+            for (int cols = 0; cols < pp_.getPlateRows(); cols++){
+                ArrayList<Boolean> temp = new ArrayList<Boolean>();
+                for (int rows = 0; rows < pp_.getPlateColumns(); rows++){
+                    temp.add(false);
+                }
+                wellsSelected_.add(temp);
+            }
+            
             repaint();
         }
         
