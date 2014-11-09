@@ -12,16 +12,10 @@ import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.VariableTest;
 import com.google.common.eventbus.Subscribe;
 import java.awt.Component;
 import java.awt.Desktop;
-import java.awt.Dialog;
-import java.awt.Image;
-import java.awt.Toolkit; 
-import java.awt.event.ActionListener; 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.URL; 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,11 +23,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.WindowConstants;
 import mmcorej.CMMCore; 
 import org.micromanager.MMStudio; 
 import org.micromanager.api.events.PropertyChangedEvent; 
-import com.github.dougkelly88.FLIMPlateReaderGUI.XYZClasses.GUIComponents.WellMapDrawPanel;
 import java.io.FileReader;
 
 
@@ -82,6 +74,8 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
 
         var_ = VariableTest.getInstance();
         currentBasePathField.setText(var_.basepath);
+        
+        loadDefaultPlateConfig();
     }
 
     /**
@@ -415,11 +409,23 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
             }
         } else {
             System.out.println("File access cancelled by user.");
-        }
-        
+        }      
         
     }//GEN-LAST:event_loadPlateConfigMenuActionPerformed
 
+    private void loadDefaultPlateConfig(){
+        File file = new File("C:/Program Files (x86)/Micro-Manager-1.4-32 20 Oct 2014 build/mmplugins/OpenHCAFLIM/XPLT/Greiner uClear.xplt"); // for debug, make more general
+        try{
+            pp_ = pp_.loadProperties(file);
+            xYZPanel1.onPlateConfigLoaded(true, pp_);
+            xYSequencing1.onPlateConfigLoaded(true, pp_);
+        } catch (Exception e) {
+                System.out.println("problem accessing file"+file.getAbsolutePath());
+                statusTextArea.setText("Problem accessing plate config at " + file.getAbsolutePath() 
+                        + " resulting in error: " + e.getMessage());
+            }
+    }
+    
     private void LoadHardwareConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoadHardwareConfigActionPerformed
         lightPathControls1.setLoadedHardwareValues();
     }//GEN-LAST:event_LoadHardwareConfigActionPerformed
