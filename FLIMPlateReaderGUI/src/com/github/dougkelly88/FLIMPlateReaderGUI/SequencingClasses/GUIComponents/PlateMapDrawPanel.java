@@ -190,9 +190,9 @@ public class PlateMapDrawPanel extends JPanel {
                 pp_.getWellSpacingH())/plateSizePixels[0];
             
             wellsSelected_.clear();
-            for (int cols = 0; cols < pp_.getPlateRows(); cols++){
+            for (int cols = 0; cols < pp_.getPlateColumns(); cols++){
                 ArrayList<Boolean> temp = new ArrayList<Boolean>();
-                for (int rows = 0; rows < pp_.getPlateColumns(); rows++){
+                for (int rows = 0; rows < pp_.getPlateRows(); rows++){
                     temp.add(false);
                 }
                 wellsSelected_.add(temp);
