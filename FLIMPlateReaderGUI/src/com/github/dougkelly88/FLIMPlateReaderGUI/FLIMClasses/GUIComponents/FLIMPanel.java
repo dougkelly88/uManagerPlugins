@@ -566,14 +566,10 @@ public class FLIMPanel extends javax.swing.JPanel {
         ArrayList<Integer> dum = SeqAcqProps.getInstance().getDelaysArray().get(0);
         int lastseqacqdel = dum.get(dum.size() - 1);
 
-        FLIMTestText.setText("Last entry in seq \n acq del array \n" + lastseqacqdel);
+        //FLIMTestText.setText("Last entry in seq \n acq del array \n" + lastseqacqdel);
 //        fm_.setLifetime(2000);
         FLIMTestText.setText("Lifetime = " + fm_.getLifetime());
-        //tableModel_.addWholeData(var_.findLabelOfPropertyForArrays("Delay Sequence in [ps]"));
-        ArrayList<Integer> del=var_.findLabelOfPropertyForArrays("Delay Sequence in [ps]");
-        //FLIMTestText.setText(Integer.toString(del.get(1))+Integer.toString(del.get(3))+Integer.toString(del.get(10)));
-        //FLIMTestText.setText(del);
-        tableModel_.addWholeData(del);
+
     }//GEN-LAST:event_getDichroicActionPerformed
 
     private void inhibitCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inhibitCheckActionPerformed
@@ -898,7 +894,7 @@ public class FLIMPanel extends javax.swing.JPanel {
         gatewidthSlider_.setValue((int) Double.parseDouble((var_.findLabelOfProperty("Gate Width"))));
         fastDelaySlider_.setValue((int) Double.parseDouble((var_.findLabelOfProperty("Fast Current Delay Setting"))));
         slowDelaySlider_.setValue((int) Double.parseDouble((var_.findLabelOfProperty("Slow Current Delay Setting"))));
-
+        tableModel_.addWholeData(var_.findLabelOfPropertyForArrayList("Delay Sequence in [ps]"));
     }
 
     

@@ -10,11 +10,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.text.Element;
 import mmcorej.StrVector;
 
 /**
@@ -156,11 +158,10 @@ public class VariableTest {
         }
         return label; 
   }
-    public ArrayList<Integer> findLabelOfPropertyForArrays(String searchedProperty){
-            //String entireFileText= new Scanner(new File("C:\\Users\\Frederik\\Desktop\\ConfigSoftware.txt"))
-             // .useDelimiter("\\A").next();
+    public ArrayList<Integer> findLabelOfPropertyForArrayList(String searchedProperty){
+
         String label=null;
-        ArrayList<Integer> delays=null;
+        ArrayList<Integer> delaysVar= new ArrayList<Integer>();
         int count=0;
       // Check if basepath is defined. If yes contiue, if not open dialog.        
         if (basepath==null){
@@ -176,12 +177,13 @@ public class VariableTest {
             } catch (FileNotFoundException ex) {
                     Logger.getLogger(SaveData.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+        //Searching property in txt file    
             int lengthProperty2=searchedProperty.length();
             int aa=entireFileText.indexOf(searchedProperty);
             String subStrAll=entireFileText.substring(aa);
             String findStr = ",";
             int lastIndex = 0;
+        // counting entries in txt file for property
             while(lastIndex != -1){
 
                 lastIndex = subStrAll.indexOf(findStr,lastIndex);
@@ -191,28 +193,29 @@ public class VariableTest {
                     lastIndex+=findStr.length();
                 }
             }
-            
-            
+        // Cut out the values
+            int a=count;
             int b=subStrAll.indexOf(":");
             int bb=subStrAll.indexOf(";");
             int bbb=0;
             int labelInt=0;
             String subStr1=subStrAll.substring(b+3,bb-1);
+        // writes every single value into arrayList
             for(int i=0; i<count; i++)
             {
                 bbb=subStr1.indexOf(",");
                 label=subStr1.substring(0,bbb);
-                labelInt=(int) Double.parseDouble(label);
-                delays.add(labelInt);
+                labelInt= Integer.parseInt(label);
+                delaysVar.add(labelInt);
                 subStr1=subStr1.substring(bbb+2);
                                
               
             }
             label=subStr1;
-            labelInt=(int) Double.parseDouble(label);
-            delays.add(count+1,labelInt);
-        }
-        //label=Integer.toString(labelInt);
-        return delays; 
+            labelInt=Integer.parseInt(label);
+            delaysVar.add(labelInt);
+    }
+        
+        return delaysVar; 
   }
 }
