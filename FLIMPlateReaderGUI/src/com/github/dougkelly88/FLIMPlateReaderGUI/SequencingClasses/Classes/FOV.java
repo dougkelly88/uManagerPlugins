@@ -16,6 +16,7 @@ public class FOV {
     double y_;
     double z_;
     String well_;
+    PlateProperties pp_;
     
     // initialise with nonsense - remove entirely?
 //    FOV(){
@@ -32,11 +33,12 @@ public class FOV {
      * @param z
      * @param well 
      */
-    public FOV(double x, double y, double z, String well){
+    public FOV(double x, double y, double z, String well, PlateProperties pp){
         x_ = x;
         y_ = y;
         z_ = z;
         well_ = well;
+        pp_ = pp;
     }
     
     /**
@@ -50,6 +52,7 @@ public class FOV {
         x_ = x;
         y_ = y;
         z_ = z;
+        pp_ = pp;
         // TODO: assign well automatically based on plate properties
         pp.getTopLeftWellOffsetH();
         pp.getTopLeftWellOffsetV();
@@ -74,21 +77,22 @@ public class FOV {
         
         int i = 0;
         while (!Character.isDigit(well.charAt(i))) i++;
-        int j = i;
-        while (Character.isDigit(well.charAt(j))) j++;
+//        int j = i;
+//        while (Character.isDigit(well.charAt(j))) j++;
         
         wellLetter = well.substring(0, i);
-        wellNumber = Integer.parseInt(well.substring(i,j));
+        wellNumber = Integer.parseInt(well.substring(i,well.length()));
         for (int k = 0; k < i; k++) {
-            letterIndex += (int) well.charAt(k);
+            letterIndex += (int) well.charAt(k) - 64;
         }
         
         well_ = well;
         x_ = pp.getTopLeftWellOffsetH() + 
                 (wellNumber - 1) * pp.getWellSpacingH();
-        y_ = pp.getTopLeftWellOffsetH() + 
-                (wellNumber - 1) * pp.getWellSpacingH();
+        y_ = pp.getTopLeftWellOffsetV() + 
+                (wellNumber - 1) * pp.getWellSpacingV();
         z_ = z;
+        pp_ = pp;
         
     }
     
@@ -126,6 +130,14 @@ public class FOV {
     
     public void setWell(String well){
         well_ = well;
+    }
+    
+    public void setPlateProps(PlateProperties pp){
+        pp_ = pp;
+    }
+    
+    public PlateProperties getPlateProps(){
+        return pp_;
     }
 }
 

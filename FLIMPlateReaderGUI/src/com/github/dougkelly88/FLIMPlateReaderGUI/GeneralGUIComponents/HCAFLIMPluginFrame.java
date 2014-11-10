@@ -109,12 +109,13 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         xYSequencing1 = new com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.GUIComponents.XYSequencing();
         jMenuBar2 = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
-        LoadHardwareConfig = new javax.swing.JMenuItem();
         loadPlateConfigMenu = new javax.swing.JMenuItem();
+        loadPlateMetadataMenu = new javax.swing.JMenuItem();
+        LoadHardwareConfig = new javax.swing.JMenuItem();
         SetBaseFolderMenu = new javax.swing.JMenuItem();
         SaveMetadataMenu = new javax.swing.JMenuItem();
-        quitMenu = new javax.swing.JMenuItem();
         LoadSoftwareConfig = new javax.swing.JMenuItem();
+        quitMenu = new javax.swing.JMenuItem();
         toolsMenu = new javax.swing.JMenu();
         advancedMenu = new javax.swing.JMenuItem();
         calibrationMenu = new javax.swing.JMenuItem();
@@ -250,14 +251,6 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
 
         fileMenu.setText("File");
 
-        LoadHardwareConfig.setText("Load Hardware Config...");
-        LoadHardwareConfig.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LoadHardwareConfigActionPerformed(evt);
-            }
-        });
-        fileMenu.add(LoadHardwareConfig);
-
         loadPlateConfigMenu.setText("Load plate properties...");
         loadPlateConfigMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -265,6 +258,17 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
             }
         });
         fileMenu.add(loadPlateConfigMenu);
+
+        loadPlateMetadataMenu.setText("Load plate metadata...");
+        fileMenu.add(loadPlateMetadataMenu);
+
+        LoadHardwareConfig.setText("Load Hardware Config...");
+        LoadHardwareConfig.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LoadHardwareConfigActionPerformed(evt);
+            }
+        });
+        fileMenu.add(LoadHardwareConfig);
 
         SetBaseFolderMenu.setText("Set Base Folder");
         SetBaseFolderMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -282,6 +286,14 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         });
         fileMenu.add(SaveMetadataMenu);
 
+        LoadSoftwareConfig.setText("Load Software Config...");
+        LoadSoftwareConfig.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LoadSoftwareConfigActionPerformed(evt);
+            }
+        });
+        fileMenu.add(LoadSoftwareConfig);
+
         quitMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
         quitMenu.setText("Quit");
         quitMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -290,14 +302,6 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
             }
         });
         fileMenu.add(quitMenu);
-
-        LoadSoftwareConfig.setText("Load Software Config...");
-        LoadSoftwareConfig.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LoadSoftwareConfigActionPerformed(evt);
-            }
-        });
-        fileMenu.add(LoadSoftwareConfig);
 
         jMenuBar2.add(fileMenu);
 
@@ -402,6 +406,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
                 pp_ = pp_.loadProperties(file);
                 xYZPanel1.onPlateConfigLoaded(true, pp_);
                 xYSequencing1.onPlateConfigLoaded(true, pp_);
+                xYSequencing1.setPlateProperties(pp_);
             } catch (Exception e) {
                 System.out.println("problem accessing file"+file.getAbsolutePath());
                 statusTextArea.setText("Problem accessing plate config at " + file.getAbsolutePath() 
@@ -500,6 +505,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     private javax.swing.JProgressBar jProgressBar1;
     private com.github.dougkelly88.FLIMPlateReaderGUI.LightPathClasses.GUIComponents.LightPathControls lightPathControls1;
     private javax.swing.JMenuItem loadPlateConfigMenu;
+    private javax.swing.JMenuItem loadPlateMetadataMenu;
     private javax.swing.JMenuItem quitMenu;
     private com.github.dougkelly88.FLIMPlateReaderGUI.GeneralGUIComponents.SaveData saveData1;
     private javax.swing.JPanel sequenceSetupBasePanel;

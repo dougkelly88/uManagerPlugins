@@ -58,12 +58,12 @@ public class PlateMapDrawPanel extends JPanel {
 
                 @Override
                 public void mouseReleased(MouseEvent e) {
-//                    if (enabled_){
+                    if (enabled_){
                         isSelecting_ = false;
                         selectionEnd_ = e.getPoint();
                         getSelectedWells();
                         repaint();
-//                    }
+                    }
                 }              
                 
             });

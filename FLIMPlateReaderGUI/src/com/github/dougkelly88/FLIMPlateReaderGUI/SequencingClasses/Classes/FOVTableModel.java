@@ -32,12 +32,12 @@ public class FOVTableModel extends AbstractTableModel {
 //    private SeqAcqProps sap_;
     
     public FOVTableModel(PlateProperties pp){
-        this.pp_ = pp;
+        pp_ = pp;
     }
     
     public FOVTableModel(String[] columnNames, PlateProperties pp) {
          this.colNames_ = columnNames;
-         this.pp_ = pp;
+         pp_ = pp;
     }
     
     @Override
@@ -149,11 +149,11 @@ public class FOVTableModel extends AbstractTableModel {
                 fov.setWell((String)value);
                 break;
             case X_INDEX:
-                value = validateX((Double) value);
+                value = validateX((Double) value, this.pp_);
                 fov.setX((Double)value);
                 break;
             case Y_INDEX:
-                value = validateY((Double) value);
+                value = validateY((Double) value, this.pp_);
                 fov.setY((Double)value);
                 break;
             case Z_INDEX:
@@ -171,30 +171,31 @@ public class FOVTableModel extends AbstractTableModel {
     }
 
     private FOV validateData(FOV fov){
-        double xmin = pp_.getTopLeftWellOffsetH() - pp_.getWellSpacingH()/2;
-        double xmax = pp_.getTopLeftWellOffsetH() + 
-                (pp_.getPlateColumns() - 0.5) * pp_.getWellSpacingH();
-        double ymin = pp_.getTopLeftWellOffsetV() - pp_.getWellSpacingV()/2;
-        double ymax = pp_.getTopLeftWellOffsetV() + 
-                (pp_.getPlateRows() - 0.5) * pp_.getWellSpacingV();
+        PlateProperties pp = fov.getPlateProps();
+        double xmin = pp.getTopLeftWellOffsetH() - pp.getWellSpacingH()/2;
+        double xmax = pp.getTopLeftWellOffsetH() + 
+                (pp.getPlateColumns() - 0.5) * pp.getWellSpacingH();
+        double ymin = pp.getTopLeftWellOffsetV() - pp.getWellSpacingV()/2;
+        double ymax = pp.getTopLeftWellOffsetV() + 
+                (pp.getPlateRows() - 0.5) * pp.getWellSpacingV();
                 
-        if (fov.x_ < xmin)
-            fov.x_ = xmin;
-        if (fov.x_ > xmax)
-            fov.x_ = xmax;
-        if (fov.y_ < ymin)
-            fov.y_ = ymin;
-        if (fov.y_ < ymax)
-            fov.y_ = ymax;      
+        if (fov.getX() < xmin)
+            fov.setX(xmin);
+        if (fov.getX() > xmax)
+            fov.setX(xmax);
+        if (fov.getY() < ymin)
+            fov.setY(ymin);
+        if (fov.getY() > ymax)
+            fov.setY(ymax);      
         
         return fov;
     }
     
-    private double validateX(double x){
+    private double validateX(double x, PlateProperties pp){
         
-        double xmin = pp_.getTopLeftWellOffsetH() - pp_.getWellSpacingH()/2;
-        double xmax = pp_.getTopLeftWellOffsetH() + 
-                (pp_.getPlateColumns() - 0.5) * pp_.getWellSpacingH();
+        double xmin = pp.getTopLeftWellOffsetH() - pp.getWellSpacingH()/2;
+        double xmax = pp.getTopLeftWellOffsetH() + 
+                (pp_.getPlateColumns() - 0.5) * pp.getWellSpacingH();
         
         if (x < xmin)
             x = xmin;
@@ -204,11 +205,11 @@ public class FOVTableModel extends AbstractTableModel {
         return x;
     }
     
-    private double validateY(double y){
+    private double validateY(double y, PlateProperties pp){
         
-        double ymin = pp_.getTopLeftWellOffsetV() - pp_.getWellSpacingV()/2;
-        double ymax = pp_.getTopLeftWellOffsetV() + 
-                (pp_.getPlateRows() - 0.5) * pp_.getWellSpacingV();
+        double ymin = pp.getTopLeftWellOffsetV() - pp.getWellSpacingV()/2;
+        double ymax = pp.getTopLeftWellOffsetV() + 
+                (pp.getPlateRows() - 0.5) * pp.getWellSpacingV();
         
         if (y < ymin)
             y = ymin;
