@@ -21,7 +21,7 @@ import javax.swing.JPanel;
  * @author dk1109
  */
 public class XYZPanel extends javax.swing.JPanel {
-
+    final static String um = "("+"\u00B5"+"m)";
     private WellMapDrawPanel dp_;
     private PlateProperties pp_;
     private double currentXUm_ = 128;
@@ -32,6 +32,11 @@ public class XYZPanel extends javax.swing.JPanel {
     public XYZPanel() {
         initComponents();
         setControlDefaults();
+        
+        // add micro symbols
+        stepSizeLabel.setText("Step size " + um);
+        zStepSizeLabel.setText("Step size " + um);
+        afOffsetLabel.setText("AF offset "+ um);
     }
 
     /**
@@ -70,7 +75,7 @@ public class XYZPanel extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         afObjectiveCombo = new javax.swing.JComboBox();
-        jLabel2 = new javax.swing.JLabel();
+        afOffsetLabel = new javax.swing.JLabel();
         afOffsetField = new javax.swing.JFormattedTextField();
         jPanel2 = new javax.swing.JPanel();
         manUscopeCheck = new javax.swing.JCheckBox();
@@ -386,7 +391,7 @@ public class XYZPanel extends javax.swing.JPanel {
 
         afObjectiveCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jLabel2.setText("Autofocus offset (um)");
+        afOffsetLabel.setText("Autofocus offset (um)");
 
         afOffsetField.setText("0");
         afOffsetField.addActionListener(new java.awt.event.ActionListener() {
@@ -403,7 +408,7 @@ public class XYZPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel2))
+                    .addComponent(afOffsetLabel))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(afObjectiveCombo, 0, 83, Short.MAX_VALUE)
@@ -419,7 +424,7 @@ public class XYZPanel extends javax.swing.JPanel {
                     .addComponent(afObjectiveCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
+                    .addComponent(afOffsetLabel)
                     .addComponent(afOffsetField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -620,11 +625,11 @@ public class XYZPanel extends javax.swing.JPanel {
     private javax.swing.JPanel ZPanel;
     private javax.swing.JComboBox afObjectiveCombo;
     private javax.swing.JFormattedTextField afOffsetField;
+    private javax.swing.JLabel afOffsetLabel;
     private javax.swing.JButton dButton;
     private javax.swing.JButton ddButton;
     private javax.swing.JButton goToWellButton;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

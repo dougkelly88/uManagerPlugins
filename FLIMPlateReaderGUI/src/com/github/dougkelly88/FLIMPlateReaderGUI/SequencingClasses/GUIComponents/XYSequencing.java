@@ -42,7 +42,7 @@ public class XYSequencing extends javax.swing.JPanel {
     
     private void setControlDefaults(){
         
-        pmdp_ = new PlateMapDrawPanel();
+        pmdp_ = new PlateMapDrawPanel(this);
         plateMapBasePanel.setLayout(new BorderLayout());
         plateMapBasePanel.add(pmdp_, BorderLayout.CENTER);
         
@@ -88,11 +88,13 @@ public class XYSequencing extends javax.swing.JPanel {
         popupMenu.add(deleteItem);
         fovTable_.addMouseListener( new MouseAdapter()
         {
+            @Override
             public void mousePressed(MouseEvent e)
             {
 //                System.out.println("pressed");
             }
 
+            @Override
             public void mouseReleased(MouseEvent e)
             {
                 if (e.isPopupTrigger())
@@ -325,8 +327,12 @@ public class XYSequencing extends javax.swing.JPanel {
         noFOVsField.setEnabled(autoFOV);
         FOVPatternCombo.setEnabled(autoFOV);
         ringRadiusField.setEnabled(autoFOV & (FOVPatternCombo.getSelectedIndex() == 1));
-        
-        if (autoFOV){
+        if (autoFOV){generateFOVs();}
+    }//GEN-LAST:event_autoGenerateFOVsCheckActionPerformed
+
+    public void generateFOVs(){
+        if (autoGenerateFOVsCheck.isSelected()){
+            tableModel_.clearAllData();
              for (int cols = 0; cols < pp_.getPlateColumns(); cols++){
                 ArrayList<Boolean> temp = pmdp_.wellsSelected_.get(cols);
                 for (int rows = 0; rows < pp_.getPlateRows(); rows++){
@@ -337,11 +343,8 @@ public class XYSequencing extends javax.swing.JPanel {
                 }
             }
         }
-        else {
-            
-        }
-    }//GEN-LAST:event_autoGenerateFOVsCheckActionPerformed
-
+    }
+    
     private void noFOVsFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noFOVsFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_noFOVsFieldActionPerformed

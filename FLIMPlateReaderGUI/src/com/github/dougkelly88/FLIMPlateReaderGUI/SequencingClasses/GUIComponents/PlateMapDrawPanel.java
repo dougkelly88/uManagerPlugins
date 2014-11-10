@@ -13,19 +13,24 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import javax.swing.JPanel;
+import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.GUIComponents.XYSequencing;
 
 /**
  *
  * @author dk1109
  */
-public class PlateMapDrawPanel extends JPanel {
+public class PlateMapDrawPanel extends JPanel implements ActionListener{
 
+        XYSequencing parent_;
+    
         Point selectionStart_;
         Point selectionEnd_;
         Rectangle selection_;
@@ -43,10 +48,10 @@ public class PlateMapDrawPanel extends JPanel {
         double conversionFactor_ = ((pp_.getPlateColumns() + 1) * 
                 pp_.getWellSpacingH())/plateSizePixels[0];    //N.B. might be useful to have this as 1x2 array with x, y conv, which could be negative...
         
-        PlateMapDrawPanel() {
+        PlateMapDrawPanel(XYSequencing parent) {
             // set a preferred size for the custom panel.
             setPreferredSize(new Dimension(470, 313));
-            
+            parent_ = parent;
 //            this.setEnabled(false);     
             addMouseListener(new MouseAdapter() {
                 
@@ -91,6 +96,9 @@ public class PlateMapDrawPanel extends JPanel {
                 }
                 wellsSelected_.add(temp);
             }
+            
+            
+            
         }
 
         @Override
@@ -175,6 +183,7 @@ public class PlateMapDrawPanel extends JPanel {
                 }
                 wellsSelected_.set(cols, temp);
             }
+            parent_.generateFOVs();
         }
         
         public void setCurrentWell(String well){
@@ -219,6 +228,11 @@ public class PlateMapDrawPanel extends JPanel {
 //            }
 //        
 //        }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
      }
 

@@ -27,6 +27,7 @@ public final class SeqAcqProps {
     private boolean useScanFLIM;
     private boolean powerMonitoring;
     private ArrayList<ArrayList<Integer>> delaysArray;
+    private double[] FLIMFOVSize = {314, 230};
 
   public static SeqAcqProps getInstance() {
      return fINSTANCE;
@@ -46,8 +47,6 @@ public final class SeqAcqProps {
     useScanFLIM = false;
     powerMonitoring = false;
     delaysArray = initDelaysArray();
-    
-    
   }
   
    private ArrayList<ArrayList<Integer>> initDelaysArray(){
@@ -96,6 +95,11 @@ public final class SeqAcqProps {
       delaysArray.clear();
       return this;
   }
+  public SeqAcqProps setFLIMFOVSize(double x, double y){
+      FLIMFOVSize[0] = x;
+      FLIMFOVSize[1] = y;
+      return this;
+  }
   
   // Getters
   public SeqAcqProps getSeqAcqProps(){
@@ -110,5 +114,8 @@ public final class SeqAcqProps {
   public ArrayList<ArrayList<Integer>> getDelaysArray(){
       delaysArray.removeAll(Collections.singleton(null));    // ensure that there are no null entries
       return delaysArray;
+  }
+  public double[] getFLIMFOVSize(){
+      return FLIMFOVSize;
   }
 } 

@@ -23,9 +23,11 @@ public class FOVTableModel extends AbstractTableModel {
    public static final int X_INDEX = 1;
    public static final int Y_INDEX = 2;
    public static final int Z_INDEX = 3;
+   
+   final static String um = "("+"\u00B5"+"m)";
     
     private ArrayList<FOV> data_ = new ArrayList<FOV>();
-    private String[] colNames_ = { "Well", "X", "Y", "Z" };
+    private String[] colNames_ = { "Well", "X "+ um, "Y" + um, "Z"+  um };
     
     private PlateProperties pp_;
 
