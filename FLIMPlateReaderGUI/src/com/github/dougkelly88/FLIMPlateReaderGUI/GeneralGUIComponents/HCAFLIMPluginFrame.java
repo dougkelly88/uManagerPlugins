@@ -92,7 +92,6 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         FLIMPanel = new javax.swing.JTabbedPane();
         fLIMPanel1 = new com.github.dougkelly88.FLIMPlateReaderGUI.FLIMClasses.GUIComponents.FLIMPanel();
         lightPathControls1 = new com.github.dougkelly88.FLIMPlateReaderGUI.LightPathClasses.GUIComponents.LightPathControls();
-        saveData1 = new com.github.dougkelly88.FLIMPlateReaderGUI.GeneralGUIComponents.SaveData();
         xYZPanel1 = new com.github.dougkelly88.FLIMPlateReaderGUI.XYZClasses.GUIComponents.XYZPanel();
         statusScrollPane = new javax.swing.JScrollPane();
         statusTextArea = new javax.swing.JTextArea();
@@ -128,7 +127,6 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
 
         FLIMPanel.addTab("FLIM panel", fLIMPanel1);
         FLIMPanel.addTab("Light Path Control", lightPathControls1);
-        FLIMPanel.addTab("tab3", saveData1);
         FLIMPanel.addTab("XYZ control", xYZPanel1);
 
         statusTextArea.setColumns(20);
@@ -451,6 +449,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
                 } 
         // set loaded values in all panels
         lightPathControls1.setLoadedSoftwareValues();
+        fLIMPanel1.setLoadedSoftwareValues();
     }//GEN-LAST:event_LoadSoftwareConfigActionPerformed
 
     /**
@@ -507,7 +506,6 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem loadPlateConfigMenu;
     private javax.swing.JMenuItem loadPlateMetadataMenu;
     private javax.swing.JMenuItem quitMenu;
-    private com.github.dougkelly88.FLIMPlateReaderGUI.GeneralGUIComponents.SaveData saveData1;
     private javax.swing.JPanel sequenceSetupBasePanel;
     private javax.swing.JTabbedPane sequenceSetupTabbedPane;
     private javax.swing.JButton snapBFButton;
