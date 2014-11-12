@@ -6,6 +6,8 @@
 package com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes;
 
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.PlateProperties;
+import java.awt.Point;
+import java.awt.Rectangle;
 
 /**
  *
@@ -77,8 +79,6 @@ public class FOV {
         
         int i = 0;
         while (!Character.isDigit(well.charAt(i))) i++;
-//        int j = i;
-//        while (Character.isDigit(well.charAt(j))) j++;
         
         wellLetter = well.substring(0, i);
         wellNumber = Integer.parseInt(well.substring(i,well.length()));
@@ -90,7 +90,7 @@ public class FOV {
         x_ = pp.getTopLeftWellOffsetH() + 
                 (wellNumber - 1) * pp.getWellSpacingH();
         y_ = pp.getTopLeftWellOffsetV() + 
-                (wellNumber - 1) * pp.getWellSpacingV();
+                (letterIndex - 1) * pp.getWellSpacingV();
         z_ = z;
         pp_ = pp;
         
@@ -138,6 +138,32 @@ public class FOV {
     
     public PlateProperties getPlateProps(){
         return pp_;
+    }
+    
+    public boolean isValid(){
+       
+        int wellNumber;
+        int letterIndex = 0;
+        
+        int i = 0;
+        while (!Character.isDigit(well_.charAt(i))) i++;
+        
+//        wellLetter = fov.well_.substring(0, i);
+        wellNumber = Integer.parseInt(well_.substring(i,well_.length()));
+        for (int k = 0; k < i; k++) {
+            letterIndex += (int) well_.charAt(k) - 64;
+        }
+        
+        Rectangle bounds = new Rectangle(
+                (int) (pp_.getTopLeftWellOffsetH() + pp_.getWellSpacingH() * (wellNumber - 1.5)),
+                (int) (pp_.getTopLeftWellOffsetV() + pp_.getWellSpacingV() * (letterIndex - 1.5)),
+                (int) (pp_.getTopLeftWellOffsetH() + pp_.getWellSpacingH() * (wellNumber - 0.5)),
+                (int) (pp_.getTopLeftWellOffsetV() + pp_.getWellSpacingV() * (letterIndex - 0.5)));
+        
+        // note issues casting double to int pretty unlikely
+        Point point = new Point((int) x_, (int) y_);
+        return bounds.contains(point);
+        
     }
 }
 

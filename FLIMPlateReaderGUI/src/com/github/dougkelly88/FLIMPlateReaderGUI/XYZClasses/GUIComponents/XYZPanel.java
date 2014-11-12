@@ -7,6 +7,7 @@
 package com.github.dougkelly88.FLIMPlateReaderGUI.XYZClasses.GUIComponents;
 
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.PlateProperties;
+import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.SeqAcqProps;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -26,6 +27,7 @@ public class XYZPanel extends javax.swing.JPanel {
     private PlateProperties pp_;
     private double currentXUm_ = 128;
     private double currentYUm_ = 128;
+    private SeqAcqProps sap_;
     /**
      * Creates new form XYZPanel
      */
@@ -608,9 +610,11 @@ public class XYZPanel extends javax.swing.JPanel {
 
     private void setControlDefaults(){
         
+        sap_ = SeqAcqProps.getInstance();
         dp_ = new WellMapDrawPanel();
         wellMapPanel.setLayout(new BorderLayout());
         wellMapPanel.add(dp_, BorderLayout.CENTER);
+        
         
     }
     

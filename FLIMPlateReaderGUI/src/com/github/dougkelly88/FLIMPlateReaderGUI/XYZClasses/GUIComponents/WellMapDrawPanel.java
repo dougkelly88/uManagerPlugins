@@ -7,6 +7,7 @@
 package com.github.dougkelly88.FLIMPlateReaderGUI.XYZClasses.GUIComponents;
 
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.PlateProperties;
+import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.SeqAcqProps;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -33,12 +34,14 @@ public class WellMapDrawPanel extends JPanel {
         double wellSizeUm = 6500;
         boolean enabled_ = false;   // start up disabled, enable upon loading plate stuff. 
         PlateProperties pp_ = new PlateProperties();
+        SeqAcqProps sap_;
         double conversionFactor_ = pp_.getWellSize()/r_;    //N.B. might be useful to have this as 1x2 array with x, y conv, which could be negative...
         
         WellMapDrawPanel() {
             // set a preferred size for the custom panel.
             setPreferredSize(new Dimension(255,255));
             
+            sap_ = SeqAcqProps.getInstance();
 //            this.setEnabled(false);     
             addMouseListener(new MouseAdapter() {
                 
@@ -50,12 +53,16 @@ public class WellMapDrawPanel extends JPanel {
                 @Override
                 public void mouseReleased(MouseEvent e) {
                     if (enabled_){
+                        double[] fov = sap_.getFLIMFOVSize();
+                        int drawFovV = (int) (fov[0] / conversionFactor_);
+                        int drawFovH = (int) (fov[1] / conversionFactor_);
+                        
                         boolean inBounds = false;
                         Point p = e.getPoint();
                         // check if point is within bounds of well...
                         if ("Round".equals(pp_.getWellShape())){
-                            inBounds = ( Math.pow((p.x + currentFOVw_/2 - r_),2) +
-                                    Math.pow((p.y + currentFOVh_/2 - r_),2) < r_*r_ );
+                            inBounds = ( Math.pow((p.x + drawFovH/2 - r_),2) +
+                                    Math.pow((p.y + drawFovV/2 - r_),2) < r_*r_ );
                         }
                         else{
                             inBounds = ( (Math.abs(p.x - r_) < r_) && (Math.abs(p.y - r_) < r_) );
@@ -78,11 +85,16 @@ public class WellMapDrawPanel extends JPanel {
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
 
+            double[] fov = sap_.getFLIMFOVSize();
+            int drawFovV = (int) (fov[0] / conversionFactor_);
+            int drawFovH = (int) (fov[1] / conversionFactor_);
+            
             Font font = g.getFont();
             g.setFont(font.deriveFont(Font.PLAIN, 40));
+            // centre text wrt well - need to get bounding box of text...
             Rectangle2D bounds = g.getFontMetrics().getStringBounds(currentWell_, g);
             g.drawString(currentWell_, (r_+1 - (int)(bounds.getWidth()/2)), 
-                    (r_+1 + (int)(bounds.getHeight()/4))); // fix - see below
+                    (r_+1 + (int)(bounds.getHeight()/4))); 
     
             g.setColor(Color.CYAN);
             
@@ -92,8 +104,8 @@ public class WellMapDrawPanel extends JPanel {
                 g.drawOval(0, 0, (1 + 2*r_), (1 + 2*r_));
             
             g.setColor(Color.RED);
-            g.drawRect((currentX_-currentFOVw_/2), (currentY_-currentFOVh_/2), 
-                    currentFOVw_, currentFOVh_);
+            g.drawRect((currentX_-drawFovH/2), (currentY_-drawFovV/2), 
+                    drawFovH, drawFovV);
         
             g.setColor(Color.GREEN);
             // draw saved FOVs
