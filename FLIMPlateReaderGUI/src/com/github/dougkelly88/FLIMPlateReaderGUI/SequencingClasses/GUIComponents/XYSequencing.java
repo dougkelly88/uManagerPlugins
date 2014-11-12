@@ -382,10 +382,12 @@ public class XYSequencing extends javax.swing.JPanel {
         int stepsInCurrentDir;
         
         spiralFOVs.add(fov);
-        int i = 0;
-        while (i < noFOV & i < 1000){   // just in case we have a runaway case...
-            stepsInCurrentDir = (int) Math.ceil((double)(i+1)/2);
-            int rowind = i%4;
+        int fovind = 1;
+        int dirind = 0;
+        while (fovind < noFOV & fovind < 1000){   // just in case we have a runaway case...
+//            stepsInCurrentDir = (int) Math.ceil((double)(fovind+1)/2);
+            stepsInCurrentDir = (int) Math.ceil((double)(dirind)/2);
+            int rowind = dirind%4;
             int hdir = dir[rowind][0];
             int vdir = dir[rowind][1];
             dxy[0] = hdir * DXY[0];
@@ -397,13 +399,17 @@ public class XYSequencing extends javax.swing.JPanel {
                         wellString, pp_);
 //                if (fov.isValid()){
                     spiralFOVs.add(fov);
-                    i++;
+                    fovind++;
 //                }
             }
+            dirind++;
         }
         // trim, a bit hacky but works
         int currsize = spiralFOVs.size();
-        for (int j = noFOV; j < currsize; j++){
+//        for (int j = noFOV; j < currsize; j++){
+//            spiralFOVs.remove(j);
+//        }
+        for (int j = currsize-1; j > noFOV-1; j--){
             spiralFOVs.remove(j);
         }
 //        spiralFOVs = (ArrayList<FOV>) (spiralFOVs.subList(0, noFOV - 1));
