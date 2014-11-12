@@ -384,36 +384,30 @@ public class XYSequencing extends javax.swing.JPanel {
         spiralFOVs.add(fov);
         int fovind = 1;
         int dirind = 0;
-        while (fovind < noFOV & fovind < 1000){   // just in case we have a runaway case...
-//            stepsInCurrentDir = (int) Math.ceil((double)(fovind+1)/2);
+        while (fovind < noFOV & dirind < 100){   // just in case we have a runaway case...
+
             stepsInCurrentDir = (int) Math.ceil((double)(dirind)/2);
-            int rowind = dirind%4;
-            int hdir = dir[rowind][0];
-            int vdir = dir[rowind][1];
-            dxy[0] = hdir * DXY[0];
-            dxy[1] = vdir * DXY[1];
+
+            dxy[0] = dir[dirind%4][0] * DXY[0];
+            dxy[1] = dir[dirind%4][1] * DXY[1];
             for (int j = 0; j < stepsInCurrentDir; j++){
                 centrexy[0] += dxy[0];
                 centrexy[1] += dxy[1];
                 fov = new FOV(centrexy[0], centrexy[1], 0, 
                         wellString, pp_);
-//                if (fov.isValid()){
+                if (fov.isValid()){
                     spiralFOVs.add(fov);
                     fovind++;
-//                }
+                }
             }
             dirind++;
+            System.out.print("Dirind = " + dirind + "\n");
         }
         // trim, a bit hacky but works
         int currsize = spiralFOVs.size();
-//        for (int j = noFOV; j < currsize; j++){
-//            spiralFOVs.remove(j);
-//        }
         for (int j = currsize-1; j > noFOV-1; j--){
             spiralFOVs.remove(j);
         }
-//        spiralFOVs = (ArrayList<FOV>) (spiralFOVs.subList(0, noFOV - 1));
-//        ArrayList<FOV> list = new ArrayList<FOV>(spiralFOVs.subList(0, noFOV-1));
         return spiralFOVs;
     }
 

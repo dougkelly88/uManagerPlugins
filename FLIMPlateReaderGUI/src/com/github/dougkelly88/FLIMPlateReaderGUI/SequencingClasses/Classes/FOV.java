@@ -157,8 +157,8 @@ public class FOV {
         Rectangle bounds = new Rectangle(
                 (int) (pp_.getTopLeftWellOffsetH() + pp_.getWellSpacingH() * (wellNumber - 1.5)),
                 (int) (pp_.getTopLeftWellOffsetV() + pp_.getWellSpacingV() * (letterIndex - 1.5)),
-                (int) (pp_.getTopLeftWellOffsetH() + pp_.getWellSpacingH() * (wellNumber - 0.5)),
-                (int) (pp_.getTopLeftWellOffsetV() + pp_.getWellSpacingV() * (letterIndex - 0.5)));
+                (int) (pp_.getWellSpacingH()),
+                (int) (pp_.getWellSpacingV()));
         
         // note issues casting double to int pretty unlikely
         Point point = new Point((int) x_, (int) y_);
