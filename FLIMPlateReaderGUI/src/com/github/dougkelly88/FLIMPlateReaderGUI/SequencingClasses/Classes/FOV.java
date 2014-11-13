@@ -9,6 +9,7 @@ import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.PlateProperties;
 import java.awt.Point;
 import java.awt.Rectangle;
 
+
 /**
  *
  * @author dk1109
@@ -17,6 +18,8 @@ public class FOV {
     double x_;
     double y_;
     double z_;
+    double width_ = 314;
+    double height_ = 230;   //40x obj, 0.7 relay
     String well_;
     PlateProperties pp_;
     
@@ -140,6 +143,23 @@ public class FOV {
         return pp_;
     }
     
+    public double getWidth_() {
+        return width_;
+    }
+
+    public double getHeight_() {
+        return height_;
+    }
+    
+    public void setWidth_(double width_) {
+        this.width_ = width_;
+    }
+
+    public void setHeight_(double height_) {
+        this.height_ = height_;
+    }
+    
+    
     public boolean isValid(){
        
         int wellNumber;
@@ -154,15 +174,46 @@ public class FOV {
             letterIndex += (int) well_.charAt(k) - 64;
         }
         
-        Rectangle bounds = new Rectangle(
-                (int) (pp_.getTopLeftWellOffsetH() + pp_.getWellSpacingH() * (wellNumber - 1.5)),
-                (int) (pp_.getTopLeftWellOffsetV() + pp_.getWellSpacingV() * (letterIndex - 1.5)),
-                (int) (pp_.getWellSpacingH()),
-                (int) (pp_.getWellSpacingV()));
+        // Replace rectangle well bounds with circle. Make more general class?
+        class Circle {
+            //circle defined by centre x,y and radius r. 
+            public double x_, y_, r_;
         
-        // note issues casting double to int pretty unlikely
-        Point point = new Point((int) x_, (int) y_);
-        return bounds.contains(point);
+            public Circle(double x, double y, double r){
+                x_ = x; y_ = y; r_ = r;
+            }
+            
+            public boolean contains(Rectangle fov){
+                Point[] points = {new Point(fov.x,fov.y), new Point(fov.x,fov.y+fov.height), 
+                    new Point(fov.x+fov.width,fov.y), new Point(fov.x+fov.width,fov.y+fov.height)};
+                
+                for(Point p : points){
+                    if (Math.pow((x_ - p.x),2) + Math.pow((y_ - p.y),2) > 
+                            Math.pow(r_,2)) {
+                        return false;
+                        }
+                }
+                return true;
+            }
+        }
+              
+        Rectangle fov = new Rectangle(
+                (int) (this.x_ - this.width_/2), (int) (this.y_- this.height_/2), 
+                (int) this.width_, (int) this.height_);
+        if (pp_.getWellShape() == "Circle"){
+            Circle well = new Circle(pp_.getTopLeftWellOffsetH() + (wellNumber - 1) * pp_.getWellSpacingH(), 
+                pp_.getTopLeftWellOffsetV() + (letterIndex - 1) * pp_.getWellSpacingV(), 
+                pp_.getWellSize()/2);
+            return well.contains(fov);
+        }
+        else {
+            Rectangle well = new Rectangle( (int) (pp_.getTopLeftWellOffsetH() + (wellNumber - 1) * pp_.getWellSpacingH()), 
+                (int) (pp_.getTopLeftWellOffsetV() + (letterIndex - 1) * pp_.getWellSpacingV()), 
+                (int) pp_.getWellSize(), (int) pp_.getWellSize());
+            return well.contains(fov);
+        }
+        
+        
         
     }
 }

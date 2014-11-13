@@ -23,7 +23,7 @@ public final class SeqAcqProps {
     private boolean useScanFLIM;
     private boolean powerMonitoring;
     private ArrayList<ArrayList<Integer>> delaysArray;
-    private double[] FLIMFOVSize = {628, 460};    // 20x obj
+    private double[] FLIMFOVSize = {314, 230};    // 40x obj, .7 relay
     private MMStudio gui_;
     private CMMCore core_;
 
