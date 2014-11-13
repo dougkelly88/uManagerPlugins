@@ -5,7 +5,6 @@
  */
 package com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses;
 
-import java.awt.List;
 import java.util.ArrayList;
 import java.util.Collections;
 import mmcorej.CMMCore;

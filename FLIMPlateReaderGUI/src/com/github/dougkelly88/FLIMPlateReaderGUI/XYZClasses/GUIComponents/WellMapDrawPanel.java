@@ -9,6 +9,7 @@ package com.github.dougkelly88.FLIMPlateReaderGUI.XYZClasses.GUIComponents;
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.PlateProperties;
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.SeqAcqProps;
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -37,10 +38,9 @@ public class WellMapDrawPanel extends JPanel {
         SeqAcqProps sap_;
         double conversionFactor_ = pp_.getWellSize()/r_;    //N.B. might be useful to have this as 1x2 array with x, y conv, which could be negative...
         
-        WellMapDrawPanel() {
+        WellMapDrawPanel(Object parent) {
             // set a preferred size for the custom panel.
             setPreferredSize(new Dimension(255,255));
-            
             sap_ = SeqAcqProps.getInstance();
 //            this.setEnabled(false);     
             addMouseListener(new MouseAdapter() {

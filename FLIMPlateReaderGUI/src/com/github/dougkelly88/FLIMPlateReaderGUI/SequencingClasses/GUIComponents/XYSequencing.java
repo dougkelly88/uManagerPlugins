@@ -34,6 +34,7 @@ public class XYSequencing extends javax.swing.JPanel {
     FOVTableModel tableModel_;
     JTable fovTable_;
     SeqAcqProps sap_;
+    Object parent_;
 
     /**
      * Creates new form XYSequencing
@@ -429,6 +430,10 @@ public class XYSequencing extends javax.swing.JPanel {
 
     public void setPlateProperties(PlateProperties pp) {
         pp_ = pp;
+    }
+    
+    public void setParent(Object o){
+        parent_ = o;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

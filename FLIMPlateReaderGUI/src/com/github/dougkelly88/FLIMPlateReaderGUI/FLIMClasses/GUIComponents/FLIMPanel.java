@@ -54,6 +54,7 @@ public class FLIMPanel extends javax.swing.JPanel {
     ChartPanel chartPanel_;
     private SeqAcqProps sap_;
     private VariableTest var_;
+    private Object parent_;
     
     @Subscribe
     public PropertyChangedEvent onPropertyChanged(PropertyChangedEvent event)
@@ -895,6 +896,10 @@ public class FLIMPanel extends javax.swing.JPanel {
         fastDelaySlider_.setValue((int) Double.parseDouble((var_.findLabelOfProperty("Fast Current Delay Setting"))));
         slowDelaySlider_.setValue((int) Double.parseDouble((var_.findLabelOfProperty("Slow Current Delay Setting"))));
         tableModel_.addWholeData(var_.findLabelOfPropertyForArrayList("Delay Sequence in [ps]"));
+    }
+    
+    public void setParent(Object o){
+        parent_ = o;
     }
 
     

@@ -30,6 +30,7 @@ public class LightPathControls extends javax.swing.JPanel {
     PropertyChangedEvent event_;
     private SeqAcqProps sap_;
     private VariableTest var_;
+    Object parent_;
 //    private SequencedAcquisitionProperties sap_;
     
     /**
@@ -491,6 +492,10 @@ public class LightPathControls extends javax.swing.JPanel {
         for(String str : ObjeBox) {
         SwitchPortComboBox.addItem(str);
         }        
+    }
+    
+    public void setParent(Object o){
+        parent_ = o;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
