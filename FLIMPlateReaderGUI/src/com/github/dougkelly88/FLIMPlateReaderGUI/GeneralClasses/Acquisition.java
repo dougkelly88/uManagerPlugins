@@ -52,6 +52,7 @@ import ome.xml.model.primitives.PositiveInteger;
 import ome.xml.model.primitives.PositiveFloat;
 import ome.xml.model.primitives.NonNegativeInteger;
 
+
 /**
  *
  * @author dk1109
@@ -106,6 +107,10 @@ public class Acquisition {
 
             OMEXMLMetadata m = serv.createOMEXMLMetadata();
 
+           core_.clearCircularBuffer();
+           core_.startSequenceAcquisition(no_delays, 1, true);
+           
+            
             m.createRoot();
             m.setImageID("Image:0", 0);
             m.setPixelsID("Pixels:0", 0);
@@ -113,7 +118,7 @@ public class Acquisition {
             m.setChannelID("Channel:0:0", 0, 0);
             m.setChannelSamplesPerPixel(new PositiveInteger(1), 0, 0);
             m.setPixelsBinDataBigEndian(Boolean.FALSE, 0, 0);
-            m.setPixelsType(PixelType.UINT16, 0);
+            m.setPixelsType(PixelType.UINT8, 0);
             
             PositiveInteger w1 = new PositiveInteger((int) core_.getImageWidth());
             PositiveInteger h1 = new PositiveInteger((int) core_.getImageHeight());
@@ -186,13 +191,17 @@ public class Acquisition {
             for (int i = 0; i < no_delays; ++i) {
 
                     delay = 1000 * i;
+                    core_.setExposure(600 - i*100);
                 		core_.setProperty("KentechHDG800", "Delay (ps)", delay);
                     core_.sleep(1000);
                     gui_.message("Count = " + i);
 //                System.out.println("count = " + i);
 
     					core_.snapImage();
+//                    gui_.snapSingleImage();
             		byte[] img = (byte[]) core_.getImage();
+//                        gui_.displayImage(img);
+                        core_.popNextImage();
                         
 //                //No camera so simulate image
 //                short[] pixels = new short[1344 * 1024];
