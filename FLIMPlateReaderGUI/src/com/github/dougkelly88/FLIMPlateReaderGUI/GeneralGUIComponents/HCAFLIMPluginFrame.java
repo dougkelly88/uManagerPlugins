@@ -90,9 +90,10 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         frameScrollPane = new javax.swing.JScrollPane();
         basePanel = new javax.swing.JPanel();
         FLIMPanel = new javax.swing.JTabbedPane();
-        fLIMPanel1 = new com.github.dougkelly88.FLIMPlateReaderGUI.FLIMClasses.GUIComponents.FLIMPanel();
         lightPathControls1 = new com.github.dougkelly88.FLIMPlateReaderGUI.LightPathClasses.GUIComponents.LightPathControls();
+        saveData1 = new com.github.dougkelly88.FLIMPlateReaderGUI.GeneralGUIComponents.SaveData();
         xYZPanel1 = new com.github.dougkelly88.FLIMPlateReaderGUI.XYZClasses.GUIComponents.XYZPanel();
+        fLIMPanel1 = new com.github.dougkelly88.FLIMPlateReaderGUI.FLIMClasses.GUIComponents.FLIMPanel();
         statusScrollPane = new javax.swing.JScrollPane();
         statusTextArea = new javax.swing.JTextArea();
         statusLabel = new javax.swing.JLabel();
@@ -125,9 +126,10 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        FLIMPanel.addTab("FLIM panel", fLIMPanel1);
         FLIMPanel.addTab("Light Path Control", lightPathControls1);
+        FLIMPanel.addTab("tab3", saveData1);
         FLIMPanel.addTab("XYZ control", xYZPanel1);
+        FLIMPanel.addTab("FLIM panel", fLIMPanel1);
 
         statusTextArea.setColumns(20);
         statusTextArea.setRows(5);
@@ -211,32 +213,36 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         basePanel.setLayout(basePanelLayout);
         basePanelLayout.setHorizontalGroup(
             basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(basePanelLayout.createSequentialGroup()
+                .addGap(796, 796, 796)
+                .addComponent(sequenceSetupBasePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(210, 210, 210))
             .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(basePanelLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(FLIMPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(20, 20, 20)
+                    .addComponent(FLIMPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 746, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(240, 240, 240)
                     .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(statusScrollPane)
                         .addComponent(flimAcquisitionPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(basePanelLayout.createSequentialGroup()
                             .addComponent(statusLabel)
-                            .addGap(0, 0, Short.MAX_VALUE))
-                        .addComponent(sequenceSetupBasePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGap(0, 0, Short.MAX_VALUE)))
                     .addContainerGap()))
         );
         basePanelLayout.setVerticalGroup(
             basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(basePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(sequenceSetupBasePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(228, 228, 228))
             .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(basePanelLayout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(FLIMPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 801, Short.MAX_VALUE)
                         .addGroup(basePanelLayout.createSequentialGroup()
-                            .addComponent(sequenceSetupBasePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGap(0, 0, Short.MAX_VALUE)
                             .addComponent(flimAcquisitionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(statusLabel)
@@ -391,10 +397,6 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         var_.saveMetadata();
     }//GEN-LAST:event_SaveMetadataMenuActionPerformed
 
-    private void currentBasePathFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_currentBasePathFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_currentBasePathFieldActionPerformed
-
     private void loadPlateConfigMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadPlateConfigMenuActionPerformed
         final JFileChooser fc = new JFileChooser("C:/Program Files (x86)/Micro-Manager-1.4-32 20 Oct 2014 build/mmplugins/OpenHCAFLIM/XPLT");   // for debug, make more general
         int returnVal = fc.showOpenDialog(this);
@@ -452,6 +454,10 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         fLIMPanel1.setLoadedSoftwareValues();
     }//GEN-LAST:event_LoadSoftwareConfigActionPerformed
 
+    private void currentBasePathFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_currentBasePathFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_currentBasePathFieldActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -506,6 +512,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem loadPlateConfigMenu;
     private javax.swing.JMenuItem loadPlateMetadataMenu;
     private javax.swing.JMenuItem quitMenu;
+    private com.github.dougkelly88.FLIMPlateReaderGUI.GeneralGUIComponents.SaveData saveData1;
     private javax.swing.JPanel sequenceSetupBasePanel;
     private javax.swing.JTabbedPane sequenceSetupTabbedPane;
     private javax.swing.JButton snapBFButton;

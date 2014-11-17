@@ -40,11 +40,16 @@ public final class SeqAcqProps {
      * Private constructor prevents construction outside this class.
      */
     private SeqAcqProps() {
+        try{
         gui_ = MMStudio.getInstance();
         core_ = gui_.getCore();
+        } catch (Exception e){
+            System.out.println("Error = " + e.getMessage());
+        }
         useScanFLIM = false;
         powerMonitoring = false;
         delaysArray = initDelaysArray();
+        
 
     }
 
@@ -103,9 +108,9 @@ public final class SeqAcqProps {
             magnification = 27.0;
 //      FLIMFOVSize[0] = x;
 //      FLIMFOVSize[1] = y;
-            core_.getImageHeight();
-            core_.getImageWidth();
-            core_.getPixelSizeUm();
+//            core_.getImageHeight();
+//            core_.getImageWidth();
+//            core_.getPixelSizeUm();
         } catch (Exception e){
             System.out.print("Error getting FOV size from equipment: "
                     + e.getMessage());
