@@ -59,7 +59,7 @@ public class FLIMPanel extends javax.swing.JPanel {
     @Subscribe
     public PropertyChangedEvent onPropertyChanged(PropertyChangedEvent event)
     {
-        FLIMTestText.setText("google eventbus triggered in device " + event.getDevice() + "\n with property " + event.getProperty() + "\n changed to value " + event.getValue());
+//        FLIMTestText.setText("google eventbus triggered in device " + event.getDevice() + "\n with property " + event.getProperty() + "\n changed to value " + event.getValue());
         event_ = event;
         return event;
     }
@@ -99,9 +99,6 @@ public class FLIMPanel extends javax.swing.JPanel {
         gatewidthPanel = new javax.swing.JPanel();
         inhibitCheck = new javax.swing.JCheckBox();
         FLIMToolsPanel = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        FLIMTestText = new javax.swing.JTextArea();
-        getDichroic = new javax.swing.JButton();
         maxpointGraphPanel = new javax.swing.JPanel();
         autogateButton = new javax.swing.JButton();
         maxpointPanel = new javax.swing.JPanel();
@@ -194,17 +191,6 @@ public class FLIMPanel extends javax.swing.JPanel {
 
         FLIMToolsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("FLIM tools"));
 
-        FLIMTestText.setColumns(20);
-        FLIMTestText.setRows(5);
-        jScrollPane1.setViewportView(FLIMTestText);
-
-        getDichroic.setText("getDichroic");
-        getDichroic.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                getDichroicActionPerformed(evt);
-            }
-        });
-
         maxpointGraphPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         maxpointGraphPanel.setMaximumSize(new java.awt.Dimension(630, 204));
         maxpointGraphPanel.setMinimumSize(new java.awt.Dimension(500, 100));
@@ -281,18 +267,14 @@ public class FLIMPanel extends javax.swing.JPanel {
             FLIMToolsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(FLIMToolsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(FLIMToolsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(FLIMToolsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(FLIMToolsPanelLayout.createSequentialGroup()
-                        .addComponent(maxpointGraphPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 570, Short.MAX_VALUE)
+                        .addComponent(maxpointGraphPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(172, 172, 172))
                     .addGroup(FLIMToolsPanelLayout.createSequentialGroup()
                         .addComponent(maxpointPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(autogateButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(getDichroic, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(autogateButton)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         FLIMToolsPanelLayout.setVerticalGroup(
@@ -303,8 +285,6 @@ public class FLIMPanel extends javax.swing.JPanel {
                 .addGap(11, 11, 11)
                 .addGroup(FLIMToolsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(autogateButton)
-                    .addComponent(getDichroic, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(maxpointPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -547,7 +527,7 @@ public class FLIMPanel extends javax.swing.JPanel {
                     .addComponent(HRIControlsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(delayBoxTabbedPane, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(FLIMToolsPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(361, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -562,19 +542,8 @@ public class FLIMPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void getDichroicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getDichroicActionPerformed
-
-        ArrayList<Integer> dum = SeqAcqProps.getInstance().getDelaysArray().get(0);
-        int lastseqacqdel = dum.get(dum.size() - 1);
-
-        //FLIMTestText.setText("Last entry in seq \n acq del array \n" + lastseqacqdel);
-//        fm_.setLifetime(2000);
-        FLIMTestText.setText("Lifetime = " + fm_.getLifetime());
-
-    }//GEN-LAST:event_getDichroicActionPerformed
-
     private void inhibitCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inhibitCheckActionPerformed
-        FLIMTestText.setText("Inhibit state = " + inhibitCheck.isSelected());
+//        FLIMTestText.setText("Inhibit state = " + inhibitCheck.isSelected());
     }//GEN-LAST:event_inhibitCheckActionPerformed
 
     private void maxpointResolutionFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maxpointResolutionFieldActionPerformed
@@ -865,25 +834,25 @@ public class FLIMPanel extends javax.swing.JPanel {
     
     private void mcpSliderPropertyChange(java.beans.PropertyChangeEvent evt) {
         var_.mcpSlider= mcpSlider_.getValue();
-        FLIMTestText.setText("MCP slider value = " + mcpSlider_.getValue());
+//        FLIMTestText.setText("MCP slider value = " + mcpSlider_.getValue());
         
     }                                        
     
     private void gatewidthSliderPropertyChange(java.beans.PropertyChangeEvent evt) {
         var_.gatewidthSlider= gatewidthSlider_.getValue();
-        FLIMTestText.setText("Gatewidth value = " + gatewidthSlider_.getValue());
+//        FLIMTestText.setText("Gatewidth value = " + gatewidthSlider_.getValue());
         
     }        
     
     private void fastDelaySliderPropertyChange(java.beans.PropertyChangeEvent evt){
         var_.fastDelaySlider= fastDelaySlider_.getValue();
-        FLIMTestText.setText("Fast delay value = " + fastDelaySlider_.getValue());
+//        FLIMTestText.setText("Fast delay value = " + fastDelaySlider_.getValue());
         
     }
     
     private void slowDelaySliderPropertyChange(java.beans.PropertyChangeEvent evt){
         var_.slowDelaySlider= slowDelaySlider_.getValue();
-        FLIMTestText.setText("Slow delay value = " + slowDelaySlider_.getValue());
+//        FLIMTestText.setText("Slow delay value = " + slowDelaySlider_.getValue());
     }
     
     public void setLoadedSoftwareValues(){
@@ -904,7 +873,6 @@ public class FLIMPanel extends javax.swing.JPanel {
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextArea FLIMTestText;
     private javax.swing.JPanel FLIMToolsPanel;
     private javax.swing.JPanel HRIControlsPanel;
     private javax.swing.JButton autogateButton;
@@ -917,14 +885,12 @@ public class FLIMPanel extends javax.swing.JPanel {
     private javax.swing.JPanel fastCurrentDelayPanel;
     private javax.swing.JPanel fastDelayBoxPanel;
     private javax.swing.JPanel gatewidthPanel;
-    private javax.swing.JButton getDichroic;
     private javax.swing.JTextField incrementField;
     private javax.swing.JCheckBox inhibitCheck;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton maxpointButton;
     private javax.swing.JPanel maxpointGraphPanel;
     private javax.swing.JPanel maxpointPanel;

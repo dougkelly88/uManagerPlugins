@@ -65,7 +65,7 @@ public class XYSequencing extends javax.swing.JPanel {
         fovTable_.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
 
         JScrollPane scroller = new javax.swing.JScrollPane(fovTable_);
-        fovTable_.setPreferredScrollableViewportSize(new java.awt.Dimension(190, 130));
+        fovTable_.setPreferredScrollableViewportSize(new java.awt.Dimension(600, 500));
         fovTablePanel.setLayout(new BorderLayout());
         fovTablePanel.add(scroller, BorderLayout.CENTER);
 
@@ -188,7 +188,7 @@ public class XYSequencing extends javax.swing.JPanel {
                 .addGroup(storedXYZPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(fovTablePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(storedXYZPanelLayout.createSequentialGroup()
-                        .addGap(0, 4, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(zModeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1)
@@ -209,7 +209,7 @@ public class XYSequencing extends javax.swing.JPanel {
         );
         prefindPanelLayout.setVerticalGroup(
             prefindPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 157, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout plateMapBasePanelLayout = new javax.swing.GroupLayout(plateMapBasePanel);
@@ -310,9 +310,7 @@ public class XYSequencing extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(plateMapBasePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(autoFOVPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(autoFOVPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

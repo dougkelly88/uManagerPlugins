@@ -7,6 +7,7 @@
 package com.github.dougkelly88.FLIMPlateReaderGUI.GeneralGUIComponents;
 
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.Acquisition;
+import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.FileWriteTestHarness;
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.PlateProperties;
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.SeqAcqProps;
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.VariableTest;
@@ -92,7 +93,6 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         basePanel = new javax.swing.JPanel();
         FLIMPanel = new javax.swing.JTabbedPane();
         lightPathControls1 = new com.github.dougkelly88.FLIMPlateReaderGUI.LightPathClasses.GUIComponents.LightPathControls();
-        saveData1 = new com.github.dougkelly88.FLIMPlateReaderGUI.GeneralGUIComponents.SaveData();
         xYZPanel1 = new com.github.dougkelly88.FLIMPlateReaderGUI.XYZClasses.GUIComponents.XYZPanel();
         fLIMPanel1 = new com.github.dougkelly88.FLIMPlateReaderGUI.FLIMClasses.GUIComponents.FLIMPanel();
         statusScrollPane = new javax.swing.JScrollPane();
@@ -128,7 +128,6 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         FLIMPanel.addTab("Light Path Control", lightPathControls1);
-        FLIMPanel.addTab("tab3", saveData1);
         FLIMPanel.addTab("XYZ control", xYZPanel1);
         FLIMPanel.addTab("FLIM panel", fLIMPanel1);
 
@@ -153,7 +152,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         snapBFButton.setText("Snap brightfield image");
 
         currentBasePathField.setEditable(false);
-        currentBasePathField.setText("%DEFAULT_BASE_FOLDER%");
+        currentBasePathField.setText("C:/Users/dk1109/FLIMFromJava.ome.tiff");
         currentBasePathField.setToolTipText("Change this value using *** in File menu");
         currentBasePathField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -175,7 +174,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
                         .addComponent(snapFLIMButton)
                         .addGap(37, 37, 37)
                         .addComponent(snapBFButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 173, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(startSequenceButton))
                     .addGroup(flimAcquisitionPanelLayout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -208,7 +207,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         sequenceSetupBasePanel.setLayout(sequenceSetupBasePanelLayout);
         sequenceSetupBasePanelLayout.setHorizontalGroup(
             sequenceSetupBasePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(sequenceSetupTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 822, Short.MAX_VALUE)
+            .addComponent(sequenceSetupTabbedPane)
         );
         sequenceSetupBasePanelLayout.setVerticalGroup(
             sequenceSetupBasePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -220,16 +219,16 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         basePanelLayout.setHorizontalGroup(
             basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(basePanelLayout.createSequentialGroup()
-                .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(basePanelLayout.createSequentialGroup()
-                        .addGap(639, 639, 639)
-                        .addComponent(sequenceSetupBasePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(basePanelLayout.createSequentialGroup()
-                        .addGap(651, 651, 651)
-                        .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(statusLabel)
-                            .addComponent(statusScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 802, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(10, 10, 10))
+                .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(statusScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 645, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(basePanelLayout.createSequentialGroup()
+                            .addGap(651, 651, 651)
+                            .addComponent(statusLabel))
+                        .addGroup(basePanelLayout.createSequentialGroup()
+                            .addGap(639, 639, 639)
+                            .addComponent(sequenceSetupBasePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 657, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(basePanelLayout.createSequentialGroup()
                     .addContainerGap()
@@ -359,7 +358,9 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(frameScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 1493, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(frameScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -469,8 +470,17 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_currentBasePathFieldActionPerformed
 
     private void snapFLIMButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_snapFLIMButtonActionPerformed
+//        FileWriteTestHarness h = new FileWriteTestHarness();
+//        String fileOut = currentBasePathField.getText();
+//        try{
+//            h.generateDummyData(fileOut + "FLIMFromJava.ome.tiff");
+//        }
+//        catch (Exception e){
+//            System.out.println("Exceptiopn = " +e.getMessage());
+//        }
         Acquisition acq = new Acquisition();
         acq.dummyTest();
+        
     }//GEN-LAST:event_snapFLIMButtonActionPerformed
 
     /**
@@ -527,7 +537,6 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem loadPlateConfigMenu;
     private javax.swing.JMenuItem loadPlateMetadataMenu;
     private javax.swing.JMenuItem quitMenu;
-    private com.github.dougkelly88.FLIMPlateReaderGUI.GeneralGUIComponents.SaveData saveData1;
     private javax.swing.JPanel sequenceSetupBasePanel;
     private javax.swing.JTabbedPane sequenceSetupTabbedPane;
     private javax.swing.JButton snapBFButton;

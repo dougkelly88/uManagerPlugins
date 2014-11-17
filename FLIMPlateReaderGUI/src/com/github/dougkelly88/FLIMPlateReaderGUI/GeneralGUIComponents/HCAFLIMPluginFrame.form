@@ -141,7 +141,10 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="frameScrollPane" min="-2" pref="1493" max="-2" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <Component id="frameScrollPane" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -160,21 +163,21 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="639" max="-2" attributes="0"/>
-                              <Component id="sequenceSetupBasePanel" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="651" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="statusScrollPane" alignment="1" min="-2" pref="645" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <EmptySpace min="-2" pref="651" max="-2" attributes="0"/>
                                   <Component id="statusLabel" min="-2" max="-2" attributes="0"/>
-                                  <Component id="statusScrollPane" min="-2" pref="802" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="639" max="-2" attributes="0"/>
+                                  <Component id="sequenceSetupBasePanel" min="-2" pref="657" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
                   <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
@@ -227,15 +230,6 @@
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                       <JTabbedPaneConstraints tabName="Light Path Control">
                         <Property name="tabTitle" type="java.lang.String" value="Light Path Control"/>
-                      </JTabbedPaneConstraints>
-                    </Constraint>
-                  </Constraints>
-                </Component>
-                <Component class="com.github.dougkelly88.FLIMPlateReaderGUI.GeneralGUIComponents.SaveData" name="saveData1">
-                  <Constraints>
-                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                      <JTabbedPaneConstraints tabName="tab3">
-                        <Property name="tabTitle" type="java.lang.String" value="tab3"/>
                       </JTabbedPaneConstraints>
                     </Constraint>
                   </Constraints>
@@ -301,7 +295,7 @@
                                   <Component id="snapFLIMButton" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                                   <Component id="snapBFButton" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="173" max="32767" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
                                   <Component id="startSequenceButton" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
@@ -359,7 +353,7 @@
                 <Component class="javax.swing.JFormattedTextField" name="currentBasePathField">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
-                    <Property name="text" type="java.lang.String" value="%DEFAULT_BASE_FOLDER%"/>
+                    <Property name="text" type="java.lang.String" value="C:/Users/dk1109/FLIMFromJava.ome.tiff"/>
                     <Property name="toolTipText" type="java.lang.String" value="Change this value using *** in File menu"/>
                   </Properties>
                   <Events>
@@ -385,7 +379,7 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="sequenceSetupTabbedPane" alignment="0" pref="822" max="32767" attributes="0"/>
+                      <Component id="sequenceSetupTabbedPane" alignment="0" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
