@@ -65,7 +65,7 @@ public class XYSequencing extends javax.swing.JPanel {
         fovTable_.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
 
         JScrollPane scroller = new javax.swing.JScrollPane(fovTable_);
-        fovTable_.setPreferredScrollableViewportSize(new java.awt.Dimension(600, 500));
+        fovTable_.setPreferredScrollableViewportSize(new java.awt.Dimension(190, 130));
         fovTablePanel.setLayout(new BorderLayout());
         fovTablePanel.add(scroller, BorderLayout.CENTER);
 

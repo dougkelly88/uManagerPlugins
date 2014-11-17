@@ -14,6 +14,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -23,6 +26,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableColumn;
 import mmcorej.CMMCore;
+import mmcorej.StrVector;
 import org.micromanager.MMStudio;
 
 /**
@@ -57,9 +61,10 @@ public class SpectralSequencing extends javax.swing.JPanel {
         }
         
         sap_ = SeqAcqProps.getInstance();
-        var_ = VariableTest.getInstance();
+       
         
-        tableModel_ = new FilterTableModel(new FilterSetup(1,1,1,1,100, sap_.getDelaysArray().get(0)));
+        tableModel_ = new FilterTableModel(new FilterSetup("465/30","ND 1.0","473/561",
+                        "525/30",100,sap_.getDelaysArray().get(0)));
         tableModel_.addTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent e) {
@@ -92,7 +97,8 @@ public class SpectralSequencing extends javax.swing.JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int r = filtTable_.getSelectedRow();
-                tableModel_.insertRow(r, new FilterSetup(1,1,1,1,100,sap_.getDelaysArray().get(0)));
+                tableModel_.insertRow(r, new FilterSetup("465/30","ND 1.0","473/561",
+                        "525/30",100,sap_.getDelaysArray().get(0)));
             }
         });
         popupMenu.add(addItem);
@@ -120,13 +126,20 @@ public class SpectralSequencing extends javax.swing.JPanel {
         });
         
         JComboBox exCombo = new JComboBox();
-        populateCombos(exCombo, "EXFW", filtTable_.getColumnModel().getColumn(1));
+        populateCombos(exCombo, "Emission", filtTable_.getColumnModel().getColumn(1));
         
     }
     
     private void populateCombos(JComboBox combo, String devLabel, TableColumn col){
         try{
-            core_.
+            StrVector vals = core_.getAllowedPropertyValues(devLabel, "Label");
+            for (String str : vals){
+                combo.addItem(str);
+            }
+            col.setCellEditor(new DefaultCellEditor(combo));
+        } catch (Exception ex) {
+            String str = "Exception at = " + ex.getMessage();
+            System.out.println(str);
         }
     }
 

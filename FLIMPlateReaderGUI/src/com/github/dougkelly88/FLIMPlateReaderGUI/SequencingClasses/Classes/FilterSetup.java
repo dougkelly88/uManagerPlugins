@@ -14,18 +14,19 @@ import java.util.ArrayList;
 //TODO: validate positions based on available
 
 public class FilterSetup {
-    private int exPos_ = 1;
-    private int ndPos_ = 1;
-    private int diPos_ = 1;
-    private int emPos_ = 1;    
+    private String exFilt_ = "465/30";
+    private String ndFilt_ = "ND 1.0";
+    private String diFilt_ = "473/561";
+    private String emFilt_ = "525/35";    
     private int intTime_ = 100;
     private ArrayList<Integer> delays_;
     
-    public FilterSetup(int ex, int nd, int di, int em, int intTime, ArrayList<Integer> delays){
-        exPos_ = ex;
-        ndPos_ = nd;
-        diPos_ = di;
-        emPos_ = em;
+    public FilterSetup(String ex, String nd, String di, String em,
+            int intTime, ArrayList<Integer> delays){
+        exFilt_ = ex;
+        ndFilt_ = nd;
+        diFilt_ = di;
+        emFilt_ = em;
         intTime_ = intTime;
         delays_ = delays;
     }
@@ -34,28 +35,28 @@ public class FilterSetup {
         return this;
     }
     
-    public int getExPos() {
-        return exPos_;
+    public String getExFilt() {
+        return exFilt_;
     }
 
-    public void setExPos(int exPos) {
-        this.exPos_ = exPos;
+    public void setExFilt(String exFilt) {
+        this.exFilt_ = exFilt;
     }
 
-    public int getDiPos() {
-        return diPos_;
+    public String getDiFilt() {
+        return diFilt_;
     }
 
-    public void setDiPos(int diPos) {
-        this.diPos_ = diPos;
+    public void setDiFilt(String diFilt) {
+        this.diFilt_ = diFilt;
     }
 
-    public int getEmPos() {
-        return emPos_;
+    public String getEmFilt() {
+        return emFilt_;
     }
 
-    public void setEmPos(int emPos) {
-        this.emPos_ = emPos;
+    public void setEmFilt(String emFilt) {
+        this.emFilt_ = emFilt;
     }
 
     public int getIntTime() {
@@ -74,12 +75,12 @@ public class FilterSetup {
         this.delays_ = delays;
     }
     
-   public int getNDPos(){
-       return ndPos_;
+   public String getNDFilt(){
+       return ndFilt_;
    }
    
-   public void setNDPos(int ndPos){
-       this.ndPos_ = ndPos;
+   public void setNDFilt(String ndFilt){
+       this.ndFilt_ = ndFilt;
    }
     
 }

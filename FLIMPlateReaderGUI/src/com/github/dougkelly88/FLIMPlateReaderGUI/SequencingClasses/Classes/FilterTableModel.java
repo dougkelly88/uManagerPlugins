@@ -52,17 +52,17 @@ public class FilterTableModel extends AbstractTableModel {
         FilterSetup f = data_.get(rowIndex);
         switch (columnIndex){
             case EX_INDEX:
-                return f.getExPos();
+                return f.getExFilt();
             case DI_INDEX:
-                return f.getDiPos();
+                return f.getDiFilt();
             case EM_INDEX:
-                return f.getEmPos();
+                return f.getEmFilt();
             case INT_INDEX:
                 return f.getIntTime();
             case DELS_INDEX: 
                 return f.getDelays();
             case ND_INDEX:
-                return f.getNDPos();
+                return f.getNDFilt();
             default: 
                 return f;
         }
