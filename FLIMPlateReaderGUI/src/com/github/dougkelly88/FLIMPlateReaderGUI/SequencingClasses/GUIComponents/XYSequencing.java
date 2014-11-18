@@ -90,6 +90,7 @@ public class XYSequencing extends javax.swing.JPanel {
         });
         popupMenu.add(addItem);
         popupMenu.add(deleteItem);
+        
         fovTable_.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -106,7 +107,6 @@ public class XYSequencing extends javax.swing.JPanel {
                     if (!source.isRowSelected(row)) {
                         source.changeSelection(row, column, false, false);
                     }
-
                     popupMenu.show(e.getComponent(), e.getX(), e.getY());
                 }
             }

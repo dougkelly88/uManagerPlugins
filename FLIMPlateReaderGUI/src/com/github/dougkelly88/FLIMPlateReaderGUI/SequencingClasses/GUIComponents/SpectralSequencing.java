@@ -7,13 +7,17 @@ package com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.GUIComponent
 
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.SeqAcqProps;
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.VariableTest;
+import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralGUIComponents.HCAFLIMPluginFrame;
 import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.FilterSetup;
 import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.FilterTableModel;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultCellEditor;
@@ -37,11 +41,12 @@ public class SpectralSequencing extends javax.swing.JPanel {
     
     FilterTableModel tableModel_;
     JTable filtTable_;
-    Object parent_;
+    HCAFLIMPluginFrame parent_;
     SeqAcqProps sap_;
     VariableTest var_;
     CMMCore core_; 
     MMStudio gui_;
+    int selectedRow_;
     
     /**
      * Creates new form SpectralSequencing
@@ -63,8 +68,10 @@ public class SpectralSequencing extends javax.swing.JPanel {
         sap_ = SeqAcqProps.getInstance();
        
         
-        tableModel_ = new FilterTableModel(new FilterSetup("465/30","ND 1.0","473/561",
-                        "525/30",100,sap_.getDelaysArray().get(0)));
+//        tableModel_ = new FilterTableModel(new FilterSetup("GFP", "465/30",
+//                "ND 1.0","473/561","525/30",100,sap_.getDelaysArray().get(0)));
+        tableModel_ = new FilterTableModel(new FilterSetup("GFP", "465/30",
+                "ND 1.0","473/561","525/30",100,initDummy()));
         tableModel_.addTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent e) {
@@ -97,12 +104,31 @@ public class SpectralSequencing extends javax.swing.JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int r = filtTable_.getSelectedRow();
-                tableModel_.insertRow(r, new FilterSetup("465/30","ND 1.0","473/561",
-                        "525/30",100,sap_.getDelaysArray().get(0)));
+//                tableModel_.insertRow(r+1, new FilterSetup("GFP","465/30",
+//                        "ND 1.0","473/561","525/30",100,sap_.getDelaysArray().get(0)));
+                tableModel_.insertRow(r+1, new FilterSetup("GFP","465/30",
+                        "ND 1.0","473/561","525/30",100,initDummy()));
             }
         });
+        JMenuItem setDels = new JMenuItem("Set delays to current values");
+        setDels.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int r = filtTable_.getSelectedRow();
+                ArrayList<Integer> newDelays = new ArrayList<Integer>();
+                for (Integer delay : sap_.getDelaysArray().get(0)){
+                    newDelays.add(delay);
+                }
+                tableModel_.setValueAt(newDelays, r, FilterTableModel.DELS_INDEX);
+            }
+            
+        });
+        
+        
         popupMenu.add(addItem);
         popupMenu.add(deleteItem);
+        popupMenu.add(setDels);
         filtTable_.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -126,23 +152,53 @@ public class SpectralSequencing extends javax.swing.JPanel {
         });
         
         JComboBox exCombo = new JComboBox();
-        populateCombos(exCombo, "Emission", filtTable_.getColumnModel().getColumn(1));
+        populateCombos(exCombo, "Excitation", FilterTableModel.EX_INDEX);
+//        JComboBox ndCombo = new JComboBox();
+//        populateCombos(ndCombo, "NDFilter", tableModel_.ND_INDEX);
+        JComboBox diCombo = new JComboBox();
+        populateCombos(diCombo, "Dichroic", FilterTableModel.DI_INDEX);
+        JComboBox emCombo = new JComboBox();
+        populateCombos(emCombo, "Emission", FilterTableModel.EM_INDEX);
         
     }
     
-    private void populateCombos(JComboBox combo, String devLabel, TableColumn col){
+    private void setParent(HCAFLIMPluginFrame frame){
+        parent_ = frame;
+    }
+    
+    private ArrayList<Integer> initDummy(){
+        ArrayList<Integer> out = new ArrayList<Integer>();
+        for (int i = 0; i < 5; i++){
+            out.add(i*1000);
+        }
+        return out;
+    }
+    
+    private void populateCombos(JComboBox combo, String devLabel, final int col){
         try{
             StrVector vals = core_.getAllowedPropertyValues(devLabel, "Label");
             for (String str : vals){
                 combo.addItem(str);
             }
-            col.setCellEditor(new DefaultCellEditor(combo));
+            filtTable_.getColumnModel().getColumn(col).setCellEditor(new DefaultCellEditor(combo));
+            combo.addItemListener(new ItemListener(){
+
+                @Override
+                public void itemStateChanged(ItemEvent event) {
+                    
+                    if (event.getStateChange() == ItemEvent.SELECTED){
+                        Object item = event.getItem();
+                        int r = filtTable_.getSelectedRow();
+                        tableModel_.setValueAt(item, r, col);
+                    }
+                }
+            });
         } catch (Exception ex) {
             String str = "Exception at = " + ex.getMessage();
             System.out.println(str);
         }
     }
-
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

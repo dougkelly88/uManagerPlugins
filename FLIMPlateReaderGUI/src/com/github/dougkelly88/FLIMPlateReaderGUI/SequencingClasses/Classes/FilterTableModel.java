@@ -13,15 +13,16 @@ import javax.swing.table.AbstractTableModel;
  * @author dk1109
  */
 public class FilterTableModel extends AbstractTableModel {
-   public static final int EX_INDEX = 0;
-   public static final int ND_INDEX = 1;
-   public static final int DI_INDEX = 2;
-   public static final int EM_INDEX = 3;
-   public static final int INT_INDEX = 4;
-   public static final int DELS_INDEX = 5;
+   public static final int LABEL_INDEX = 0;
+   public static final int EX_INDEX = 1;
+   public static final int ND_INDEX = 2;
+   public static final int DI_INDEX = 3;
+   public static final int EM_INDEX = 4;
+   public static final int INT_INDEX = 5;
+   public static final int DELS_INDEX = 6;
    
    private ArrayList<FilterSetup> data_ = new ArrayList<FilterSetup>();
-   private String[] colNames_ = { "Ex filter", "Dichroic", "Em filter", "Camera integration (ms)", "Delays" };
+   private String[] colNames_ = { "Label", "Ex filter", "ND filter", "Dichroic", "Em filter", "Camera integration (ms)", "Delays" };
    
    public FilterTableModel(String[] columnNames) {
          this.colNames_ = columnNames;
@@ -42,10 +43,75 @@ public class FilterTableModel extends AbstractTableModel {
     }
 
     @Override
-    public int getColumnCount() {
-        return 5;
+    public String getColumnName(int col) {
+      return colNames_[col];
     }
-
+    
+    @Override
+    public int getColumnCount() {
+        return 7;
+    }
+    
+    @Override
+    public void setValueAt(Object value, int row, int col) {
+        FilterSetup f = data_.get(row);
+        switch (col){
+            case INT_INDEX:
+                int val;
+                if (value.getClass() == String.class){
+                    val = Integer.parseInt(value.toString());
+                    // TODO: validate integration time - upper/lower lims? rounding?
+                    f.setIntTime(val);
+                }
+                else if (value.getClass() == Integer.class){
+                    f.setIntTime(Integer.parseInt(value.toString()));
+                }
+                break;
+            case EX_INDEX:
+                f.setExFilt(value.toString());
+                break;
+            case EM_INDEX:
+                f.setEmFilt(value.toString());
+                break;
+            case ND_INDEX:
+                f.setNDFilt(value.toString());
+                break;
+            case DI_INDEX:
+                f.setDiFilt(value.toString());
+                break;
+            case LABEL_INDEX:
+                f.setLabel(value.toString());
+            case DELS_INDEX:
+                ArrayList<Integer> dels = (ArrayList<Integer>) value;
+                f.setDelays(dels);
+                break;
+            default: 
+                break;
+        }
+        
+//        if (col == INT_INDEX){
+//            int val;
+//            if (value.getClass() == String.class){
+//                val = Integer.parseInt(value.toString());
+//            
+//                f.setIntTime(val);
+//            }       
+//            else if (col == EX_INDEX){
+//                f.setExFilt(value.toString());
+//            }
+//            else if 
+        
+           data_.set(row, f);
+           fireTableCellUpdated(row, col);
+        
+    }
+//    
+//    public void setDelays(ArrayList<Integer> dels, int row){
+//        FilterSetup f = data_.get(row);
+//        f.setDelays(dels);
+//        fireTableCellUpdated(row,DELS_INDEX);
+//    }
+    
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         
@@ -63,6 +129,8 @@ public class FilterTableModel extends AbstractTableModel {
                 return f.getDelays();
             case ND_INDEX:
                 return f.getNDFilt();
+            case LABEL_INDEX:
+                return f.getLabel();
             default: 
                 return f;
         }
@@ -74,9 +142,11 @@ public class FilterTableModel extends AbstractTableModel {
              case EX_INDEX:
              case DI_INDEX:
              case EM_INDEX:
-             case INT_INDEX:
+             case LABEL_INDEX:
              case ND_INDEX:
-                return Integer.class;
+                return String.class;
+             case INT_INDEX:
+                 return Integer.class;
              default:
                 return FilterSetup.class;
          }
@@ -90,19 +160,17 @@ public class FilterTableModel extends AbstractTableModel {
         int row = data_.size();
         data_.add(f);
         fireTableRowsInserted(row, row);
-//        sap_.setDelaysArray(0, data_);
     }
    
     public void insertRow(int index, FilterSetup f){
         data_.add(index, f);
-        fireTableRowsInserted(data_.size() - 1, data_.size() - 1);
-//        sap_.setDelaysArray(0, data_);
+//        fireTableRowsInserted(data_.size() - 1, data_.size() - 1);
+        fireTableRowsInserted(data_.size(), data_.size());
     }
     
     public void removeRow(int row) {
         data_.remove(row);
         fireTableRowsDeleted(row, row);
-//        sap_.setDelaysArray(0, data_);
     }
     
     public void addWholeData(ArrayList<FilterSetup> data){

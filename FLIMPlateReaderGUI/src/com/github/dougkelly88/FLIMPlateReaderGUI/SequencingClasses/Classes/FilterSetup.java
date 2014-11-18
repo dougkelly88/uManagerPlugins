@@ -14,6 +14,7 @@ import java.util.ArrayList;
 //TODO: validate positions based on available
 
 public class FilterSetup {
+    private String label_ = "GFP";
     private String exFilt_ = "465/30";
     private String ndFilt_ = "ND 1.0";
     private String diFilt_ = "473/561";
@@ -21,8 +22,9 @@ public class FilterSetup {
     private int intTime_ = 100;
     private ArrayList<Integer> delays_;
     
-    public FilterSetup(String ex, String nd, String di, String em,
+    public FilterSetup(String label, String ex, String nd, String di, String em,
             int intTime, ArrayList<Integer> delays){
+        label_ = label;
         exFilt_ = ex;
         ndFilt_ = nd;
         diFilt_ = di;
@@ -81,6 +83,14 @@ public class FilterSetup {
    
    public void setNDFilt(String ndFilt){
        this.ndFilt_ = ndFilt;
+   }
+   
+   public String getLabel(){
+       return label_;
+   }
+   
+   public void setLabel(String label){
+       this.label_ = label;
    }
     
 }
