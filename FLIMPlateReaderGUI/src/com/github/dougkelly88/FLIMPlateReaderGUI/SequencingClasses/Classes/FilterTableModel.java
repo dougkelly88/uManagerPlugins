@@ -81,6 +81,7 @@ public class FilterTableModel extends AbstractTableModel {
                 break;
             case LABEL_INDEX:
                 f.setLabel(value.toString());
+                break;
             case DELS_INDEX:
                 ArrayList<Integer> dels = (ArrayList<Integer>) value;
                 f.setDelays(dels);
@@ -88,29 +89,11 @@ public class FilterTableModel extends AbstractTableModel {
             default: 
                 break;
         }
-        
-//        if (col == INT_INDEX){
-//            int val;
-//            if (value.getClass() == String.class){
-//                val = Integer.parseInt(value.toString());
-//            
-//                f.setIntTime(val);
-//            }       
-//            else if (col == EX_INDEX){
-//                f.setExFilt(value.toString());
-//            }
-//            else if 
-        
+               
            data_.set(row, f);
            fireTableCellUpdated(row, col);
         
     }
-//    
-//    public void setDelays(ArrayList<Integer> dels, int row){
-//        FilterSetup f = data_.get(row);
-//        f.setDelays(dels);
-//        fireTableCellUpdated(row,DELS_INDEX);
-//    }
     
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
