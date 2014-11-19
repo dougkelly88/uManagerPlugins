@@ -27,19 +27,97 @@ public class TimeCourseSequencing extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        timeCourseSeqBasePanel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        noTimePointsField = new javax.swing.JFormattedTextField();
+        jLabel2 = new javax.swing.JLabel();
+        timeStepField = new javax.swing.JFormattedTextField();
+        timeUnitsCombo = new javax.swing.JComboBox();
+        popTimeCourseButton = new javax.swing.JButton();
+
+        timeCourseSeqBasePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+
+        javax.swing.GroupLayout timeCourseSeqBasePanelLayout = new javax.swing.GroupLayout(timeCourseSeqBasePanel);
+        timeCourseSeqBasePanel.setLayout(timeCourseSeqBasePanelLayout);
+        timeCourseSeqBasePanelLayout.setHorizontalGroup(
+            timeCourseSeqBasePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        timeCourseSeqBasePanelLayout.setVerticalGroup(
+            timeCourseSeqBasePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 465, Short.MAX_VALUE)
+        );
+
+        jLabel1.setText("Number of time points:");
+
+        noTimePointsField.setText("5");
+
+        jLabel2.setText("Time step:");
+
+        timeStepField.setText("60");
+
+        timeUnitsCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seconds", "Minutes", "Hours" }));
+        timeUnitsCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                timeUnitsComboActionPerformed(evt);
+            }
+        });
+
+        popTimeCourseButton.setText("Populate time course...");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(timeCourseSeqBasePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(noTimePointsField, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(timeStepField, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(timeUnitsCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
+                        .addComponent(popTimeCourseButton)
+                        .addGap(22, 22, 22))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(timeCourseSeqBasePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(noTimePointsField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(timeStepField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(timeUnitsCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(popTimeCourseButton))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void timeUnitsComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timeUnitsComboActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_timeUnitsComboActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JFormattedTextField noTimePointsField;
+    private javax.swing.JButton popTimeCourseButton;
+    private javax.swing.JPanel timeCourseSeqBasePanel;
+    private javax.swing.JFormattedTextField timeStepField;
+    private javax.swing.JComboBox timeUnitsCombo;
     // End of variables declaration//GEN-END:variables
 }
