@@ -160,13 +160,14 @@ public class Acquisition {
 
             CoreMetadata cm = new CoreMetadata();
 
-            cm.moduloT.labels = delArrayStr;
+/*            cm.moduloT.labels = delArrayStr;
             cm.moduloT.unit = "ps";
             cm.moduloT.typeDescription = "Gated";
             cm.moduloT.type = loci.formats.FormatTools.LIFETIME;
             
 
             serv.addModuloAlong(m, cm, series);
+*/
             
 
             new File(path).delete();
