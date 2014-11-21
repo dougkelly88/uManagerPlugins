@@ -378,7 +378,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(frameScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 802, Short.MAX_VALUE)
+            .addComponent(frameScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 806, Short.MAX_VALUE)
         );
 
         pack();
