@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -166,7 +167,7 @@ public class TimeCourseSequencing extends javax.swing.JPanel {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
-    /*private void myinitComponents() {
+    private void myinitComponents() {
 
         timeCourseSeqBasePanel = new javax.swing.JPanel();
 
@@ -201,7 +202,7 @@ public class TimeCourseSequencing extends javax.swing.JPanel {
                     .addComponent(timeCourseSeqBasePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addContainerGap()))
         );
-    }*/
+    }
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -271,7 +272,7 @@ public class TimeCourseSequencing extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(timeCourseSeqBasePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(timeCourseSeqBasePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -283,8 +284,8 @@ public class TimeCourseSequencing extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-private void myinitComponents() {
-
+/*
+    private void myinitComponents() {
         timeCourseSeqBasePanel = new javax.swing.JPanel();
 
         timeCourseSeqBasePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -318,7 +319,7 @@ private void myinitComponents() {
                     .addComponent(timeCourseSeqBasePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addContainerGap()))
         );
-    }
+    }*/
     private void timeUnitsComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timeUnitsComboActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_timeUnitsComboActionPerformed
@@ -333,4 +334,5 @@ private void myinitComponents() {
     private javax.swing.JFormattedTextField timeStepField;
     private javax.swing.JComboBox timeUnitsCombo;
     // End of variables declaration//GEN-END:variables
+
 }
