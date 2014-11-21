@@ -155,6 +155,11 @@ public class XYSequencing extends javax.swing.JPanel {
         storedXYZPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Stored XYZ positions"));
 
         clearXYZButton.setText("Clear stored XYZ");
+        clearXYZButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearXYZButtonActionPerformed(evt);
+            }
+        });
 
         storeXYZButton.setText("Store current XYZ");
 
@@ -532,6 +537,10 @@ public class XYSequencing extends javax.swing.JPanel {
     private void intensityThresoldFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_intensityThresoldFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_intensityThresoldFieldActionPerformed
+
+    private void clearXYZButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearXYZButtonActionPerformed
+        tableModel_.clearAllData();
+    }//GEN-LAST:event_clearXYZButtonActionPerformed
 
     public void setPlateProperties(PlateProperties pp) {
         pp_ = pp;
