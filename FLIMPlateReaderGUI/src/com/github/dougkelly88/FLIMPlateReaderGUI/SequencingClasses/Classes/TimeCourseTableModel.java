@@ -19,7 +19,7 @@ public class TimeCourseTableModel extends AbstractTableModel {
  
    
    private ArrayList<TimeSetup> data_ = new ArrayList<TimeSetup>();
-   private String[] colNames_ = { "Time", "Liquid Dispension", "Sound Alert"};
+   private String[] colNames_ = { "Time", "Liquid Dispersion", "Sound Alert"};
    
    public TimeCourseTableModel(String[] columnNames) {
          this.colNames_ = columnNames;
@@ -96,9 +96,10 @@ public class TimeCourseTableModel extends AbstractTableModel {
          switch (column) {
              case Time_INDEX:
              case LD_INDEX:
-                 return Boolean.class;
+                 return getValueAt(0, column).getClass();
+//                 return Boolean.class;
              case SA_INDEX:
-                 return Boolean.class;
+                 return getValueAt(0, column).getClass();
              default:
                 return TimeSetup.class;
          }

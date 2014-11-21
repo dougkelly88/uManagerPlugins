@@ -51,7 +51,7 @@ public class TimeCourseSequencing extends javax.swing.JPanel {
      */
     public TimeCourseSequencing() {
         initComponents();
-        myinitComponents();
+//        myinitComponents();
         setControlDefaults();
     }
     

@@ -109,7 +109,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         sequenceSetupTabbedPane = new javax.swing.JTabbedPane();
         xYSequencing1 = new com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.GUIComponents.XYSequencing();
         spectralSequencing1 = new com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.GUIComponents.SpectralSequencing();
-        timeCourseSequencing1 = new com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.GUIComponents.TimeCourseSequencing();
+        timeCourseSequencing2 = new com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.GUIComponents.TimeCourseSequencing();
         jMenuBar2 = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         loadPlateConfigMenu = new javax.swing.JMenuItem();
@@ -205,19 +205,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
 
         sequenceSetupTabbedPane.addTab("XYZ positions", xYSequencing1);
         sequenceSetupTabbedPane.addTab("Filter sets", spectralSequencing1);
-
-        javax.swing.GroupLayout timeCourseSequencing1Layout = new javax.swing.GroupLayout(timeCourseSequencing1);
-        timeCourseSequencing1.setLayout(timeCourseSequencing1Layout);
-        timeCourseSequencing1Layout.setHorizontalGroup(
-            timeCourseSequencing1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 647, Short.MAX_VALUE)
-        );
-        timeCourseSequencing1Layout.setVerticalGroup(
-            timeCourseSequencing1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 545, Short.MAX_VALUE)
-        );
-
-        sequenceSetupTabbedPane.addTab("Time course", timeCourseSequencing1);
+        sequenceSetupTabbedPane.addTab("Time course", timeCourseSequencing2);
 
         javax.swing.GroupLayout sequenceSetupBasePanelLayout = new javax.swing.GroupLayout(sequenceSetupBasePanel);
         sequenceSetupBasePanel.setLayout(sequenceSetupBasePanelLayout);
@@ -227,7 +215,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         );
         sequenceSetupBasePanelLayout.setVerticalGroup(
             sequenceSetupBasePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(sequenceSetupTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 573, Short.MAX_VALUE)
+            .addComponent(sequenceSetupTabbedPane)
         );
 
         javax.swing.GroupLayout basePanelLayout = new javax.swing.GroupLayout(basePanel);
@@ -266,7 +254,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
             .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, basePanelLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(FLIMPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 801, Short.MAX_VALUE)
+                    .addComponent(FLIMPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 851, Short.MAX_VALUE)
                     .addContainerGap())
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, basePanelLayout.createSequentialGroup()
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -560,7 +548,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     private javax.swing.JLabel statusLabel;
     private javax.swing.JScrollPane statusScrollPane;
     private javax.swing.JTextArea statusTextArea;
-    private com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.GUIComponents.TimeCourseSequencing timeCourseSequencing1;
+    private com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.GUIComponents.TimeCourseSequencing timeCourseSequencing2;
     private javax.swing.JMenu toolsMenu;
     private javax.swing.JMenuItem wizardMenu;
     private com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.GUIComponents.XYSequencing xYSequencing1;
