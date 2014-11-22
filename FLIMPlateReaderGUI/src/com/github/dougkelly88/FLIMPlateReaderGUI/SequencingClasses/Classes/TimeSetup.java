@@ -5,8 +5,6 @@
  */
 package com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author Frederik
@@ -30,7 +28,7 @@ public class TimeSetup {
     }
     
     public String getTimeCell() {
-        return time_;
+        return time_;   
     }
 
     public void setTimeCell(String time) {

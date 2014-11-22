@@ -57,13 +57,13 @@ public class TimeCourseTableModel extends AbstractTableModel {
             case Time_INDEX:
                 f.setTimeCell(value.toString());
                 break;
-            case LD_INDEX:
+            case LD_INDEX: 
                 boolean bo=(Boolean) value;
                 f.setLDState(bo);
                 break;
             case SA_INDEX:
                 boolean boo=(Boolean) value;
-                f.setLDState(boo);
+                f.setSAState(boo);
                 break;
 
             default: 
@@ -99,6 +99,7 @@ public class TimeCourseTableModel extends AbstractTableModel {
                  return getValueAt(0, column).getClass();
              case SA_INDEX:
                  return getValueAt(0, column).getClass();
+//                 return getValueAt(0, column).getClass();
              default:
                 return TimeSetup.class;
          }
