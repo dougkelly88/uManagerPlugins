@@ -33,7 +33,7 @@ import org.micromanager.MMStudio;
 
 /**
  *
- * @author dk1109
+ * @author Frederik
  */
 public class TimeCourseSequencing extends javax.swing.JPanel {
     
@@ -109,20 +109,6 @@ public class TimeCourseSequencing extends javax.swing.JPanel {
                         false));
             }
         });
-        /*JMenuItem setDels = new JMenuItem("Set delays to current values");
-        setDels.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int r = timeTable_.getSelectedRow();
-                ArrayList<Integer> newDelays = new ArrayList<Integer>();
-                for (Integer delay : sap_.getDelaysArray().get(0)){
-                    newDelays.add(delay);
-                }
-                tableModel_.setValueAt(newDelays, r, TimeCourseTableModel.DELS_INDEX);
-            }
-            
-        });*/
         
         
         popupMenu.add(addItem);

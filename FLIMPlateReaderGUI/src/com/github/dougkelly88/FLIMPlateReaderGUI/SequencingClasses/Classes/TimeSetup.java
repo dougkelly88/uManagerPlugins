@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author dk1109
+ * @author Frederik
  */
 //TODO: validate positions based on available
 

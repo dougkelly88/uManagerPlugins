@@ -10,7 +10,7 @@ import javax.swing.table.AbstractTableModel;
 
 /**
  *
- * @author dk1109
+ * @author Frederik
  */
 public class TimeCourseTableModel extends AbstractTableModel {
    public static final int Time_INDEX = 0;
@@ -97,7 +97,6 @@ public class TimeCourseTableModel extends AbstractTableModel {
              case Time_INDEX:
              case LD_INDEX:
                  return getValueAt(0, column).getClass();
-//                 return Boolean.class;
              case SA_INDEX:
                  return getValueAt(0, column).getClass();
              default:
