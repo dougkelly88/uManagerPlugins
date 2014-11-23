@@ -657,7 +657,7 @@ public class XYSequencing extends javax.swing.JPanel {
     }//GEN-LAST:event_zModeComboActionPerformed
 
     private void storeXYZButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_storeXYZButtonActionPerformed
-        
+        // TODO: replace dummy xyz with (translated) values from hardware. 
         double x = 34000;
         double y = 34000;
         double z = 1000;
