@@ -268,7 +268,7 @@ public class FileWrite {
       // add FLIM ModuloAlongT annotation if required 
       if (delays != null) {
         CoreMetadata modlo = createModuloAnn(meta);
-        service.addModuloAlong(meta, modlo, series);
+//        service.addModuloAlong(meta, modlo, series);
       }
 
 
@@ -317,15 +317,15 @@ public class FileWrite {
 
     CoreMetadata modlo = new CoreMetadata();
 
-    modlo.moduloT.type = loci.formats.FormatTools.LIFETIME;
-    modlo.moduloT.unit = "ps";
-    modlo.moduloT.typeDescription = "Gated";
+//    modlo.moduloT.type = loci.formats.FormatTools.LIFETIME;
+//    modlo.moduloT.unit = "ps";
+//    modlo.moduloT.typeDescription = "Gated";
 
-    modlo.moduloT.labels = new String[sizet];
+//    modlo.moduloT.labels = new String[sizet];
 
     for (int i = 0; i < sizet; i++) {
       //System.out.println(delays.get(i));
-      modlo.moduloT.labels[i] = delays.get(i);
+//      modlo.moduloT.labels[i] = delays.get(i);
       
     }
 
