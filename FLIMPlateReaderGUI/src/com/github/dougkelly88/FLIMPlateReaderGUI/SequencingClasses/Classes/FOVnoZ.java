@@ -14,10 +14,9 @@ import java.awt.Rectangle;
  *
  * @author dk1109
  */
-public class FOV {
+public class FOVnoZ {
     double x_;
     double y_;
-    double z_;
     double width_ = 314;
     double height_ = 230;   //40x obj, 0.7 relay
     String well_;
@@ -39,10 +38,9 @@ public class FOV {
      * @param well 
      * @param pp 
      */
-    public FOV(double x, double y, double z, String well, PlateProperties pp){
+    public FOVnoZ(double x, double y, String well, PlateProperties pp){
         x_ = x;
         y_ = y;
-        z_ = z;
         well_ = well;
         pp_ = pp;
     }
@@ -54,10 +52,9 @@ public class FOV {
      * @param z
      * @param pp 
      */
-    public FOV(double x, double y, double z, PlateProperties pp){
+    public FOVnoZ(double x, double y, PlateProperties pp){
         x_ = x;
         y_ = y;
-        z_ = z;
         pp_ = pp;
         // TODO: assign well automatically based on plate properties
         pp.getTopLeftWellOffsetH();
@@ -72,7 +69,7 @@ public class FOV {
      * @param pp
      * @param z 
      */
-    public FOV(String well, PlateProperties pp, double z){
+    public FOVnoZ(String well, PlateProperties pp){
         // split well text into numeric data, dealing with possibility of multiple
         // letters in well label - break out to general classes? 
         // Make well an object?
@@ -95,12 +92,11 @@ public class FOV {
                 (wellNumber - 1) * pp.getWellSpacingH();
         y_ = pp.getTopLeftWellOffsetV() + 
                 (letterIndex - 1) * pp.getWellSpacingV();
-        z_ = z;
         pp_ = pp;
         
     }
     
-    public FOV getFOV(){
+    public FOVnoZ getFOV(){
         return this;
     }
     
@@ -112,9 +108,6 @@ public class FOV {
         return y_;
     }
     
-    public double getZ(){
-        return z_;
-    }
     
     public String getWell(){
         return well_;
@@ -128,9 +121,6 @@ public class FOV {
         y_ = y;
     }
     
-    public void setZ(double z){
-        z_ = z;
-    }
     
     public void setWell(String well){
         well_ = well;

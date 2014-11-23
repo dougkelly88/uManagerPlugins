@@ -9,14 +9,26 @@ import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.PlateProperties;
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.SeqAcqProps;
 import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.FOV;
 import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.FOVTableModel;
+import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.FOVnoZ;
 import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import javax.swing.Box;
+import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -35,6 +47,8 @@ public class XYSequencing extends javax.swing.JPanel {
     JTable fovTable_;
     SeqAcqProps sap_;
     Object parent_;
+    final static String um = "(" + "\u00B5" + "m)";
+    boolean zAsOffset_ = true;
 
     /**
      * Creates new form XYSequencing
@@ -90,7 +104,7 @@ public class XYSequencing extends javax.swing.JPanel {
         });
         popupMenu.add(addItem);
         popupMenu.add(deleteItem);
-        
+
         fovTable_.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -132,7 +146,7 @@ public class XYSequencing extends javax.swing.JPanel {
         clearXYZButton = new javax.swing.JButton();
         storeXYZButton = new javax.swing.JButton();
         fovTablePanel = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        genZStackButton = new javax.swing.JButton();
         zModeCombo = new javax.swing.JComboBox();
         prefindPanel = new javax.swing.JPanel();
         quickPFButton = new javax.swing.JButton();
@@ -174,10 +188,19 @@ public class XYSequencing extends javax.swing.JPanel {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jButton1.setText("Generate Z stack...");
+        genZStackButton.setText("Generate Z stack...");
+        genZStackButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                genZStackButtonActionPerformed(evt);
+            }
+        });
 
         zModeCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Z as offset", "Absolute Z" }));
-        zModeCombo.setEnabled(false);
+        zModeCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                zModeComboActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout storedXYZPanelLayout = new javax.swing.GroupLayout(storedXYZPanel);
         storedXYZPanel.setLayout(storedXYZPanelLayout);
@@ -190,7 +213,7 @@ public class XYSequencing extends javax.swing.JPanel {
                 .addGroup(storedXYZPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(storeXYZButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(clearXYZButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(genZStackButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(zModeCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -204,7 +227,7 @@ public class XYSequencing extends javax.swing.JPanel {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(zModeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
+                        .addComponent(genZStackButton)
                         .addGap(34, 34, 34)
                         .addComponent(storeXYZButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -432,14 +455,14 @@ public class XYSequencing extends javax.swing.JPanel {
     public void generateFOVs() {
         if (autoGenerateFOVsCheck.isSelected()) {
             tableModel_.clearAllData();
-            
+
             ArrayList<FOV> fovs = new ArrayList<FOV>();
-            
+
             for (int cols = 0; cols < pp_.getPlateColumns(); cols++) {
                 ArrayList<Boolean> temp = pmdp_.wellsSelected_.get(cols);
                 for (int rows = 0; rows < pp_.getPlateRows(); rows++) {
                     if (temp.get(rows)) {
-                        
+
                         String wellString = Character.toString((char) (65 + rows)) + Integer.toString(cols + 1);
                         if (FOVPatternCombo.getSelectedIndex() == 0) { // spiral pattern
                             fovs = generateSpiral(Integer.parseInt(noFOVsField.getText()),
@@ -448,8 +471,8 @@ public class XYSequencing extends javax.swing.JPanel {
                             fovs = generateRing(Integer.parseInt(noFOVsField.getText()),
                                     wellString);
                         }
-                        
-                        for (FOV fov: fovs){
+
+                        for (FOV fov : fovs) {
                             tableModel_.addRow(fov);
                         }
 //                        tableModel_.addRow(new FOV(wellString, pp_, 0));
@@ -463,30 +486,29 @@ public class XYSequencing extends javax.swing.JPanel {
 
         // cover whole well in a rectangle; remove those outwith well bounds;
         // finally trim to #fov. Deals with asymmetric FOV
-        
         ArrayList<FOV> spiralFOVs = new ArrayList<FOV>();
         FOV fov = new FOV(wellString, pp_, 0);
         double[] centrexy = {fov.getX(), fov.getY()};
         double[] DXY = {sap_.getFLIMFOVSize()[0], sap_.getFLIMFOVSize()[1]};
-        int[][] dir = {{1, 0},{0, 1},{-1, 0},{0, -1}};
+        int[][] dir = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
         double[] dxy = new double[2];
         int stepsInCurrentDir;
-        
+
         spiralFOVs.add(fov);
         int fovind = 1;
         int dirind = 0;
-        while (fovind < noFOV & dirind < 100){   // just in case we have a runaway case...
+        while (fovind < noFOV & dirind < 100) {   // just in case we have a runaway case...
 
-            stepsInCurrentDir = (int) Math.ceil((double)(dirind)/2);
+            stepsInCurrentDir = (int) Math.ceil((double) (dirind) / 2);
 
-            dxy[0] = dir[dirind%4][0] * DXY[0];
-            dxy[1] = dir[dirind%4][1] * DXY[1];
-            for (int j = 0; j < stepsInCurrentDir; j++){
+            dxy[0] = dir[dirind % 4][0] * DXY[0];
+            dxy[1] = dir[dirind % 4][1] * DXY[1];
+            for (int j = 0; j < stepsInCurrentDir; j++) {
                 centrexy[0] += dxy[0];
                 centrexy[1] += dxy[1];
-                fov = new FOV(centrexy[0], centrexy[1], 0, 
+                fov = new FOV(centrexy[0], centrexy[1], 0,
                         wellString, pp_);
-                if (fov.isValid()){
+                if (fov.isValid()) {
                     spiralFOVs.add(fov);
                     fovind++;
                 }
@@ -496,7 +518,7 @@ public class XYSequencing extends javax.swing.JPanel {
         }
         // trim, a bit hacky but works
         int currsize = spiralFOVs.size();
-        for (int j = currsize-1; j > noFOV-1; j--){
+        for (int j = currsize - 1; j > noFOV - 1; j--) {
             spiralFOVs.remove(j);
         }
         return spiralFOVs;
@@ -542,11 +564,104 @@ public class XYSequencing extends javax.swing.JPanel {
         tableModel_.clearAllData();
     }//GEN-LAST:event_clearXYZButtonActionPerformed
 
+    private void genZStackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genZStackButtonActionPerformed
+        //TODO: generate new FOV in current position if FOV table is empty. 
+        ArrayList<FOV> temp = tableModel_.getData();
+        ArrayList<FOV> newtemp = new ArrayList<FOV>();
+
+        double startUm;
+        double endUm;
+        double stepUm;
+
+        String um = "(" + "\u00B5" + "m)";
+        JLabel messageLabel = new JLabel("<html>Please enter start, end and delta values for Z stack: </html>");
+        JLabel startLabel = new JLabel("Start Z position " + um + ":");
+        JLabel endLabel = new JLabel("End Z position " + um + ":");
+        JLabel stepLabel = new JLabel("Step size " + um + ":");
+
+        JFormattedTextField startField = new JFormattedTextField(-3);
+        JFormattedTextField endField = new JFormattedTextField(3);
+        JFormattedTextField stepField = new JFormattedTextField(0.5);
+
+        JPanel zStackDialog = new JPanel();
+        zStackDialog.setLayout(new BorderLayout(50, 100));
+
+        JPanel controlsPanel = new JPanel();
+        controlsPanel.setLayout(new GridLayout(3, 2, 50, 10));
+
+        controlsPanel.add(startLabel);
+        controlsPanel.add(startField);
+        controlsPanel.add(endLabel);
+        controlsPanel.add(endField);
+        controlsPanel.add(stepLabel);
+        controlsPanel.add(stepField);
+
+        zStackDialog.add(messageLabel, BorderLayout.PAGE_START);
+        zStackDialog.add(controlsPanel, BorderLayout.CENTER);
+
+        int result = JOptionPane.showConfirmDialog(this, zStackDialog,
+                "Z stack setup", JOptionPane.OK_CANCEL_OPTION);
+        if (result == JOptionPane.OK_OPTION) {
+
+            // SHOULD FIND UNIQUE XY VALUES FIRST! - this is a bit clunky, but 
+            // hashsets (probably more efficient for finding unique vals?) don't
+            // seem to work...
+            ArrayList<FOV> unique = temp;
+            ArrayList<Integer> indToRemove = new ArrayList<Integer>();
+//            unique = temp;
+
+            
+            for (FOV oldfov : temp){
+                oldfov.setZ(0);
+                int match = 0;
+                for (int ind = 0; ind < unique.size(); ind++){
+                    FOV fov = unique.get(ind);
+                    if ((oldfov.getX() == fov.getX()) & (oldfov.getY() == fov.getY())) {
+                        match++;
+                        if (match > 1){
+                            indToRemove.add(ind);
+                        }
+                    }
+                }
+            }
+            Set<Integer> u = new HashSet<Integer>(indToRemove); //effectively get unique values
+            
+            for (int ind = u.size(); ind > 0; ind--){
+                unique.remove(ind);
+            }
+
+            startUm = Double.parseDouble(startField.getText());
+            endUm = Double.parseDouble(endField.getText());
+            stepUm = Double.parseDouble(stepField.getText());
+            int Nz = (int) ((endUm - startUm) / stepUm + 1);
+
+            for (FOV fov : unique) {
+
+                for (int zpos = 0; zpos < Nz; zpos++) {
+
+                    double z = startUm + zpos * stepUm;
+                    newtemp.add(new FOV(fov.getX(), fov.getY(), fov.getZ() + z,
+                            fov.getWell(), fov.getPlateProps()));
+
+                }
+
+            }
+
+            tableModel_.addWholeData(newtemp);
+
+        }
+
+    }//GEN-LAST:event_genZStackButtonActionPerformed
+
+    private void zModeComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zModeComboActionPerformed
+        zAsOffset_ = (String) zModeCombo.getSelectedItem() == "Z as offset";
+    }//GEN-LAST:event_zModeComboActionPerformed
+
     public void setPlateProperties(PlateProperties pp) {
         pp_ = pp;
     }
-    
-    public void setParent(Object o){
+
+    public void setParent(Object o) {
         parent_ = o;
     }
 
@@ -559,8 +674,8 @@ public class XYSequencing extends javax.swing.JPanel {
     private javax.swing.JCheckBox autoGenerateFOVsCheck;
     private javax.swing.JButton clearXYZButton;
     private javax.swing.JPanel fovTablePanel;
+    private javax.swing.JButton genZStackButton;
     private javax.swing.JFormattedTextField intensityThresoldField;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
