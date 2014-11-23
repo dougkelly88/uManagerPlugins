@@ -13,25 +13,27 @@ import javax.swing.table.AbstractTableModel;
  * @author Frederik
  */
 public class TimeCourseTableModel extends AbstractTableModel {
-   public static final int Time_INDEX = 0;
+   public static final int TIME_INDEX = 0;
    public static final int LD_INDEX = 1;
    public static final int SA_INDEX = 2;
+   final static String ul = "("+"\u00B5"+"l)";
  
    
    private ArrayList<TimeSetup> data_ = new ArrayList<TimeSetup>();
-   private String[] colNames_ = { "Time", "Liquid Dispersion", "Sound Alert"};
+   private String[] colNames_ = { "Time (s)", "Liquid dispense volume " + ul,
+       "Sound alert?"};
    
    public TimeCourseTableModel(String[] columnNames) {
          this.colNames_ = columnNames;
     }
    
-   public TimeCourseTableModel(String[] columnNames, TimeSetup filts){
+   public TimeCourseTableModel(String[] columnNames, TimeSetup times){
        this.colNames_ = columnNames;
-       this.data_.add(filts);
+       this.data_.add(times);
    }
    
-   public TimeCourseTableModel(TimeSetup filts){
-       this.data_.add(filts);
+   public TimeCourseTableModel(TimeSetup times){
+       this.data_.add(times);
    }
 
     @Override
@@ -54,12 +56,12 @@ public class TimeCourseTableModel extends AbstractTableModel {
         TimeSetup f = data_.get(row);
         switch (col){
             
-            case Time_INDEX:
-                f.setTimeCell(value.toString());
+            case TIME_INDEX:
+                f.setTimeCell((Double) value);
                 break;
             case LD_INDEX: 
-                boolean bo=(Boolean) value;
-                f.setLDState(bo);
+//                boolean bo=(Boolean) value;
+                f.setLDVolume((Double) value);
                 break;
             case SA_INDEX:
                 boolean boo=(Boolean) value;
@@ -80,10 +82,10 @@ public class TimeCourseTableModel extends AbstractTableModel {
         
         TimeSetup f = data_.get(rowIndex);
         switch (columnIndex){
-            case Time_INDEX:
+            case TIME_INDEX:
                 return f.getTimeCell();
             case LD_INDEX:
-                return f.getLDState();
+                return f.getLDVolume();
             case SA_INDEX:
                 return f.getSAState();
             default: 
@@ -94,7 +96,8 @@ public class TimeCourseTableModel extends AbstractTableModel {
     @Override
     public Class getColumnClass(int column) {
          switch (column) {
-             case Time_INDEX:
+             case TIME_INDEX:
+                 return getValueAt(0,column).getClass();
              case LD_INDEX:
                  return getValueAt(0, column).getClass();
              case SA_INDEX:

@@ -12,11 +12,11 @@ package com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes;
 //TODO: validate positions based on available
 
 public class TimeSetup {
-    private String time_ = "10s";
-    private boolean ld_ = false;
+    private double time_ = 10;
+    private double ld_ = 100;
     private boolean sa_ = false;
     
-    public TimeSetup(String time, boolean ld, boolean sa){
+    public TimeSetup(double time, double ld, boolean sa){
         time_ = time;
         ld_ = ld;
         sa_ = sa;
@@ -27,19 +27,19 @@ public class TimeSetup {
         return this;
     }
     
-    public String getTimeCell() {
+    public double getTimeCell() {
         return time_;   
     }
 
-    public void setTimeCell(String time) {
+    public void setTimeCell(double time) {
         this.time_ = time;
     }
 
-    public boolean getLDState() {
+    public double getLDVolume() {
         return ld_;
     }
 
-    public void setLDState(boolean LDState) {
+    public void setLDVolume(double LDState) {
         this.ld_ = LDState;
     }
 

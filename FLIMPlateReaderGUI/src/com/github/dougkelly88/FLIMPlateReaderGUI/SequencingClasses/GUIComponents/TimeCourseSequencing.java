@@ -69,7 +69,7 @@ public class TimeCourseSequencing extends javax.swing.JPanel {
         
 //        tableModel_ = new FilterTableModel(new FilterSetup("GFP", "465/30",
 //                "ND 1.0","473/561","525/30",100,sap_.getDelaysArray().get(0)));
-        tableModel_ = new TimeCourseTableModel(new TimeSetup("10s", false,
+        tableModel_ = new TimeCourseTableModel(new TimeSetup(-1, 0,
                 false));
         tableModel_.addTableModelListener(new TableModelListener() {
             @Override
@@ -105,7 +105,7 @@ public class TimeCourseSequencing extends javax.swing.JPanel {
                 int r = timeTable_.getSelectedRow();
 //                tableModel_.insertRow(r+1, new FilterSetup("GFP","465/30",
 //                        "ND 1.0","473/561","525/30",100,sap_.getDelaysArray().get(0)));
-                tableModel_.insertRow(r+1, new TimeSetup("10s", false,
+                tableModel_.insertRow(r+1, new TimeSetup(-1, 0,
                         false));
             }
         });
