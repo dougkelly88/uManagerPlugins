@@ -33,6 +33,8 @@ public class FOVTableModel extends AbstractTableModel {
 
 //    private SeqAcqProps sap_;
     
+    //TODO: remove duplicates!
+    
     public FOVTableModel(PlateProperties pp){
         pp_ = pp;
     }

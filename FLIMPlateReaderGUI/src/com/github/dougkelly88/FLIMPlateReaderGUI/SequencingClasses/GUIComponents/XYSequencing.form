@@ -113,6 +113,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Store current XYZ"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="storeXYZButtonActionPerformed"/>
+          </Events>
         </Component>
         <Container class="javax.swing.JPanel" name="fovTablePanel">
 

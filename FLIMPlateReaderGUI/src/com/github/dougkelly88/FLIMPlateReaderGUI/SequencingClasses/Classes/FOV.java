@@ -59,11 +59,12 @@ public class FOV {
         y_ = y;
         z_ = z;
         pp_ = pp;
-        // TODO: assign well automatically based on plate properties
-        pp.getTopLeftWellOffsetH();
-        pp.getTopLeftWellOffsetV();
-        pp.getWellSpacingH();
-        pp.getWellSpacingV();
+        int col = (int) Math.round((x - 
+                pp.getTopLeftWellOffsetH())/pp.getWellSpacingH()) + 1;
+        int row = (int) Math.round((y - 
+                pp.getTopLeftWellOffsetV())/pp.getWellSpacingV()) + 1;
+        well_ = Character.toString((char) (row + 64)) + col;
+        
     }
     
     /**

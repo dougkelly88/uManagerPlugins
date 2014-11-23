@@ -170,6 +170,11 @@ public class XYSequencing extends javax.swing.JPanel {
         });
 
         storeXYZButton.setText("Store current XYZ");
+        storeXYZButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                storeXYZButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout fovTablePanelLayout = new javax.swing.GroupLayout(fovTablePanel);
         fovTablePanel.setLayout(fovTablePanelLayout);
@@ -523,7 +528,7 @@ public class XYSequencing extends javax.swing.JPanel {
     }
 
     private void noFOVsFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noFOVsFieldActionPerformed
-        // TODO add your handling code here:
+        generateFOVs();
     }//GEN-LAST:event_noFOVsFieldActionPerformed
 
     private void FOVPatternComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FOVPatternComboActionPerformed
@@ -650,6 +655,16 @@ public class XYSequencing extends javax.swing.JPanel {
     private void zModeComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zModeComboActionPerformed
         zAsOffset_ = (String) zModeCombo.getSelectedItem() == "Z as offset";
     }//GEN-LAST:event_zModeComboActionPerformed
+
+    private void storeXYZButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_storeXYZButtonActionPerformed
+        
+        double x = 34000;
+        double y = 34000;
+        double z = 1000;
+        FOV newfov = new FOV(x, y, z, pp_);
+        tableModel_.addRow(newfov);
+        pmdp_.addSelectedWell(newfov.getWell());
+    }//GEN-LAST:event_storeXYZButtonActionPerformed
 
     public void setPlateProperties(PlateProperties pp) {
         pp_ = pp;
