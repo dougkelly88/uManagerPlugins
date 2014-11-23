@@ -33,7 +33,7 @@
                       <Component id="timeStepField" min="-2" pref="49" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="timeUnitsCombo" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="98" max="32767" attributes="0"/>
+                      <EmptySpace pref="110" max="32767" attributes="0"/>
                       <Component id="popTimeCourseButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                   </Group>
@@ -119,8 +119,11 @@
     </Component>
     <Component class="javax.swing.JButton" name="popTimeCourseButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Populate time course..."/>
+        <Property name="text" type="java.lang.String" value="Populate time course"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="popTimeCourseButtonActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

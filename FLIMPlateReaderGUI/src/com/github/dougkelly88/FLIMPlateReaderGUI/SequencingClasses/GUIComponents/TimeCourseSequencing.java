@@ -13,22 +13,15 @@ import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.TimeC
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import javax.swing.DefaultCellEditor;
-import javax.swing.JComboBox;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import mmcorej.CMMCore;
-import mmcorej.StrVector;
 import org.micromanager.MMStudio;
 
 /**
@@ -51,7 +44,6 @@ public class TimeCourseSequencing extends javax.swing.JPanel {
      */
     public TimeCourseSequencing() {
         initComponents();
-//        myinitComponents();
         setControlDefaults();
     }
     
@@ -69,7 +61,7 @@ public class TimeCourseSequencing extends javax.swing.JPanel {
         
 //        tableModel_ = new FilterTableModel(new FilterSetup("GFP", "465/30",
 //                "ND 1.0","473/561","525/30",100,sap_.getDelaysArray().get(0)));
-        tableModel_ = new TimeCourseTableModel(new TimeSetup(-1, 0,
+        tableModel_ = new TimeCourseTableModel(new TimeSetup(0, 0,
                 false));
         tableModel_.addTableModelListener(new TableModelListener() {
             @Override
@@ -103,8 +95,6 @@ public class TimeCourseSequencing extends javax.swing.JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int r = timeTable_.getSelectedRow();
-//                tableModel_.insertRow(r+1, new FilterSetup("GFP","465/30",
-//                        "ND 1.0","473/561","525/30",100,sap_.getDelaysArray().get(0)));
                 tableModel_.insertRow(r+1, new TimeSetup(-1, 0,
                         false));
             }
@@ -228,7 +218,12 @@ public class TimeCourseSequencing extends javax.swing.JPanel {
             }
         });
 
-        popTimeCourseButton.setText("Populate time course...");
+        popTimeCourseButton.setText("Populate time course");
+        popTimeCourseButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                popTimeCourseButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -250,7 +245,7 @@ public class TimeCourseSequencing extends javax.swing.JPanel {
                         .addComponent(timeStepField, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(timeUnitsCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
                         .addComponent(popTimeCourseButton)
                         .addGap(22, 22, 22))))
         );
@@ -309,6 +304,24 @@ public class TimeCourseSequencing extends javax.swing.JPanel {
     private void timeUnitsComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timeUnitsComboActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_timeUnitsComboActionPerformed
+
+    private void popTimeCourseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popTimeCourseButtonActionPerformed
+        
+        int noTimePoints = Integer.parseInt(noTimePointsField.getText());
+        double tStepSecs = Double.parseDouble(timeStepField.getText());
+        String units = (String) timeUnitsCombo.getSelectedItem();
+        
+        if (units == "Minutes")
+            tStepSecs = tStepSecs * 60;
+        else if (units == "Hours")
+            tStepSecs = tStepSecs * 60 * 60;
+        
+        tableModel_.clearAllData();
+        
+        for (int ind = 0; ind < noTimePoints; ind++){
+            tableModel_.addRow(new TimeSetup(ind * tStepSecs, 0, false));
+        }
+    }//GEN-LAST:event_popTimeCourseButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

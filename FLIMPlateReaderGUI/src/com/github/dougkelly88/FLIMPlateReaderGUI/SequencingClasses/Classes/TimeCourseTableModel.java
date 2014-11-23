@@ -6,6 +6,8 @@
 package com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -73,6 +75,7 @@ public class TimeCourseTableModel extends AbstractTableModel {
         }
                
            data_.set(row, f);
+           validateTimes();
            fireTableCellUpdated(row, col);
         
     }
@@ -120,6 +123,7 @@ public class TimeCourseTableModel extends AbstractTableModel {
    
     public void insertRow(int index, TimeSetup f){
         data_.add(index, f);
+        validateTimes();
 //        fireTableRowsInserted(data_.size() - 1, data_.size() - 1);
         fireTableRowsInserted(data_.size(), data_.size());
     }
@@ -132,6 +136,7 @@ public class TimeCourseTableModel extends AbstractTableModel {
     public void addWholeData(ArrayList<TimeSetup> data){
         data_.clear();
         data_.addAll(data);
+        validateTimes();
         fireTableDataChanged();
     }
     
@@ -145,5 +150,16 @@ public class TimeCourseTableModel extends AbstractTableModel {
         return true;
     }
     
+    private void validateTimes(){
+        // ensure no duplicate time points
+        Set<Double> unique = new HashSet<Double>();
+        for (TimeSetup times : data_){
+            unique.add(times.getTimeCell());
+        }
+        for (TimeSetup times : data_){
+            
+        }
+        //TODO: IMPLEMENT THIS PROPERLY!
+    }
         
 }
