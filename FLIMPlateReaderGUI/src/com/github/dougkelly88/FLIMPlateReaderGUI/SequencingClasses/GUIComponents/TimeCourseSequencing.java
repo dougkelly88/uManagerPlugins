@@ -8,7 +8,7 @@ package com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.GUIComponent
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.SeqAcqProps;
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.VariableTest;
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralGUIComponents.HCAFLIMPluginFrame;
-import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.TimeSetup;
+import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.TimePoint;
 import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.TimeCourseTableModel;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -61,7 +61,7 @@ public class TimeCourseSequencing extends javax.swing.JPanel {
         
 //        tableModel_ = new FilterTableModel(new FilterSetup("GFP", "465/30",
 //                "ND 1.0","473/561","525/30",100,sap_.getDelaysArray().get(0)));
-        tableModel_ = new TimeCourseTableModel(new TimeSetup(0, 0,
+        tableModel_ = new TimeCourseTableModel(new TimePoint(0.0, 0.0,
                 false));
         tableModel_.addTableModelListener(new TableModelListener() {
             @Override
@@ -95,7 +95,7 @@ public class TimeCourseSequencing extends javax.swing.JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int r = timeTable_.getSelectedRow();
-                tableModel_.insertRow(r+1, new TimeSetup(-1, 0,
+                tableModel_.insertRow(r+1, new TimePoint(-1.0, 0.0,
                         false));
             }
         });
@@ -319,7 +319,7 @@ public class TimeCourseSequencing extends javax.swing.JPanel {
         tableModel_.clearAllData();
         
         for (int ind = 0; ind < noTimePoints; ind++){
-            tableModel_.addRow(new TimeSetup(ind * tStepSecs, 0, false));
+            tableModel_.addRow(new TimePoint(ind * tStepSecs, 0.0, false));
         }
     }//GEN-LAST:event_popTimeCourseButtonActionPerformed
 
