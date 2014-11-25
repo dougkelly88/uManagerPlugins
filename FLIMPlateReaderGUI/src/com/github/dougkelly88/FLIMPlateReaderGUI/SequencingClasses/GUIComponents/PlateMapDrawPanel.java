@@ -21,6 +21,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.GUIComponents.XYSequencing;
+import java.util.Arrays;
 
 /**
  *
@@ -75,13 +76,16 @@ public class PlateMapDrawPanel extends JPanel implements ActionListener {
         addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
+
+//                
+//                selection_= new Rectangle(x[0], y[0], x[1], y[1]);
                 selection_ = new Rectangle(
                         selectionStart_.x,
                         selectionStart_.y,
                         e.getPoint().x - selectionStart_.x,
                         e.getPoint().y - selectionStart_.y
                 );
-//                    getSelectedWells();
+//                getSelectedWells();
                 repaint();
             }
 
@@ -158,13 +162,26 @@ public class PlateMapDrawPanel extends JPanel implements ActionListener {
     }
 
     private void getSelectedWells() {
-            // convert selected region into list of selected wells
+        // convert selected region into list of selected wells
         // TODO: currently selects well IFF centre of well is enclosed in
         //      selection rectangle. Update such that well is selected if 
         //      any part is enclosed. 
         int wellSpaceH = (int) (pp_.getWellSpacingH() / conversionFactor_);
         int wellSpaceV = (int) (pp_.getWellSpacingV() / conversionFactor_);
         int wellSize = (int) (pp_.getWellSize() / conversionFactor_);
+
+        int x[] = new int[2];
+        x[0] = selectionStart_.x;
+        x[1] = selectionEnd_.x;
+        int y[] = new int[2];
+        y[0] = selectionStart_.y;
+        y[1] = selectionEnd_.y;
+        Arrays.sort(x);
+        Arrays.sort(y);
+        selection_.x = x[0];
+        selection_.width = x[1] - x[0];
+        selection_.y = y[0];
+        selection_.height = y[1] - y[0];
 
         for (int cols = 0; cols < pp_.getPlateColumns(); cols++) {
             ArrayList<Boolean> temp = wellsSelected_.get(cols);
@@ -184,6 +201,20 @@ public class PlateMapDrawPanel extends JPanel implements ActionListener {
 
     public void setCurrentWell(String well) {
         currentWell_ = well;
+        repaint();
+    }
+
+    public void clearAllWells() {
+
+        wellsSelected_.clear();
+        for (int cols = 0; cols < pp_.getPlateColumns(); cols++) {
+            ArrayList<Boolean> temp = new ArrayList<Boolean>();
+            for (int rows = 0; rows < pp_.getPlateRows(); rows++) {
+                temp.add(false);
+            }
+            wellsSelected_.add(temp);
+        }
+
         repaint();
     }
 
@@ -233,19 +264,6 @@ public class PlateMapDrawPanel extends JPanel implements ActionListener {
         return enabled_;
     }
 
-//        public class PlateActionListener implements ActionListener{
-//            String s;
-//
-//            public PlateActionListener(String shape){
-//                s = shape;
-//            }
-//            
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                wellShape_ = this.s;
-//            }
-//        
-//        }
     @Override
     public void actionPerformed(ActionEvent e) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

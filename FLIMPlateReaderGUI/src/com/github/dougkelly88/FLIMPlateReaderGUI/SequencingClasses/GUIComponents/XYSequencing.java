@@ -9,14 +9,17 @@ import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.PlateProperties;
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.SeqAcqProps;
 import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.FOV;
 import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.FOVTableModel;
+import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.TableRenderer;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
@@ -28,6 +31,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import javax.swing.text.NumberFormatter;
 
 /**
  *
@@ -119,7 +123,9 @@ public class XYSequencing extends javax.swing.JPanel {
                 }
             }
         });
-
+        
+//        fovTable_.setDefaultRenderer(FOV.class, new TableRenderer());
+        
     }
 
     public void onPlateConfigLoaded(boolean enable, PlateProperties pp) {
@@ -561,16 +567,18 @@ public class XYSequencing extends javax.swing.JPanel {
 
     private void clearXYZButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearXYZButtonActionPerformed
         tableModel_.clearAllData();
+        pmdp_.clearAllWells();
     }//GEN-LAST:event_clearXYZButtonActionPerformed
 
     private void genZStackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genZStackButtonActionPerformed
         //TODO: generate new FOV in current position if FOV table is empty. 
         ArrayList<FOV> temp = tableModel_.getData();
         ArrayList<FOV> newtemp = new ArrayList<FOV>();
+        ArrayList<FOV> unique = new ArrayList<FOV>();
 
-        double startUm;
-        double endUm;
-        double stepUm;
+        double startUm = -1.0;
+        double endUm = -1.0;
+        double stepUm = 1.0;
 
         String um = "(" + "\u00B5" + "m)";
         JLabel messageLabel = new JLabel("<html>Please enter start, end and delta values for Z stack: </html>");
@@ -578,10 +586,18 @@ public class XYSequencing extends javax.swing.JPanel {
         JLabel endLabel = new JLabel("End Z position " + um + ":");
         JLabel stepLabel = new JLabel("Step size " + um + ":");
 
-        JFormattedTextField startField = new JFormattedTextField(-3);
-        JFormattedTextField endField = new JFormattedTextField(3);
-        JFormattedTextField stepField = new JFormattedTextField(0.5);
-
+        // Uses a custom NumberFormat.
+        NumberFormat customFormat = NumberFormat.getInstance(new Locale("en_US"));
+        JFormattedTextField customFormatField =
+            new JFormattedTextField(new NumberFormatter(customFormat));
+        
+        JFormattedTextField startField = new JFormattedTextField(customFormat);
+        startField.setValue(-3.0);
+        JFormattedTextField endField = new JFormattedTextField(customFormat);
+        endField.setValue(3.0);
+        JFormattedTextField stepField = new JFormattedTextField(customFormat);
+        stepField.setValue(1.0);
+        
         JPanel zStackDialog = new JPanel();
         zStackDialog.setLayout(new BorderLayout(50, 100));
 
@@ -602,36 +618,30 @@ public class XYSequencing extends javax.swing.JPanel {
                 "Z stack setup", JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION) {
 
-            // SHOULD FIND UNIQUE XY VALUES FIRST! - this is a bit clunky, but 
-            // hashsets (probably more efficient for finding unique vals?) don't
-            // seem to work...
-            ArrayList<FOV> unique = temp;
-            ArrayList<Integer> indToRemove = new ArrayList<Integer>();
-//            unique = temp;
-
-            
-            for (FOV oldfov : temp){
-                oldfov.setZ(0);
-                int match = 0;
-                for (int ind = 0; ind < unique.size(); ind++){
-                    FOV fov = unique.get(ind);
-                    if ((oldfov.getX() == fov.getX()) & (oldfov.getY() == fov.getY())) {
-                        match++;
-                        if (match > 1){
-                            indToRemove.add(ind);
-                        }
-                    }
+            for (FOV fov : temp){
+                if (!unique.contains(fov)){
+                    fov.setZ(0);
+                    unique.add(fov);
                 }
             }
-            Set<Integer> u = new HashSet<Integer>(indToRemove); //effectively get unique values
             
-            for (int ind = u.size(); ind > 0; ind--){
-                unique.remove(ind);
-            }
+            // must be a better way to achieve this...?
+            if (startField.getValue().getClass() == Double.class)
+                startUm = (Double)(startField.getValue());
+            else
+                startUm = ((Long) startField.getValue()).doubleValue();
+            
+            if (endField.getValue().getClass() == Double.class)
+                endUm = (Double)(endField.getValue());
+            else
+                endUm = ((Long) endField.getValue()).doubleValue();
+            
+            if (stepField.getValue().getClass() == Double.class)
+                stepUm = (Double)(stepField.getValue());
+            else
+                stepUm = ((Long) stepField.getValue()).doubleValue();
+            
 
-            startUm = Double.parseDouble(startField.getText());
-            endUm = Double.parseDouble(endField.getText());
-            stepUm = Double.parseDouble(stepField.getText());
             int Nz = (int) ((endUm - startUm) / stepUm + 1);
 
             for (FOV fov : unique) {
@@ -641,9 +651,7 @@ public class XYSequencing extends javax.swing.JPanel {
                     double z = startUm + zpos * stepUm;
                     newtemp.add(new FOV(fov.getX(), fov.getY(), fov.getZ() + z,
                             fov.getWell(), fov.getPlateProps()));
-
                 }
-
             }
 
             tableModel_.addWholeData(newtemp);

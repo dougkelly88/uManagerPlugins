@@ -9,6 +9,7 @@ package com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes;
 import com.github.dougkelly88.FLIMPlateReaderGUI.FLIMClasses.Classes.*;
 import java.awt.Color;
 import java.awt.Component;
+import java.text.DecimalFormat;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
@@ -17,6 +18,7 @@ import javax.swing.table.DefaultTableCellRenderer;
  * @author dk1109
  */
 public class TableRenderer extends DefaultTableCellRenderer{
+    private static DecimalFormat df = new DecimalFormat("#0.00");
 
     public TableRenderer(){};
 //        public Component getTableCellRendererComponent(JTable table, Object obj, boolean isSelected, boolean hasFocus, int row, int column) {
@@ -29,14 +31,17 @@ public class TableRenderer extends DefaultTableCellRenderer{
 //            return cell;
 //        }
     
+    @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            FOV val = (FOV) value;
             if (value == null) {
                 value = "";
 //                Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 //                cell.setBackground(Color.LIGHT_GRAY);
             } else {
-                // Carry on as normal...
+//                this.setText(df.format(val.z_));
             }
-            return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+//            return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            return this;
         }
 }

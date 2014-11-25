@@ -9,7 +9,6 @@ package com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes;
  *
  * @author Frederik
  */
-//TODO: validate positions based on available
 
 public class TimePoint implements Comparable<TimePoint> {
     private Double time_ = 10.0;
