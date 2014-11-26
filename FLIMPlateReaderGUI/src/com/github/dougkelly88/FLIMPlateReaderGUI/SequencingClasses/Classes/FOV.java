@@ -21,6 +21,7 @@ public class FOV implements Comparable<FOV> {
     double width_ = 314;
     double height_ = 230;   //40x obj, 0.7 relay
     String well_;
+    String group_ = "Experiment";
     PlateProperties pp_;
 
     // initialise with nonsense - remove entirely?
@@ -124,6 +125,10 @@ public class FOV implements Comparable<FOV> {
     public String getWell() {
         return well_;
     }
+    
+         public String getGroup() {
+        return group_;
+    }
 
     public void setX(double x) {
         x_ = x;
@@ -163,6 +168,10 @@ public class FOV implements Comparable<FOV> {
 
     public void setHeight_(double height_) {
         this.height_ = height_;
+    }
+    
+    public void setGroup(String group_) {
+        this.group_ = group_;
     }
 
     public boolean isValid() {

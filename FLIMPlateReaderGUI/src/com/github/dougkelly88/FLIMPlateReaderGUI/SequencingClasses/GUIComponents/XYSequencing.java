@@ -165,6 +165,8 @@ public class XYSequencing extends javax.swing.JPanel {
         FOVPatternCombo = new javax.swing.JComboBox();
         ringRadiusField = new javax.swing.JFormattedTextField();
         jLabel2 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        groupDescField = new javax.swing.JTextField();
 
         storedXYZPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Stored XYZ positions"));
 
@@ -186,7 +188,7 @@ public class XYSequencing extends javax.swing.JPanel {
         fovTablePanel.setLayout(fovTablePanelLayout);
         fovTablePanelLayout.setHorizontalGroup(
             fovTablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 191, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         fovTablePanelLayout.setVerticalGroup(
             fovTablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -212,7 +214,6 @@ public class XYSequencing extends javax.swing.JPanel {
         storedXYZPanelLayout.setHorizontalGroup(
             storedXYZPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, storedXYZPanelLayout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(fovTablePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(storedXYZPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -290,12 +291,8 @@ public class XYSequencing extends javax.swing.JPanel {
         prefindPanelLayout.setHorizontalGroup(
             prefindPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(prefindPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(prefindPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(prefindPanelLayout.createSequentialGroup()
-                        .addComponent(quickPFButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(advancedPFButton))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(prefindPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(prefindPanelLayout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -305,10 +302,13 @@ public class XYSequencing extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(FOVToFindField, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(prefindPanelLayout.createSequentialGroup()
+                        .addComponent(quickPFButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(advancedPFButton))
+                    .addGroup(prefindPanelLayout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(attemptsField, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addComponent(attemptsField, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         prefindPanelLayout.setVerticalGroup(
             prefindPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -378,13 +378,22 @@ public class XYSequencing extends javax.swing.JPanel {
 
         jLabel2.setText("Ring radius um:");
 
+        jLabel6.setText("Group description:");
+
+        groupDescField.setText("Experiment");
+        groupDescField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                groupDescFieldActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout autoFOVPanelLayout = new javax.swing.GroupLayout(autoFOVPanel);
         autoFOVPanel.setLayout(autoFOVPanelLayout);
         autoFOVPanelLayout.setHorizontalGroup(
             autoFOVPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(autoFOVPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(autoFOVPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(autoFOVPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(autoFOVPanelLayout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -395,7 +404,9 @@ public class XYSequencing extends javax.swing.JPanel {
                             .addComponent(jLabel1)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(noFOVsField, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(FOVPatternCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(FOVPatternCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel6)
+                    .addComponent(groupDescField))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
         autoFOVPanelLayout.setVerticalGroup(
@@ -413,6 +424,10 @@ public class XYSequencing extends javax.swing.JPanel {
                 .addGroup(autoFOVPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ringRadiusField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
+                .addGap(52, 52, 52)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(groupDescField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -422,15 +437,16 @@ public class XYSequencing extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(prefindPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(prefindPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(storedXYZPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(storedXYZPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(plateMapBasePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(autoFOVPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(autoFOVPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -459,9 +475,10 @@ public class XYSequencing extends javax.swing.JPanel {
 
     public void generateFOVs() {
         if (autoGenerateFOVsCheck.isSelected()) {
-            tableModel_.clearAllData();
 
             ArrayList<FOV> fovs = new ArrayList<FOV>();
+            ArrayList<FOV> preexisting = new ArrayList<FOV>(tableModel_.getData());
+            tableModel_.clearAllData();
 
             for (int cols = 0; cols < pp_.getPlateColumns(); cols++) {
                 ArrayList<Boolean> temp = pmdp_.wellsSelected_.get(cols);
@@ -478,6 +495,13 @@ public class XYSequencing extends javax.swing.JPanel {
                         }
 
                         for (FOV fov : fovs) {
+                            if (preexisting.contains(fov)){
+//                                int ind = preexisting.indexOf(fov);
+                                fov.setGroup(preexisting.get(preexisting.indexOf(fov)).getGroup());
+                            } else {
+                                fov.setGroup(groupDescField.getText());
+                            }
+                            
                             tableModel_.addRow(fov);
                         }
 //                        tableModel_.addRow(new FOV(wellString, pp_, 0));
@@ -674,6 +698,10 @@ public class XYSequencing extends javax.swing.JPanel {
         pmdp_.addSelectedWell(newfov.getWell());
     }//GEN-LAST:event_storeXYZButtonActionPerformed
 
+    private void groupDescFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_groupDescFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_groupDescFieldActionPerformed
+
     public void setPlateProperties(PlateProperties pp) {
         pp_ = pp;
     }
@@ -692,12 +720,14 @@ public class XYSequencing extends javax.swing.JPanel {
     private javax.swing.JButton clearXYZButton;
     private javax.swing.JPanel fovTablePanel;
     private javax.swing.JButton genZStackButton;
+    private javax.swing.JTextField groupDescField;
     private javax.swing.JFormattedTextField intensityThresoldField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JFormattedTextField noFOVsField;
     private javax.swing.JPanel plateMapBasePanel;
     private javax.swing.JPanel prefindPanel;
