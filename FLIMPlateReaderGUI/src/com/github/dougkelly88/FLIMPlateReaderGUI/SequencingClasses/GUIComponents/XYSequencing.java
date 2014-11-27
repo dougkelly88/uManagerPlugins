@@ -123,9 +123,8 @@ public class XYSequencing extends javax.swing.JPanel {
                 }
             }
         });
-        
+
 //        fovTable_.setDefaultRenderer(FOV.class, new TableRenderer());
-        
     }
 
     public void onPlateConfigLoaded(boolean enable, PlateProperties pp) {
@@ -495,13 +494,13 @@ public class XYSequencing extends javax.swing.JPanel {
                         }
 
                         for (FOV fov : fovs) {
-                            if (preexisting.contains(fov)){
+                            if (preexisting.contains(fov)) {
 //                                int ind = preexisting.indexOf(fov);
                                 fov.setGroup(preexisting.get(preexisting.indexOf(fov)).getGroup());
                             } else {
                                 fov.setGroup(groupDescField.getText());
                             }
-                            
+
                             tableModel_.addRow(fov);
                         }
 //                        tableModel_.addRow(new FOV(wellString, pp_, 0));
@@ -596,9 +595,7 @@ public class XYSequencing extends javax.swing.JPanel {
 
     private void genZStackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genZStackButtonActionPerformed
         //TODO: generate new FOV in current position if FOV table is empty. 
-        ArrayList<FOV> temp = tableModel_.getData();
-        ArrayList<FOV> newtemp = new ArrayList<FOV>();
-        ArrayList<FOV> unique = new ArrayList<FOV>();
+        //TODO: 
 
         double startUm = -1.0;
         double endUm = -1.0;
@@ -612,16 +609,16 @@ public class XYSequencing extends javax.swing.JPanel {
 
         // Uses a custom NumberFormat.
         NumberFormat customFormat = NumberFormat.getInstance(new Locale("en_US"));
-        JFormattedTextField customFormatField =
-            new JFormattedTextField(new NumberFormatter(customFormat));
-        
+        JFormattedTextField customFormatField
+                = new JFormattedTextField(new NumberFormatter(customFormat));
+
         JFormattedTextField startField = new JFormattedTextField(customFormat);
         startField.setValue(-3.0);
         JFormattedTextField endField = new JFormattedTextField(customFormat);
         endField.setValue(3.0);
         JFormattedTextField stepField = new JFormattedTextField(customFormat);
         stepField.setValue(1.0);
-        
+
         JPanel zStackDialog = new JPanel();
         zStackDialog.setLayout(new BorderLayout(50, 100));
 
@@ -642,47 +639,57 @@ public class XYSequencing extends javax.swing.JPanel {
                 "Z stack setup", JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION) {
 
-            for (FOV fov : temp){
-                if (!unique.contains(fov)){
-                    fov.setZ(0);
-                    unique.add(fov);
-                }
-            }
-            
             // must be a better way to achieve this...?
-            if (startField.getValue().getClass() == Double.class)
-                startUm = (Double)(startField.getValue());
-            else
+            if (startField.getValue().getClass() == Double.class) {
+                startUm = (Double) (startField.getValue());
+            } else {
                 startUm = ((Long) startField.getValue()).doubleValue();
-            
-            if (endField.getValue().getClass() == Double.class)
-                endUm = (Double)(endField.getValue());
-            else
-                endUm = ((Long) endField.getValue()).doubleValue();
-            
-            if (stepField.getValue().getClass() == Double.class)
-                stepUm = (Double)(stepField.getValue());
-            else
-                stepUm = ((Long) stepField.getValue()).doubleValue();
-            
-
-            int Nz = (int) ((endUm - startUm) / stepUm + 1);
-
-            for (FOV fov : unique) {
-
-                for (int zpos = 0; zpos < Nz; zpos++) {
-
-                    double z = startUm + zpos * stepUm;
-                    newtemp.add(new FOV(fov.getX(), fov.getY(), fov.getZ() + z,
-                            fov.getWell(), fov.getPlateProps()));
-                }
             }
 
-            tableModel_.addWholeData(newtemp);
+            if (endField.getValue().getClass() == Double.class) {
+                endUm = (Double) (endField.getValue());
+            } else {
+                endUm = ((Long) endField.getValue()).doubleValue();
+            }
+
+            if (stepField.getValue().getClass() == Double.class) {
+                stepUm = (Double) (stepField.getValue());
+            } else {
+                stepUm = ((Long) stepField.getValue()).doubleValue();
+            }
+
+            doZStackGeneration(startUm, endUm, stepUm);
 
         }
 
     }//GEN-LAST:event_genZStackButtonActionPerformed
+
+    private void doZStackGeneration(double startUm, double endUm, double stepUm) {
+        ArrayList<FOV> temp = tableModel_.getData();
+        ArrayList<FOV> newtemp = new ArrayList<FOV>();
+        ArrayList<FOV> unique = new ArrayList<FOV>();
+
+        for (FOV fov : temp) {
+            if (!unique.contains(fov)) {
+                fov.setZ(0);
+                unique.add(fov);
+            }
+        }
+
+        int Nz = (int) ((endUm - startUm) / stepUm + 1);
+
+        for (FOV fov : unique) {
+
+            for (int zpos = 0; zpos < Nz; zpos++) {
+
+                double z = startUm + zpos * stepUm;
+                newtemp.add(new FOV(fov.getX(), fov.getY(), fov.getZ() + z,
+                        fov.getWell(), fov.getPlateProps()));
+            }
+        }
+
+        tableModel_.addWholeData(newtemp);
+    }
 
     private void zModeComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zModeComboActionPerformed
         zAsOffset_ = (String) zModeCombo.getSelectedItem() == "Z as offset";
