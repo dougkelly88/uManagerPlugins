@@ -47,6 +47,9 @@ public class XYSequencing extends javax.swing.JPanel {
     Object parent_;
     final static String um = "(" + "\u00B5" + "m)";
     boolean zAsOffset_ = true;
+    double[] zStackParams = {0.0, 0.0, 1.0};
+
+    
 
     /**
      * Creates new form XYSequencing
@@ -147,6 +150,7 @@ public class XYSequencing extends javax.swing.JPanel {
         fovTablePanel = new javax.swing.JPanel();
         genZStackButton = new javax.swing.JButton();
         zModeCombo = new javax.swing.JComboBox();
+        clearZButton = new javax.swing.JButton();
         prefindPanel = new javax.swing.JPanel();
         quickPFButton = new javax.swing.JButton();
         advancedPFButton = new javax.swing.JToggleButton();
@@ -208,6 +212,13 @@ public class XYSequencing extends javax.swing.JPanel {
             }
         });
 
+        clearZButton.setText("Clear Z stack");
+        clearZButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearZButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout storedXYZPanelLayout = new javax.swing.GroupLayout(storedXYZPanel);
         storedXYZPanel.setLayout(storedXYZPanelLayout);
         storedXYZPanelLayout.setHorizontalGroup(
@@ -219,7 +230,8 @@ public class XYSequencing extends javax.swing.JPanel {
                     .addComponent(storeXYZButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(clearXYZButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(genZStackButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(zModeCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(zModeCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(clearZButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         storedXYZPanelLayout.setVerticalGroup(
@@ -233,7 +245,9 @@ public class XYSequencing extends javax.swing.JPanel {
                         .addComponent(zModeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(genZStackButton)
-                        .addGap(34, 34, 34)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(clearZButton)
+                        .addGap(5, 5, 5)
                         .addComponent(storeXYZButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(clearXYZButton)))
@@ -397,13 +411,12 @@ public class XYSequencing extends javax.swing.JPanel {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ringRadiusField, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(autoFOVPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(autoGenerateFOVsCheck, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, autoFOVPanelLayout.createSequentialGroup()
-                            .addComponent(jLabel1)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(noFOVsField, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(FOVPatternCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(autoGenerateFOVsCheck, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, autoFOVPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(noFOVsField, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(FOVPatternCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel6)
                     .addComponent(groupDescField))
                 .addContainerGap(20, Short.MAX_VALUE))
@@ -500,9 +513,11 @@ public class XYSequencing extends javax.swing.JPanel {
                             } else {
                                 fov.setGroup(groupDescField.getText());
                             }
-
+                            
                             tableModel_.addRow(fov);
                         }
+                        
+                        doZStackGeneration(getZStackParams());
 //                        tableModel_.addRow(new FOV(wellString, pp_, 0));
                     }
                 }
@@ -658,13 +673,18 @@ public class XYSequencing extends javax.swing.JPanel {
                 stepUm = ((Long) stepField.getValue()).doubleValue();
             }
 
-            doZStackGeneration(startUm, endUm, stepUm);
-
+            setZStackParams(startUm, endUm, stepUm);
+            
+            doZStackGeneration(getZStackParams());
         }
 
     }//GEN-LAST:event_genZStackButtonActionPerformed
 
-    private void doZStackGeneration(double startUm, double endUm, double stepUm) {
+    private void doZStackGeneration(double[] z) {
+        double startUm = z[0];
+        double endUm = z[1];
+        double stepUm = z[2];
+        
         ArrayList<FOV> temp = tableModel_.getData();
         ArrayList<FOV> newtemp = new ArrayList<FOV>();
         ArrayList<FOV> unique = new ArrayList<FOV>();
@@ -682,8 +702,8 @@ public class XYSequencing extends javax.swing.JPanel {
 
             for (int zpos = 0; zpos < Nz; zpos++) {
 
-                double z = startUm + zpos * stepUm;
-                newtemp.add(new FOV(fov.getX(), fov.getY(), fov.getZ() + z,
+                double zed = startUm + zpos * stepUm;
+                newtemp.add(new FOV(fov.getX(), fov.getY(), fov.getZ() + zed,
                         fov.getWell(), fov.getPlateProps()));
             }
         }
@@ -702,6 +722,7 @@ public class XYSequencing extends javax.swing.JPanel {
         double z = 1000;
         FOV newfov = new FOV(x, y, z, pp_);
         tableModel_.addRow(newfov);
+        doZStackGeneration(getZStackParams());
         pmdp_.addSelectedWell(newfov.getWell());
     }//GEN-LAST:event_storeXYZButtonActionPerformed
 
@@ -709,12 +730,27 @@ public class XYSequencing extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_groupDescFieldActionPerformed
 
+    private void clearZButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearZButtonActionPerformed
+        setZStackParams(0.0,0.0,1);
+        doZStackGeneration(getZStackParams());
+    }//GEN-LAST:event_clearZButtonActionPerformed
+
     public void setPlateProperties(PlateProperties pp) {
         pp_ = pp;
     }
 
     public void setParent(Object o) {
         parent_ = o;
+    }
+    
+    public double[] getZStackParams() {
+        return zStackParams;
+    }
+
+    public void setZStackParams(double start, double end, double step) {
+        this.zStackParams[0] = start;
+        this.zStackParams[1] = end;
+        this.zStackParams[2] = step;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -725,6 +761,7 @@ public class XYSequencing extends javax.swing.JPanel {
     private javax.swing.JPanel autoFOVPanel;
     private javax.swing.JCheckBox autoGenerateFOVsCheck;
     private javax.swing.JButton clearXYZButton;
+    private javax.swing.JButton clearZButton;
     private javax.swing.JPanel fovTablePanel;
     private javax.swing.JButton genZStackButton;
     private javax.swing.JTextField groupDescField;

@@ -73,6 +73,7 @@
                       <Component id="clearXYZButton" max="32767" attributes="0"/>
                       <Component id="genZStackButton" max="32767" attributes="0"/>
                       <Component id="zModeCombo" max="32767" attributes="0"/>
+                      <Component id="clearZButton" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -89,7 +90,9 @@
                           <Component id="zModeCombo" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="genZStackButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="clearZButton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                           <Component id="storeXYZButton" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="clearXYZButton" min="-2" max="-2" attributes="0"/>
@@ -151,6 +154,14 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="zModeComboActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="clearZButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Clear Z stack"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="clearZButtonActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
