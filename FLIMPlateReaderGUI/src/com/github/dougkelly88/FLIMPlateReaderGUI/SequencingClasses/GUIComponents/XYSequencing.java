@@ -7,6 +7,7 @@ package com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.GUIComponent
 
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.PlateProperties;
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.SeqAcqProps;
+import com.github.dougkelly88.FLIMPlateReaderGUI.InstrumentInterfaceClasses.XYZMotionInterface;
 import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.FOV;
 import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.FOVTableModel;
 import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.TableRenderer;
@@ -48,8 +49,7 @@ public class XYSequencing extends javax.swing.JPanel {
     final static String um = "(" + "\u00B5" + "m)";
     boolean zAsOffset_ = true;
     double[] zStackParams = {0.0, 0.0, 1.0};
-
-    
+    XYZMotionInterface xyzmi_;
 
     /**
      * Creates new form XYSequencing
@@ -103,8 +103,20 @@ public class XYSequencing extends javax.swing.JPanel {
                 tableModel_.insertRow(r, new FOV("A1", pp_, 6000));
             }
         });
+        JMenuItem goToFOVItem = new JMenuItem("Go to FOV");
+        goToFOVItem.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int r = fovTable_.getSelectedRow();
+//                FOV fov = tableModel_.getData().get(r);
+                xyzmi_.gotoFOV(tableModel_.getData().get(r));
+            }
+        });
+        
         popupMenu.add(addItem);
         popupMenu.add(deleteItem);
+        popupMenu.add(goToFOVItem);
 
         fovTable_.addMouseListener(new MouseAdapter() {
             @Override
@@ -515,6 +527,7 @@ public class XYSequencing extends javax.swing.JPanel {
                             }
                             
                             tableModel_.addRow(fov);
+//                            xyzmi_.fovXYtoStageXY(fov);
                         }
                         
                         doZStackGeneration(getZStackParams());
@@ -724,6 +737,7 @@ public class XYSequencing extends javax.swing.JPanel {
         tableModel_.addRow(newfov);
         doZStackGeneration(getZStackParams());
         pmdp_.addSelectedWell(newfov.getWell());
+//        xyzmi_.fovXYtoStageXY(newfov);
     }//GEN-LAST:event_storeXYZButtonActionPerformed
 
     private void groupDescFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_groupDescFieldActionPerformed
@@ -751,6 +765,14 @@ public class XYSequencing extends javax.swing.JPanel {
         this.zStackParams[0] = start;
         this.zStackParams[1] = end;
         this.zStackParams[2] = step;
+    }
+    
+    public XYZMotionInterface getXYZMotionInterface() {
+        return xyzmi_;
+    }
+
+    public void setXYZMotionInterface(XYZMotionInterface xyzmi_) {
+        this.xyzmi_ = xyzmi_;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

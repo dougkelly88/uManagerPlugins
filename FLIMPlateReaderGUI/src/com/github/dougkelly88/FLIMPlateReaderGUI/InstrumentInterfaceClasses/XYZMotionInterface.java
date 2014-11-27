@@ -7,12 +7,9 @@ package com.github.dougkelly88.FLIMPlateReaderGUI.InstrumentInterfaceClasses;
 
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.PlateProperties;
 import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.FOV;
-import java.awt.Point;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import mmcorej.CMMCore;
-import org.apache.commons.math3.linear.DecompositionSolver;
-//import org.apache.commons.math.linear.LUDecomposition;
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.LUDecomposition;
@@ -21,7 +18,7 @@ import org.apache.commons.math3.linear.LUDecomposition;
  *
  * @author dk1109
  */
-public class XYZMotionInterface {
+public final class XYZMotionInterface {
 
     PlateProperties pp_;
     CMMCore core_;
@@ -52,7 +49,7 @@ public class XYZMotionInterface {
                         pp_.getTopLeftWellOffsetV());
         transform_ = deriveAffineTransform(xpltWellCentres_, stageWellCentres_);
     }
-
+    
     public int gotoFOV(FOV fov) {
 
         try {
@@ -76,6 +73,18 @@ public class XYZMotionInterface {
         transform_.transform(xy, xyout);
         
         return xyout;
+    }
+    
+    public void setStageWellCentres(Point2D.Double p1, Point2D.Double p2, Point2D.Double p3){
+        stageWellCentres_[0] = p1;
+        stageWellCentres_[1] = p2;
+        stageWellCentres_[2] = p3;
+    }
+    
+    public void setXPLTWellCentres(Point2D.Double p1, Point2D.Double p2, Point2D.Double p3){
+        xpltWellCentres_[0] = p1;
+        xpltWellCentres_[1] = p2;
+        xpltWellCentres_[2] = p3;
     }
 
     public static AffineTransform deriveAffineTransform(

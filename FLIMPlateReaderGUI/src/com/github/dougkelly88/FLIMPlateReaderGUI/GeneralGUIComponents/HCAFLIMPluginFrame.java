@@ -11,6 +11,7 @@ import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.FileWriteTestHar
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.PlateProperties;
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.SeqAcqProps;
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.VariableTest;
+import com.github.dougkelly88.FLIMPlateReaderGUI.InstrumentInterfaceClasses.XYZMotionInterface;
 import com.google.common.eventbus.Subscribe;
 import java.awt.Component;
 import java.awt.Desktop;
@@ -41,6 +42,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     private SeqAcqProps sap_;
     private VariableTest var_;
     private PlateProperties pp_;
+    private XYZMotionInterface xyzmi_;
     
     @Subscribe
     public void onPropertyChanged(PropertyChangedEvent event)
@@ -418,8 +420,9 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
             try {
                 pp_ = pp_.loadProperties(file);
                 xYZPanel1.onPlateConfigLoaded(true, pp_);
-                xYSequencing1.onPlateConfigLoaded(true, pp_);
+//                xYSequencing1.onPlateConfigLoaded(true, pp_);
                 xYSequencing1.setPlateProperties(pp_);
+
             } catch (Exception e) {
                 System.out.println("problem accessing file"+file.getAbsolutePath());
                 statusTextArea.setText("Problem accessing plate config at " + file.getAbsolutePath() 
@@ -437,6 +440,8 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
             pp_ = pp_.loadProperties(file);
             xYZPanel1.onPlateConfigLoaded(true, pp_);
             xYSequencing1.onPlateConfigLoaded(true, pp_);
+            xyzmi_ = new XYZMotionInterface(pp_, core_);
+            xYSequencing1.setXYZMotionInterface(xyzmi_);
         } catch (Exception e) {
                 System.out.println("problem accessing file"+file.getAbsolutePath());
                 statusTextArea.setText("Problem accessing plate config at " + file.getAbsolutePath() 
