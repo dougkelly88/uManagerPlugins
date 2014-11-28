@@ -120,5 +120,18 @@ public final class XYZMotionInterface {
 
         return new AffineTransform(m00, m10, m01, m11, m02, m12);
     }
+    
+    public int moveRelative(double x, double y){
+        
+        try{
+        
+            core_.setRelativeXYPosition(xystage_, x, y);
+            
+        } catch (Exception e) {
+        
+        }
+        
+        return 1;
+    }
 
 }

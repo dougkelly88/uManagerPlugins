@@ -8,6 +8,8 @@ package com.github.dougkelly88.FLIMPlateReaderGUI.XYZClasses.GUIComponents;
 
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.PlateProperties;
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.SeqAcqProps;
+import com.github.dougkelly88.FLIMPlateReaderGUI.InstrumentInterfaceClasses.XYZMotionInterface;
+import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.FOV;
 import java.awt.BorderLayout;
 import java.awt.Container;
 
@@ -23,6 +25,8 @@ public class XYZPanel extends javax.swing.JPanel {
     private double currentYUm_ = 128;
     private SeqAcqProps sap_;
     private Object parent_;
+    private XYZMotionInterface xyzmi_;
+    private FOV currentFOV_;
     /**
      * Creates new form XYZPanel
      */
@@ -555,37 +559,51 @@ public class XYZPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_keyboardStageCheckActionPerformed
 
     private void ddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ddButtonActionPerformed
-        currentYUm_ = currentYUm_ + 2*Double.parseDouble(stepSizeField.getText());
+        Double step = Double.parseDouble(stepSizeField.getText());
+        xyzmi_.moveRelative(0, 2*step);
+        currentYUm_ = currentYUm_ + 2*step;
         dp_.setCurrentY(currentYUm_);
     }//GEN-LAST:event_ddButtonActionPerformed
 
     private void rrButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rrButtonActionPerformed
-        currentXUm_ = currentXUm_ + 2*Double.parseDouble(stepSizeField.getText());
+        Double step = Double.parseDouble(stepSizeField.getText());
+        xyzmi_.moveRelative(-2*step, 0);
+        currentXUm_ = currentXUm_ + 2*step;
         dp_.setCurrentX(currentXUm_);
     }//GEN-LAST:event_rrButtonActionPerformed
 
     private void llButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_llButtonActionPerformed
-        currentXUm_ = currentXUm_ - 2*Double.parseDouble(stepSizeField.getText());
+        Double step = Double.parseDouble(stepSizeField.getText());
+        xyzmi_.moveRelative(2*step,0);
+        currentXUm_ = currentXUm_ - 2*step;
         dp_.setCurrentX(currentXUm_);
     }//GEN-LAST:event_llButtonActionPerformed
 
     private void rButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rButtonActionPerformed
-        currentXUm_ = currentXUm_ + Double.parseDouble(stepSizeField.getText());
+        Double step = Double.parseDouble(stepSizeField.getText());
+        xyzmi_.moveRelative(-step,0);
+        currentXUm_ = currentXUm_ + step;
         dp_.setCurrentX(currentXUm_);
     }//GEN-LAST:event_rButtonActionPerformed
 
     private void lButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lButtonActionPerformed
-        currentXUm_ = currentXUm_ - Double.parseDouble(stepSizeField.getText());
+        Double step = Double.parseDouble(stepSizeField.getText());
+        xyzmi_.moveRelative(-step,0);
+        currentXUm_ = currentXUm_ - step;
         dp_.setCurrentX(currentXUm_);
     }//GEN-LAST:event_lButtonActionPerformed
 
     private void dButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dButtonActionPerformed
-        currentYUm_ = currentYUm_ + Double.parseDouble(stepSizeField.getText());
+        Double step = Double.parseDouble(stepSizeField.getText());
+        xyzmi_.moveRelative(0,step);
+        currentYUm_ = currentYUm_ + step;
         dp_.setCurrentY(currentYUm_);
     }//GEN-LAST:event_dButtonActionPerformed
 
     private void uuButonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uuButonActionPerformed
-        currentYUm_ = currentYUm_ - 2*Double.parseDouble(stepSizeField.getText());
+        Double step = Double.parseDouble(stepSizeField.getText());
+        xyzmi_.moveRelative(0,-2*step);
+        currentYUm_ = currentYUm_ - 2*step;
         dp_.setCurrentY(currentYUm_);
     }//GEN-LAST:event_uuButonActionPerformed
 
@@ -594,8 +612,11 @@ public class XYZPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_zDButtonActionPerformed
 
     private void goToWellButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goToWellButtonActionPerformed
-        // TODO: validate well string
+        
         dp_.setCurrentWell(wellField.getText());
+        double currentZ = 1000; //TODO get current Z
+        FOV fov = new FOV(wellField.getText(), pp_, currentZ);
+        xyzmi_.gotoFOV(fov);
     }//GEN-LAST:event_goToWellButtonActionPerformed
 
     private void uButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uButtonActionPerformed
@@ -610,6 +631,22 @@ public class XYZPanel extends javax.swing.JPanel {
         wellMapPanel.setLayout(new BorderLayout());
         wellMapPanel.add(dp_, BorderLayout.CENTER);
 
+    }
+    
+    public FOV getCurrentFOV(){
+        return this.currentFOV_;
+    }
+    
+    public void setCurrentFOV(FOV fov){
+        this.currentFOV_ = fov;
+    }
+    
+    public XYZMotionInterface getXYZMotionInterface() {
+        return xyzmi_;
+    }
+
+    public void setXYZMotionInterface(XYZMotionInterface xyzmi_) {
+        this.xyzmi_ = xyzmi_;
     }
     
     public void setParent(Object o){

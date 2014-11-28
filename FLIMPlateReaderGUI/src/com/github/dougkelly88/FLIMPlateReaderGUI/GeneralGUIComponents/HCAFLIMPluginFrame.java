@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.github.dougkelly88.FLIMPlateReaderGUI.GeneralGUIComponents;
 
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.Acquisition;
@@ -19,34 +18,34 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.net.URL; 
+import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon; 
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import mmcorej.CMMCore; 
-import org.micromanager.MMStudio; 
-import org.micromanager.api.events.PropertyChangedEvent; 
+import mmcorej.CMMCore;
+import org.micromanager.MMStudio;
+import org.micromanager.api.events.PropertyChangedEvent;
 import java.io.FileReader;
-
+import java.net.URLDecoder;
 
 /**
  *
  * @author dk1109
  */
 public class HCAFLIMPluginFrame extends javax.swing.JFrame {
+
     CMMCore core_;
     static HCAFLIMPluginFrame frame_;
     private SeqAcqProps sap_;
     private VariableTest var_;
     private PlateProperties pp_;
     private XYZMotionInterface xyzmi_;
-    
+
     @Subscribe
-    public void onPropertyChanged(PropertyChangedEvent event)
-    {
+    public void onPropertyChanged(PropertyChangedEvent event) {
         statusTextArea.setText("google eventbus triggered in device " + event.getDevice() + "\n with property " + event.getProperty() + "\n changed to value " + event.getValue());
     }
 
@@ -60,25 +59,25 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         this.setTitle("HCA-FLIM Plugin");
         core_ = core;
         frame_ = this;
-                
+
         MMStudio gui_ = MMStudio.getInstance();
         gui_.registerForEvents(this);
-        
+
         // Add confirm dialog when window closed using x
         frame_.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        frame_.addWindowListener(new  WindowAdapter(){
+        frame_.addWindowListener(new WindowAdapter() {
             @Override
-            public void windowClosing(WindowEvent we){
+            public void windowClosing(WindowEvent we) {
                 confirmQuit();
             }
         });
-        
+
         sap_ = SeqAcqProps.getInstance();
         pp_ = new PlateProperties();
 
         var_ = VariableTest.getInstance();
         currentBasePathField.setText(var_.basepath);
-        
+
         loadDefaultPlateConfig();
     }
 
@@ -375,7 +374,6 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 
-            
     private void aboutMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuActionPerformed
         Splash s = new Splash();
         s.setVisible(true);
@@ -400,10 +398,10 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         Component parentFrame = null;
         int returnVal = chooser.showOpenDialog(parentFrame);
-        if(returnVal == JFileChooser.APPROVE_OPTION) {
-            var_.basepath= chooser.getSelectedFile().getPath();
-        } 
-        
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            var_.basepath = chooser.getSelectedFile().getPath();
+        }
+
         statusTextArea.setText("Selected base path: " + var_.basepath);
         currentBasePathField.setText(var_.basepath);
     }//GEN-LAST:event_SetBaseFolderMenuActionPerformed
@@ -424,31 +422,44 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
                 xYSequencing1.setPlateProperties(pp_);
 
             } catch (Exception e) {
-                System.out.println("problem accessing file"+file.getAbsolutePath());
-                statusTextArea.setText("Problem accessing plate config at " + file.getAbsolutePath() 
+                System.out.println("problem accessing file" + file.getAbsolutePath());
+                statusTextArea.setText("Problem accessing plate config at " + file.getAbsolutePath()
                         + " resulting in error: " + e.getMessage());
             }
         } else {
             System.out.println("File access cancelled by user.");
-        }      
-        
+        }
+
     }//GEN-LAST:event_loadPlateConfigMenuActionPerformed
 
-    private void loadDefaultPlateConfig(){
-        File file = new File("C:/Program Files (x86)/Micro-Manager-1.4-32 20 Oct 2014 build/mmplugins/OpenHCAFLIM/XPLT/Greiner uClear.xplt"); // for debug, make more general
-        try{
+    private void loadDefaultPlateConfig() {
+//        File file = new File("C:/Program Files (x86)/Micro-Manager-1.4-32 20 Oct 2014 build/mmplugins/OpenHCAFLIM/XPLT/Greiner uClear.xplt"); // for debug, make more general
+        String decodedPath = new String();
+        try {
+            String path = HCAFLIMPluginFrame.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+            decodedPath = URLDecoder.decode(path, "UTF-8");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        
+//        File file = new File(decodedPath);
+        String fp = new File("").getAbsolutePath();
+        File file = new File("mmplugins/OpenHCAFLIM/XPLT/Greiner uClear.xplt"); // for debug, mak
+        
+        try {
             pp_ = pp_.loadProperties(file);
             xYZPanel1.onPlateConfigLoaded(true, pp_);
             xYSequencing1.onPlateConfigLoaded(true, pp_);
             xyzmi_ = new XYZMotionInterface(pp_, core_);
             xYSequencing1.setXYZMotionInterface(xyzmi_);
+            xYZPanel1.setXYZMotionInterface(xyzmi_);
         } catch (Exception e) {
-                System.out.println("problem accessing file"+file.getAbsolutePath());
-                statusTextArea.setText("Problem accessing plate config at " + file.getAbsolutePath() 
-                        + " resulting in error: " + e.getMessage());
-            }
+            System.out.println("problem accessing file" + file.getAbsolutePath());
+            statusTextArea.setText("Problem accessing plate config at " + file.getAbsolutePath()
+                    + " resulting in error: " + e.getMessage());
+        }
     }
-    
+
     private void LoadHardwareConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoadHardwareConfigActionPerformed
         lightPathControls1.setLoadedHardwareValues();
     }//GEN-LAST:event_LoadHardwareConfigActionPerformed
@@ -456,17 +467,17 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     private void LoadSoftwareConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoadSoftwareConfigActionPerformed
         // Load ConfigSoftware in testText and set loaded values in all panels
         // load ConfigSoftware in testText
-        FileReader allConfig = null ;   
+        FileReader allConfig = null;
         try {
-            allConfig = new FileReader(var_.basepath+"\\ConfigSoftware.txt");
+            allConfig = new FileReader(var_.basepath + "\\ConfigSoftware.txt");
         } catch (FileNotFoundException ex) {
             Logger.getLogger(SaveData.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
-                    statusTextArea.read(allConfig, null);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                } 
+            statusTextArea.read(allConfig, null);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
         // set loaded values in all panels
         lightPathControls1.setLoadedSoftwareValues();
         fLIMPanel1.setLoadedSoftwareValues();
@@ -487,7 +498,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
 //        }
         Acquisition acq = new Acquisition();
         acq.dummyTest();
-        
+
     }//GEN-LAST:event_snapFLIMButtonActionPerformed
 
     /**
@@ -560,21 +571,23 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     private com.github.dougkelly88.FLIMPlateReaderGUI.XYZClasses.GUIComponents.XYZPanel xYZPanel1;
     // End of variables declaration//GEN-END:variables
 
-    private void confirmQuit(){
-        int n = JOptionPane.showConfirmDialog(frame_, 
+    private void confirmQuit() {
+        int n = JOptionPane.showConfirmDialog(frame_,
                 "Quit: are you sure?", "Quit", JOptionPane.YES_NO_OPTION);
-        if (n==JOptionPane.YES_OPTION){
+        if (n == JOptionPane.YES_OPTION) {
             dispose();
         }
 
     }
-    
-     private String test(String dev, String prop)
-    {
+
+    private String test(String dev, String prop) {
         String out;
-        try{out = core_.getProperty(dev, prop);}
-        catch (Exception e){out = "Error:" + e.getMessage();}
+        try {
+            out = core_.getProperty(dev, prop);
+        } catch (Exception e) {
+            out = "Error:" + e.getMessage();
+        }
         return out;
     }
-    
+
 }

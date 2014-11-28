@@ -8,6 +8,8 @@ package com.github.dougkelly88.FLIMPlateReaderGUI.XYZClasses.GUIComponents;
 
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.PlateProperties;
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.SeqAcqProps;
+import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralGUIComponents.HCAFLIMPluginFrame;
+import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.FOV;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -24,11 +26,15 @@ import javax.swing.JPanel;
  * @author dk1109
  */
 public class WellMapDrawPanel extends JPanel {
+    
+    // TODO implement with FOV class - ensuring consistency with parent
 
         int currentX_ = 128;    
         int currentY_ = 128;    
         int currentFOVw_ = 12;
         int currentFOVh_ = 16;
+        FOV currentFOV_;
+        FOV drawFOV_;
         int r_ = 127;
         String currentWell_ = "C4";
         String wellShape_ = "Square";
@@ -40,8 +46,11 @@ public class WellMapDrawPanel extends JPanel {
         
         WellMapDrawPanel(Object parent) {
             // set a preferred size for the custom panel.
+            
+            XYZPanel panel = (XYZPanel) parent;
             setPreferredSize(new Dimension(255,255));
             sap_ = SeqAcqProps.getInstance();
+            currentFOV_ = panel.getCurrentFOV();
 //            this.setEnabled(false);     
             addMouseListener(new MouseAdapter() {
                 
@@ -165,6 +174,14 @@ public class WellMapDrawPanel extends JPanel {
 //            }
 //        
 //        }
+        
+        public void setCurrentFOV(FOV fov){
+            this.currentFOV_ = fov;
+        }
+        
+        public FOV getCurrentFOV(){
+            return this.currentFOV_;
+        }
 
      }
 
