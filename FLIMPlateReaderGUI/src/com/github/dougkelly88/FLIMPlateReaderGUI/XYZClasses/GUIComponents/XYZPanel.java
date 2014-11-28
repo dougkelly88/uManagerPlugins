@@ -13,6 +13,8 @@ import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.FOV;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -63,7 +65,7 @@ public class XYZPanel extends javax.swing.JPanel {
         panningPanel = new javax.swing.JPanel();
         stepSizeLabel = new javax.swing.JLabel();
         stepSizeField = new javax.swing.JFormattedTextField();
-        twoXPanningPanel = new javax.swing.JPanel();
+        panningButtonPanel = new javax.swing.JPanel();
         wellMapPanel = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         wellField = new javax.swing.JTextField();
@@ -98,14 +100,14 @@ public class XYZPanel extends javax.swing.JPanel {
             }
         });
 
-        javax.swing.GroupLayout twoXPanningPanelLayout = new javax.swing.GroupLayout(twoXPanningPanel);
-        twoXPanningPanel.setLayout(twoXPanningPanelLayout);
-        twoXPanningPanelLayout.setHorizontalGroup(
-            twoXPanningPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout panningButtonPanelLayout = new javax.swing.GroupLayout(panningButtonPanel);
+        panningButtonPanel.setLayout(panningButtonPanelLayout);
+        panningButtonPanelLayout.setHorizontalGroup(
+            panningButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 234, Short.MAX_VALUE)
         );
-        twoXPanningPanelLayout.setVerticalGroup(
-            twoXPanningPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        panningButtonPanelLayout.setVerticalGroup(
+            panningButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 229, Short.MAX_VALUE)
         );
 
@@ -116,7 +118,7 @@ public class XYZPanel extends javax.swing.JPanel {
             .addGroup(panningPanelLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addGroup(panningPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(twoXPanningPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panningButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panningPanelLayout.createSequentialGroup()
                         .addComponent(stepSizeLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -126,7 +128,7 @@ public class XYZPanel extends javax.swing.JPanel {
         panningPanelLayout.setVerticalGroup(
             panningPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panningPanelLayout.createSequentialGroup()
-                .addComponent(twoXPanningPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panningButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panningPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(stepSizeLabel)
@@ -462,22 +464,21 @@ public class XYZPanel extends javax.swing.JPanel {
         wellMapPanel.setLayout(new BorderLayout());
         wellMapPanel.add(dp_, BorderLayout.CENTER);
         
-        twoXPanningPanel.setLayout(new BorderLayout());
-        JPanel oneXPanningPanel = new JPanel();
-        oneXPanningPanel.setLayout(new GridLayout(3,3));
+        panningButtonPanel.setLayout(new GridLayout(5,5));
 //        oneXPanningPanel.setPreferredSize(new Dimension(4*37, 4*37));
-        JPanel[][] buttonHolders = new JPanel[3][3];
-        for (int x = 0; x < 3; x++){
-            for (int y = 0; y < 3; y++){
+        JPanel[][] buttonHolders = new JPanel[5][5];
+        for (int x = 0; x < 5; x++){
+            for (int y = 0; y < 5; y++){
                 buttonHolders[x][y] = new JPanel();
-                oneXPanningPanel.add(buttonHolders[x][y]);
+                panningButtonPanel.add(buttonHolders[x][y]);
             }
         }
         JButton uButton = new JButton();
         uButton.setPreferredSize(new Dimension(37,37));
         uButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/up.png")));
         uButton.setMargin(new Insets(0,0,0,0));
-        buttonHolders[0][1].add(uButton);
+        uButton.setBorder(null);
+        buttonHolders[1][2].add(uButton);
         uButton.addActionListener(new ActionListener() {
 
             @Override
@@ -491,7 +492,7 @@ public class XYZPanel extends javax.swing.JPanel {
         dButton.setPreferredSize(new Dimension(37,37));
         dButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/down.png")));
         dButton.setMargin(new Insets(0,0,0,0));
-        buttonHolders[2][1].add(dButton);
+        buttonHolders[3][2].add(dButton);
         dButton.addActionListener(new ActionListener() {
 
             @Override
@@ -505,7 +506,7 @@ public class XYZPanel extends javax.swing.JPanel {
         lButton.setPreferredSize(new Dimension(37,37));
         lButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/left.png")));
         lButton.setMargin(new Insets(0,0,0,0));
-        buttonHolders[1][0].add(lButton);
+        buttonHolders[2][1].add(lButton);
         lButton.addActionListener(new ActionListener() {
 
             @Override
@@ -519,7 +520,7 @@ public class XYZPanel extends javax.swing.JPanel {
         rButton.setPreferredSize(new Dimension(37,37));
         rButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/right.png")));
         rButton.setMargin(new Insets(0,0,0,0));
-        buttonHolders[1][2].add(rButton);
+        buttonHolders[2][3].add(rButton);
         rButton.addActionListener(new ActionListener() {
 
             @Override
@@ -533,8 +534,8 @@ public class XYZPanel extends javax.swing.JPanel {
         uuButton.setPreferredSize(new Dimension(37,37));
         uuButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/upup.png")));
         uuButton.setMargin(new Insets(0,0,0,0));
-        twoXPanningPanel.add(uuButton, BorderLayout.NORTH);
-        rButton.addActionListener(new ActionListener() {
+        buttonHolders[0][2].add(uuButton);
+        uuButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -542,26 +543,12 @@ public class XYZPanel extends javax.swing.JPanel {
             }
             
         });
-        
-        JButton ddButton = new JButton();
-        ddButton.setPreferredSize(new Dimension(37,37));
-        ddButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/downdown.png")));
-        ddButton.setMargin(new Insets(0,0,0,0));
-        twoXPanningPanel.add(ddButton, BorderLayout.SOUTH);
-        rButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                pan(Y_AXIS,2);
-            }
-            
-        });
-        
+                      
         JButton llButton = new JButton();
         llButton.setPreferredSize(new Dimension(37,37));
         llButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/leftleft.png")));
         llButton.setMargin(new Insets(0,0,0,0));
-        twoXPanningPanel.add(llButton, BorderLayout.WEST);
+        buttonHolders[2][0].add(llButton);
         llButton.addActionListener(new ActionListener() {
 
             @Override
@@ -575,7 +562,7 @@ public class XYZPanel extends javax.swing.JPanel {
         rrButton.setPreferredSize(new Dimension(37,37));
         rrButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/rightright.png")));
         rrButton.setMargin(new Insets(0,0,0,0));
-        twoXPanningPanel.add(rrButton, BorderLayout.EAST);
+        buttonHolders[2][4].add(rrButton);
         rrButton.addActionListener(new ActionListener() {
 
             @Override
@@ -585,7 +572,22 @@ public class XYZPanel extends javax.swing.JPanel {
             
         });
         
-        twoXPanningPanel.add(oneXPanningPanel, BorderLayout.CENTER);
+        JButton ddButton = new JButton();
+        ddButton.setPreferredSize(new Dimension(37,37));
+        ddButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/downdown.png")));
+        ddButton.setMargin(new Insets(0,0,0,0));
+        buttonHolders[4][2].add(ddButton);
+        ddButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pan(Y_AXIS,2);
+            }
+            
+        });
+        
+//        twoXPanningPanel.add(oneXPanningPanel, BorderLayout.CENTER);
+        
 
     }
     
@@ -646,10 +648,10 @@ public class XYZPanel extends javax.swing.JPanel {
     private javax.swing.JCheckBox manFocusCheck;
     private javax.swing.JCheckBox manStageCheck;
     private javax.swing.JCheckBox manUscopeCheck;
+    private javax.swing.JPanel panningButtonPanel;
     private javax.swing.JPanel panningPanel;
     private javax.swing.JFormattedTextField stepSizeField;
     private javax.swing.JLabel stepSizeLabel;
-    private javax.swing.JPanel twoXPanningPanel;
     private javax.swing.JTextField wellField;
     private javax.swing.JPanel wellMapPanel;
     private javax.swing.JButton zDButton;
