@@ -65,9 +65,8 @@ public final class XYZMotionInterface {
     public FOV getCurrentFOV(){
         
         try{
-            Point2D.Double xy = core_.getXYStagePosition(xystage_);
+            Point2D.Double xy = stageXYtoFOVXY(core_.getXYStagePosition(xystage_));
             return new FOV(xy.getX(), xy.getY(), 0, pp_);
-            
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
@@ -78,14 +77,23 @@ public final class XYZMotionInterface {
     
     public Point2D.Double fovXYtoStageXY(FOV fov) {
 
-//        double xy[] = new double[2];
         Point2D.Double xy = new Point2D.Double(fov.getX(), fov.getY());
         Point2D.Double xyout = new Point2D.Double();
-//        xy[0] = fov.getX();
-//        xy[1] = fov.getY();
         
         transform_.transform(xy, xyout);
         
+        
+        return xyout;
+    }
+    
+    public Point2D.Double stageXYtoFOVXY(Point2D.Double stagexy){
+    
+        Point2D.Double xyout = new Point2D.Double();
+        try{
+            transform_.inverseTransform(stagexy, xyout);
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
         return xyout;
     }
     
