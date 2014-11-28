@@ -14,6 +14,7 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -126,7 +127,7 @@ public class XYZPanel extends javax.swing.JPanel {
             panningPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panningPanelLayout.createSequentialGroup()
                 .addComponent(twoXPanningPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panningPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(stepSizeLabel)
                     .addComponent(stepSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -464,6 +465,7 @@ public class XYZPanel extends javax.swing.JPanel {
         twoXPanningPanel.setLayout(new BorderLayout());
         JPanel oneXPanningPanel = new JPanel();
         oneXPanningPanel.setLayout(new GridLayout(3,3));
+//        oneXPanningPanel.setPreferredSize(new Dimension(4*37, 4*37));
         JPanel[][] buttonHolders = new JPanel[3][3];
         for (int x = 0; x < 3; x++){
             for (int y = 0; y < 3; y++){
@@ -474,6 +476,7 @@ public class XYZPanel extends javax.swing.JPanel {
         JButton uButton = new JButton();
         uButton.setPreferredSize(new Dimension(37,37));
         uButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/up.png")));
+        uButton.setMargin(new Insets(0,0,0,0));
         buttonHolders[0][1].add(uButton);
         uButton.addActionListener(new ActionListener() {
 
@@ -483,11 +486,11 @@ public class XYZPanel extends javax.swing.JPanel {
             }
             
         });
-        
-        
+
         JButton dButton = new JButton();
         dButton.setPreferredSize(new Dimension(37,37));
         dButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/down.png")));
+        dButton.setMargin(new Insets(0,0,0,0));
         buttonHolders[2][1].add(dButton);
         dButton.addActionListener(new ActionListener() {
 
@@ -501,6 +504,7 @@ public class XYZPanel extends javax.swing.JPanel {
         JButton lButton = new JButton();
         lButton.setPreferredSize(new Dimension(37,37));
         lButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/left.png")));
+        lButton.setMargin(new Insets(0,0,0,0));
         buttonHolders[1][0].add(lButton);
         lButton.addActionListener(new ActionListener() {
 
@@ -514,12 +518,69 @@ public class XYZPanel extends javax.swing.JPanel {
         JButton rButton = new JButton();
         rButton.setPreferredSize(new Dimension(37,37));
         rButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/right.png")));
+        rButton.setMargin(new Insets(0,0,0,0));
         buttonHolders[1][2].add(rButton);
         rButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 pan(X_AXIS,-1);
+            }
+            
+        });
+        
+        JButton uuButton = new JButton();
+        uuButton.setPreferredSize(new Dimension(37,37));
+        uuButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/upup.png")));
+        uuButton.setMargin(new Insets(0,0,0,0));
+        twoXPanningPanel.add(uuButton, BorderLayout.NORTH);
+        rButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pan(Y_AXIS,-2);
+            }
+            
+        });
+        
+        JButton ddButton = new JButton();
+        ddButton.setPreferredSize(new Dimension(37,37));
+        ddButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/downdown.png")));
+        ddButton.setMargin(new Insets(0,0,0,0));
+        twoXPanningPanel.add(ddButton, BorderLayout.SOUTH);
+        rButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pan(Y_AXIS,2);
+            }
+            
+        });
+        
+        JButton llButton = new JButton();
+        llButton.setPreferredSize(new Dimension(37,37));
+        llButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/leftleft.png")));
+        llButton.setMargin(new Insets(0,0,0,0));
+        twoXPanningPanel.add(llButton, BorderLayout.WEST);
+        llButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pan(X_AXIS,2);
+            }
+            
+        });
+        
+        JButton rrButton = new JButton();
+        rrButton.setPreferredSize(new Dimension(37,37));
+        rrButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/rightright.png")));
+        rrButton.setMargin(new Insets(0,0,0,0));
+        twoXPanningPanel.add(rrButton, BorderLayout.EAST);
+        rrButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pan(X_AXIS,-2);
             }
             
         });
