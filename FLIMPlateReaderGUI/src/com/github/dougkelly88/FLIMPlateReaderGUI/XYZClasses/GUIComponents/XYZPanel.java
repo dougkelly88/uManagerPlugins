@@ -612,10 +612,13 @@ public class XYZPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_zDButtonActionPerformed
 
     private void goToWellButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goToWellButtonActionPerformed
-        
-        dp_.setCurrentWell(wellField.getText());
+        // TODO: better to edit documentfilter for this field such that lowercase
+        // leters are automatically replaced...
+        // http://www.java2s.com/Code/Java/Swing-JFC/DocumentFilterthatmapslowercaseletterstouppercase.htm
+        String upper = (wellField.getText()).toUpperCase();
+        dp_.setCurrentWell(upper);
         double currentZ = 1000; //TODO get current Z
-        FOV fov = new FOV(wellField.getText(), pp_, currentZ);
+        FOV fov = new FOV(upper, pp_, currentZ);
         xyzmi_.gotoFOV(fov);
     }//GEN-LAST:event_goToWellButtonActionPerformed
 

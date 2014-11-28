@@ -433,18 +433,9 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_loadPlateConfigMenuActionPerformed
 
     private void loadDefaultPlateConfig() {
-//        File file = new File("C:/Program Files (x86)/Micro-Manager-1.4-32 20 Oct 2014 build/mmplugins/OpenHCAFLIM/XPLT/Greiner uClear.xplt"); // for debug, make more general
-        String decodedPath = new String();
-        try {
-            String path = HCAFLIMPluginFrame.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-            decodedPath = URLDecoder.decode(path, "UTF-8");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        
-//        File file = new File(decodedPath);
-        String fp = new File("").getAbsolutePath();
-        File file = new File("mmplugins/OpenHCAFLIM/XPLT/Greiner uClear.xplt"); // for debug, mak
+
+//        String fp = new File("").getAbsolutePath();
+        File file = new File("mmplugins/OpenHCAFLIM/XPLT/Greiner uClear.xplt"); // relative path now
         
         try {
             pp_ = pp_.loadProperties(file);
