@@ -12,6 +12,12 @@ import com.github.dougkelly88.FLIMPlateReaderGUI.InstrumentInterfaceClasses.XYZM
 import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.FOV;
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 
 /**
  *
@@ -27,6 +33,9 @@ public class XYZPanel extends javax.swing.JPanel {
     private Object parent_;
     private XYZMotionInterface xyzmi_;
     private FOV currentFOV_;
+    
+    public static final int X_AXIS = 0;
+    public static final int Y_AXIS = 1;
     /**
      * Creates new form XYZPanel
      */
@@ -54,15 +63,6 @@ public class XYZPanel extends javax.swing.JPanel {
         stepSizeLabel = new javax.swing.JLabel();
         stepSizeField = new javax.swing.JFormattedTextField();
         twoXPanningPanel = new javax.swing.JPanel();
-        oneXPanningPanel = new javax.swing.JPanel();
-        dButton = new javax.swing.JButton();
-        uButton = new javax.swing.JButton();
-        lButton = new javax.swing.JButton();
-        rButton = new javax.swing.JButton();
-        llButton = new javax.swing.JButton();
-        rrButton = new javax.swing.JButton();
-        ddButton = new javax.swing.JButton();
-        uuButon = new javax.swing.JButton();
         wellMapPanel = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         wellField = new javax.swing.JTextField();
@@ -97,141 +97,15 @@ public class XYZPanel extends javax.swing.JPanel {
             }
         });
 
-        dButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/down.png"))); // NOI18N
-        dButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        dButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dButtonActionPerformed(evt);
-            }
-        });
-
-        uButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/up.png"))); // NOI18N
-        uButton.setIconTextGap(0);
-        uButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        uButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                uButtonActionPerformed(evt);
-            }
-        });
-
-        lButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/left.png"))); // NOI18N
-        lButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        lButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lButtonActionPerformed(evt);
-            }
-        });
-
-        rButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/right.png"))); // NOI18N
-        rButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        rButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rButtonActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout oneXPanningPanelLayout = new javax.swing.GroupLayout(oneXPanningPanel);
-        oneXPanningPanel.setLayout(oneXPanningPanelLayout);
-        oneXPanningPanelLayout.setHorizontalGroup(
-            oneXPanningPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(oneXPanningPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(oneXPanningPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(dButton)
-                    .addGroup(oneXPanningPanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(lButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(uButton)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rButton))
-        );
-        oneXPanningPanelLayout.setVerticalGroup(
-            oneXPanningPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, oneXPanningPanelLayout.createSequentialGroup()
-                .addGroup(oneXPanningPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(oneXPanningPanelLayout.createSequentialGroup()
-                        .addComponent(uButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 38, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, oneXPanningPanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(oneXPanningPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(rButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addComponent(dButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        llButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/leftleft.png"))); // NOI18N
-        llButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        llButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                llButtonActionPerformed(evt);
-            }
-        });
-
-        rrButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/rightright.png"))); // NOI18N
-        rrButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        rrButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rrButtonActionPerformed(evt);
-            }
-        });
-
-        ddButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/downdown.png"))); // NOI18N
-        ddButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        ddButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ddButtonActionPerformed(evt);
-            }
-        });
-
-        uuButon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/upup.png"))); // NOI18N
-        uuButon.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        uuButon.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                uuButonActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout twoXPanningPanelLayout = new javax.swing.GroupLayout(twoXPanningPanel);
         twoXPanningPanel.setLayout(twoXPanningPanelLayout);
         twoXPanningPanelLayout.setHorizontalGroup(
             twoXPanningPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(twoXPanningPanelLayout.createSequentialGroup()
-                .addGroup(twoXPanningPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(twoXPanningPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(llButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(oneXPanningPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(rrButton))
-                    .addGroup(twoXPanningPanelLayout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(uuButon))
-                    .addGroup(twoXPanningPanelLayout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(ddButton)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(0, 234, Short.MAX_VALUE)
         );
         twoXPanningPanelLayout.setVerticalGroup(
             twoXPanningPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(twoXPanningPanelLayout.createSequentialGroup()
-                .addGroup(twoXPanningPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(twoXPanningPanelLayout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(uuButon, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(oneXPanningPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(twoXPanningPanelLayout.createSequentialGroup()
-                        .addGap(97, 97, 97)
-                        .addComponent(llButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(twoXPanningPanelLayout.createSequentialGroup()
-                        .addGap(93, 93, 93)
-                        .addComponent(rrButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+            .addGap(0, 229, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout panningPanelLayout = new javax.swing.GroupLayout(panningPanel);
@@ -239,23 +113,20 @@ public class XYZPanel extends javax.swing.JPanel {
         panningPanelLayout.setHorizontalGroup(
             panningPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panningPanelLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
                 .addGroup(panningPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(twoXPanningPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panningPanelLayout.createSequentialGroup()
-                        .addGap(14, 14, 14)
                         .addComponent(stepSizeLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(stepSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(panningPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(twoXPanningPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(stepSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panningPanelLayout.setVerticalGroup(
             panningPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panningPanelLayout.createSequentialGroup()
                 .addComponent(twoXPanningPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addGroup(panningPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(stepSizeLabel)
                     .addComponent(stepSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -343,6 +214,11 @@ public class XYZPanel extends javax.swing.JPanel {
         zUButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/up.png"))); // NOI18N
         zUButton.setIconTextGap(0);
         zUButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        zUButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                zUButtonActionPerformed(evt);
+            }
+        });
 
         zDButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/down.png"))); // NOI18N
         zDButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
@@ -558,55 +434,6 @@ public class XYZPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_keyboardStageCheckActionPerformed
 
-    private void ddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ddButtonActionPerformed
-        Double step = Double.parseDouble(stepSizeField.getText());
-        xyzmi_.moveRelative(0, 2*step);
-        currentYUm_ = currentYUm_ + 2*step;
-        dp_.setCurrentY(currentYUm_);
-    }//GEN-LAST:event_ddButtonActionPerformed
-
-    private void rrButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rrButtonActionPerformed
-        Double step = Double.parseDouble(stepSizeField.getText());
-        xyzmi_.moveRelative(-2*step, 0);
-        currentXUm_ = currentXUm_ + 2*step;
-        dp_.setCurrentX(currentXUm_);
-    }//GEN-LAST:event_rrButtonActionPerformed
-
-    private void llButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_llButtonActionPerformed
-        Double step = Double.parseDouble(stepSizeField.getText());
-        xyzmi_.moveRelative(2*step,0);
-        currentXUm_ = currentXUm_ - 2*step;
-        dp_.setCurrentX(currentXUm_);
-    }//GEN-LAST:event_llButtonActionPerformed
-
-    private void rButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rButtonActionPerformed
-        Double step = Double.parseDouble(stepSizeField.getText());
-        xyzmi_.moveRelative(-step,0);
-        currentXUm_ = currentXUm_ + step;
-        dp_.setCurrentX(currentXUm_);
-    }//GEN-LAST:event_rButtonActionPerformed
-
-    private void lButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lButtonActionPerformed
-        Double step = Double.parseDouble(stepSizeField.getText());
-        xyzmi_.moveRelative(-step,0);
-        currentXUm_ = currentXUm_ - step;
-        dp_.setCurrentX(currentXUm_);
-    }//GEN-LAST:event_lButtonActionPerformed
-
-    private void dButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dButtonActionPerformed
-        Double step = Double.parseDouble(stepSizeField.getText());
-        xyzmi_.moveRelative(0,step);
-        currentYUm_ = currentYUm_ + step;
-        dp_.setCurrentY(currentYUm_);
-    }//GEN-LAST:event_dButtonActionPerformed
-
-    private void uuButonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uuButonActionPerformed
-        Double step = Double.parseDouble(stepSizeField.getText());
-        xyzmi_.moveRelative(0,-2*step);
-        currentYUm_ = currentYUm_ - 2*step;
-        dp_.setCurrentY(currentYUm_);
-    }//GEN-LAST:event_uuButonActionPerformed
-
     private void zDButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zDButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_zDButtonActionPerformed
@@ -616,16 +443,16 @@ public class XYZPanel extends javax.swing.JPanel {
         // leters are automatically replaced...
         // http://www.java2s.com/Code/Java/Swing-JFC/DocumentFilterthatmapslowercaseletterstouppercase.htm
         String upper = (wellField.getText()).toUpperCase();
+        wellField.setText(upper);
         dp_.setCurrentWell(upper);
         double currentZ = 1000; //TODO get current Z
         FOV fov = new FOV(upper, pp_, currentZ);
         xyzmi_.gotoFOV(fov);
     }//GEN-LAST:event_goToWellButtonActionPerformed
 
-    private void uButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uButtonActionPerformed
-        currentYUm_ = currentYUm_ - Double.parseDouble(stepSizeField.getText());
-        dp_.setCurrentY(currentYUm_);
-    }//GEN-LAST:event_uButtonActionPerformed
+    private void zUButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zUButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_zUButtonActionPerformed
 
     private void setControlDefaults(){
         
@@ -633,7 +460,87 @@ public class XYZPanel extends javax.swing.JPanel {
         dp_ = new WellMapDrawPanel(this);
         wellMapPanel.setLayout(new BorderLayout());
         wellMapPanel.add(dp_, BorderLayout.CENTER);
+        
+        twoXPanningPanel.setLayout(new BorderLayout());
+        JPanel oneXPanningPanel = new JPanel();
+        oneXPanningPanel.setLayout(new GridLayout(3,3));
+        JPanel[][] buttonHolders = new JPanel[3][3];
+        for (int x = 0; x < 3; x++){
+            for (int y = 0; y < 3; y++){
+                buttonHolders[x][y] = new JPanel();
+                oneXPanningPanel.add(buttonHolders[x][y]);
+            }
+        }
+        JButton uButton = new JButton();
+        uButton.setPreferredSize(new Dimension(37,37));
+        uButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/up.png")));
+        buttonHolders[0][1].add(uButton);
+        uButton.addActionListener(new ActionListener() {
 
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pan(Y_AXIS,-1);
+            }
+            
+        });
+        
+        
+        JButton dButton = new JButton();
+        dButton.setPreferredSize(new Dimension(37,37));
+        dButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/down.png")));
+        buttonHolders[2][1].add(dButton);
+        dButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pan(Y_AXIS,1);
+            }
+            
+        });
+        
+        JButton lButton = new JButton();
+        lButton.setPreferredSize(new Dimension(37,37));
+        lButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/left.png")));
+        buttonHolders[1][0].add(lButton);
+        lButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pan(X_AXIS,1);
+            }
+            
+        });
+        
+        JButton rButton = new JButton();
+        rButton.setPreferredSize(new Dimension(37,37));
+        rButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/dougkelly88/FLIMPlateReaderGUI/Resources/right.png")));
+        buttonHolders[1][2].add(rButton);
+        rButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pan(X_AXIS,-1);
+            }
+            
+        });
+        
+        twoXPanningPanel.add(oneXPanningPanel, BorderLayout.CENTER);
+
+    }
+    
+    private void pan(int axis, int multiplier){
+        Double step = multiplier * Double.parseDouble(stepSizeField.getText());
+        if (axis == X_AXIS){
+            xyzmi_.moveRelative(step,0);
+            currentXUm_ = currentXUm_ + step;
+            dp_.setCurrentX(currentXUm_);
+        }
+        else if (axis == Y_AXIS){
+            xyzmi_.moveRelative(0,step);
+            currentYUm_ = currentYUm_ + step;
+            dp_.setCurrentY(currentYUm_);
+        }
+        
     }
     
     public FOV getCurrentFOV(){
@@ -669,28 +576,19 @@ public class XYZPanel extends javax.swing.JPanel {
     private javax.swing.JComboBox afObjectiveCombo;
     private javax.swing.JFormattedTextField afOffsetField;
     private javax.swing.JLabel afOffsetLabel;
-    private javax.swing.JButton dButton;
-    private javax.swing.JButton ddButton;
     private javax.swing.JButton goToWellButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JCheckBox keyboardStageCheck;
-    private javax.swing.JButton lButton;
-    private javax.swing.JButton llButton;
     private javax.swing.JCheckBox manFocusCheck;
     private javax.swing.JCheckBox manStageCheck;
     private javax.swing.JCheckBox manUscopeCheck;
-    private javax.swing.JPanel oneXPanningPanel;
     private javax.swing.JPanel panningPanel;
-    private javax.swing.JButton rButton;
-    private javax.swing.JButton rrButton;
     private javax.swing.JFormattedTextField stepSizeField;
     private javax.swing.JLabel stepSizeLabel;
     private javax.swing.JPanel twoXPanningPanel;
-    private javax.swing.JButton uButton;
-    private javax.swing.JButton uuButon;
     private javax.swing.JTextField wellField;
     private javax.swing.JPanel wellMapPanel;
     private javax.swing.JButton zDButton;
