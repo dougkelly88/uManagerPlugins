@@ -733,7 +733,7 @@ public class XYSequencing extends javax.swing.JPanel {
         double x = 34000;
         double y = 34000;
         double z = 1000;
-        FOV newfov = new FOV(x, y, z, pp_);
+        FOV newfov = xyzmi_.getCurrentFOV();
         tableModel_.addRow(newfov);
         doZStackGeneration(getZStackParams());
         pmdp_.addSelectedWell(newfov.getWell());

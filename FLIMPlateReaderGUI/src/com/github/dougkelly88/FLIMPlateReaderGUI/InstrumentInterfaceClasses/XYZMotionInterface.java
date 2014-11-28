@@ -62,6 +62,20 @@ public final class XYZMotionInterface {
         return 1;
     }
 
+    public FOV getCurrentFOV(){
+        
+        try{
+            Point2D.Double xy = core_.getXYStagePosition(xystage_);
+            return new FOV(xy.getX(), xy.getY(), 0, pp_);
+            
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        
+        return new FOV("A1", pp_, 0);   // replace with something that more clearly
+                                        // indicated error?
+    }
+    
     public Point2D.Double fovXYtoStageXY(FOV fov) {
 
 //        double xy[] = new double[2];
