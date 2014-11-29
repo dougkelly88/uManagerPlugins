@@ -31,6 +31,7 @@ import org.micromanager.api.events.PropertyChangedEvent;
 import java.io.FileReader;
 import java.net.URLDecoder;
 
+
 /**
  *
  * @author dk1109
@@ -276,6 +277,11 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         fileMenu.add(loadPlateConfigMenu);
 
         loadPlateMetadataMenu.setText("Load plate metadata...");
+        loadPlateMetadataMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loadPlateMetadataMenuActionPerformed(evt);
+            }
+        });
         fileMenu.add(loadPlateMetadataMenu);
 
         LoadHardwareConfig.setText("Load Hardware Config...");
@@ -488,9 +494,14 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
 //            System.out.println("Exceptiopn = " +e.getMessage());
 //        }
         Acquisition acq = new Acquisition();
-        acq.dummyTest();
+//        acq.dummyTest();
+        acq.doacqModulo();
 
     }//GEN-LAST:event_snapFLIMButtonActionPerformed
+
+    private void loadPlateMetadataMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadPlateMetadataMenuActionPerformed
+       // http://howtodoinjava.com/2013/05/27/parse-csv-files-in-java/
+    }//GEN-LAST:event_loadPlateMetadataMenuActionPerformed
 
     /**
      * @param args the command line arguments
