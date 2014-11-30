@@ -321,19 +321,18 @@ public class LightPathControls extends javax.swing.JPanel {
     private void laserToggleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_laserToggleActionPerformed
 
         if (laserToggle.isSelected()) {
-            laserToggle.setText("Laser ON");
-            try {
-                core_.setProperty("FianiumSC", "LaserOn?", "Off");
-            } catch (Exception ex) {
-                Logger.getLogger(LightPathControls.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        } else {
-            laserToggle.setText("Laser OFF");
+            laserToggle.setText("Turn laser OFF");
             try {
                 core_.setProperty("FianiumSC", "LaserOn?", "On");
-            } catch (Exception ex) {
-                Logger.getLogger(LightPathControls.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        } else {
+            laserToggle.setText("Turn laser ON");
+            try {
+                core_.setProperty("FianiumSC", "LaserOn?", "Off");
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
             }
         }
 
@@ -428,7 +427,7 @@ public class LightPathControls extends javax.swing.JPanel {
         // if Fianium present, load up these controls:
         try {
             String sn = core_.getProperty("FianiumSC", "LaserSerialNumber");
-            String temp = "TBA";
+            String temp = "TBA";    // TODO: implement temperature monitor in DeviceAdapter!
             String rr = core_.getProperty("FianiumSC", "RepRate");
             String ot = core_.getProperty("FianiumSC", "OperatingTime(Mins)");
             laserSerialNumberLabel.setText("Laser serial number: " + sn);
@@ -445,7 +444,8 @@ public class LightPathControls extends javax.swing.JPanel {
                 public void propertyChange(java.beans.PropertyChangeEvent evt) {
                     try {
                         if (laserToggle.isSelected()) {
-                            core_.setProperty("FianiumSC", "Power output (%)", powerSlider_.getValue());
+                            int pcoutput = (int) powerSlider_.getValue().intValue();
+                            core_.setProperty("FianiumSC", "Power output (%)", pcoutput);
                         }
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
