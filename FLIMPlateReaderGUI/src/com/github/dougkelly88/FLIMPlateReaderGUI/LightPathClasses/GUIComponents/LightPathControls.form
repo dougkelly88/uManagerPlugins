@@ -53,7 +53,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                  <Component id="LaserON" min="-2" pref="113" max="-2" attributes="0"/>
+                  <Component id="laserON" min="-2" pref="113" max="-2" attributes="0"/>
                   <EmptySpace pref="441" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -62,19 +62,19 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="LaserON" min="-2" pref="25" max="-2" attributes="0"/>
+                  <Component id="laserON" min="-2" pref="25" max="-2" attributes="0"/>
                   <EmptySpace pref="26" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JToggleButton" name="LaserON">
+        <Component class="javax.swing.JToggleButton" name="laserON">
           <Properties>
             <Property name="text" type="java.lang.String" value="Laser ON"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="LaserONActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="laserONActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
@@ -99,22 +99,22 @@
                   <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                      <Component id="NDFWComboBox" linkSize="1" min="-2" pref="94" max="-2" attributes="0"/>
+                      <Component id="ndFWComboBox" linkSize="1" min="-2" pref="94" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="ExcitationComboBox" linkSize="1" alignment="0" min="-2" pref="57" max="-2" attributes="0"/>
+                      <Component id="excitationComboBox" linkSize="1" alignment="0" min="-2" pref="57" max="-2" attributes="0"/>
                       <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="DichroicComboBox" linkSize="1" alignment="0" min="-2" pref="57" max="-2" attributes="0"/>
+                      <Component id="dichroicComboBox" linkSize="1" alignment="0" min="-2" pref="57" max="-2" attributes="0"/>
                       <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                      <Component id="EmissionComboBox" linkSize="1" min="-2" pref="57" max="-2" attributes="0"/>
+                      <Component id="emissionComboBox" linkSize="1" min="-2" pref="57" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="122" max="32767" attributes="0"/>
               </Group>
@@ -132,10 +132,10 @@
                   </Group>
                   <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="NDFWComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="ExcitationComboBox" alignment="3" max="32767" attributes="0"/>
-                      <Component id="DichroicComboBox" alignment="3" max="32767" attributes="0"/>
-                      <Component id="EmissionComboBox" alignment="3" max="32767" attributes="0"/>
+                      <Component id="ndFWComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="excitationComboBox" alignment="3" max="32767" attributes="0"/>
+                      <Component id="dichroicComboBox" alignment="3" max="32767" attributes="0"/>
+                      <Component id="emissionComboBox" alignment="3" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
               </Group>
@@ -143,7 +143,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JComboBox" name="NDFWComboBox">
+        <Component class="javax.swing.JComboBox" name="ndFWComboBox">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="4">
@@ -155,10 +155,10 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="NDFWComboBoxActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ndFWComboBoxActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JComboBox" name="ExcitationComboBox">
+        <Component class="javax.swing.JComboBox" name="excitationComboBox">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="4">
@@ -170,10 +170,10 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ExcitationComboBoxActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="excitationComboBoxActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JComboBox" name="DichroicComboBox">
+        <Component class="javax.swing.JComboBox" name="dichroicComboBox">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="4">
@@ -185,10 +185,10 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DichroicComboBoxActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="dichroicComboBoxActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JComboBox" name="EmissionComboBox">
+        <Component class="javax.swing.JComboBox" name="emissionComboBox">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="4">
@@ -200,7 +200,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="EmissionComboBoxActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="emissionComboBoxActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
@@ -244,18 +244,18 @@
               <Group type="102" attributes="0">
                   <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="ObjectiveComboBox" alignment="0" max="32767" attributes="0"/>
+                      <Component id="objectiveComboBox" alignment="0" max="32767" attributes="0"/>
                       <Component id="ObjectiveLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="FilterCubeComboBox" alignment="0" max="32767" attributes="0"/>
+                      <Component id="filterCubeComboBox" alignment="0" max="32767" attributes="0"/>
                       <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                      <Component id="SwitchPortComboBox" max="32767" attributes="0"/>
+                      <Component id="switchPortComboBox" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="215" max="-2" attributes="0"/>
               </Group>
@@ -271,16 +271,16 @@
                   </Group>
                   <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="ObjectiveComboBox" alignment="3" max="32767" attributes="0"/>
-                      <Component id="FilterCubeComboBox" alignment="3" max="32767" attributes="0"/>
-                      <Component id="SwitchPortComboBox" alignment="3" max="32767" attributes="0"/>
+                      <Component id="objectiveComboBox" alignment="3" max="32767" attributes="0"/>
+                      <Component id="filterCubeComboBox" alignment="3" max="32767" attributes="0"/>
+                      <Component id="switchPortComboBox" alignment="3" max="32767" attributes="0"/>
                   </Group>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JComboBox" name="ObjectiveComboBox">
+        <Component class="javax.swing.JComboBox" name="objectiveComboBox">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="4">
@@ -292,10 +292,10 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ObjectiveComboBoxActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="objectiveComboBoxActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JComboBox" name="FilterCubeComboBox">
+        <Component class="javax.swing.JComboBox" name="filterCubeComboBox">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="4">
@@ -307,10 +307,10 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="FilterCubeComboBoxActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="filterCubeComboBoxActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JComboBox" name="SwitchPortComboBox">
+        <Component class="javax.swing.JComboBox" name="switchPortComboBox">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="4">
@@ -322,7 +322,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SwitchPortComboBoxActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="switchPortComboBoxActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="ObjectiveLabel">
