@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.github.dougkelly88.FLIMPlateReaderGUI.LightPathClasses.GUIComponents;
 
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.SeqAcqProps;
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.VariableTest;
+import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralGUIComponents.SliderControl;
 import com.google.common.eventbus.Subscribe;
+import java.awt.BorderLayout;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
@@ -19,21 +20,21 @@ import org.micromanager.acquisition.AcquisitionEngine;
 import org.micromanager.api.ScriptInterface;
 import org.micromanager.api.events.PropertyChangedEvent;
 
-
-
 /**
  *
  * @author dk1109
  */
 public class LightPathControls extends javax.swing.JPanel {
+
     MMStudio gui_;
     CMMCore core_;
     PropertyChangedEvent event_;
     private SeqAcqProps sap_;
     private VariableTest var_;
     Object parent_;
+    SliderControl powerSlider_;
 //    private SequencedAcquisitionProperties sap_;
-    
+
     /**
      * Creates new form FLIMControls
      */
@@ -42,15 +43,13 @@ public class LightPathControls extends javax.swing.JPanel {
         gui_ = MMStudio.getInstance();
         sap_ = SeqAcqProps.getInstance();
         var_ = VariableTest.getInstance();
-        try{
-        gui_.registerForEvents(this);
-        core_ = gui_.getCore();
-        }
-        catch (Exception e) 
-        {
+        try {
+            gui_.registerForEvents(this);
+            core_ = gui_.getCore();
+        } catch (Exception e) {
             //gui_.showMessage("Error in FLIMPanel constructor: " + e.getMessage());
         }
-        
+
     }
 
     /**
@@ -62,8 +61,13 @@ public class LightPathControls extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        General = new javax.swing.JPanel();
-        laserON = new javax.swing.JToggleButton();
+        excitationSource = new javax.swing.JPanel();
+        laserToggle = new javax.swing.JToggleButton();
+        outputPowerPanel = new javax.swing.JPanel();
+        laserRepRateLabel = new javax.swing.JLabel();
+        laserTemperatureLabel = new javax.swing.JLabel();
+        laserSerialNumberLabel = new javax.swing.JLabel();
+        laserRunTimeLabel = new javax.swing.JLabel();
         Filters = new javax.swing.JPanel();
         ndFWComboBox = new javax.swing.JComboBox();
         excitationComboBox = new javax.swing.JComboBox();
@@ -81,30 +85,71 @@ public class LightPathControls extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
 
-        General.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "General"));
+        excitationSource.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Excitation source"));
 
-        laserON.setText("Laser ON");
-        laserON.addActionListener(new java.awt.event.ActionListener() {
+        laserToggle.setText("Turn laser ON");
+        laserToggle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                laserONActionPerformed(evt);
+                laserToggleActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout GeneralLayout = new javax.swing.GroupLayout(General);
-        General.setLayout(GeneralLayout);
-        GeneralLayout.setHorizontalGroup(
-            GeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(GeneralLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addComponent(laserON, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(441, Short.MAX_VALUE))
+        javax.swing.GroupLayout outputPowerPanelLayout = new javax.swing.GroupLayout(outputPowerPanel);
+        outputPowerPanel.setLayout(outputPowerPanelLayout);
+        outputPowerPanelLayout.setHorizontalGroup(
+            outputPowerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 275, Short.MAX_VALUE)
         );
-        GeneralLayout.setVerticalGroup(
-            GeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(GeneralLayout.createSequentialGroup()
+        outputPowerPanelLayout.setVerticalGroup(
+            outputPowerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 65, Short.MAX_VALUE)
+        );
+
+        laserRepRateLabel.setText("Laser repetition rate (MHz):");
+
+        laserTemperatureLabel.setText("Laser temperature (oC): ");
+
+        laserSerialNumberLabel.setText("Laser serial number:");
+
+        laserRunTimeLabel.setText("Laser run time (mins):");
+
+        javax.swing.GroupLayout excitationSourceLayout = new javax.swing.GroupLayout(excitationSource);
+        excitationSource.setLayout(excitationSourceLayout);
+        excitationSourceLayout.setHorizontalGroup(
+            excitationSourceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(excitationSourceLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(laserON, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addComponent(laserToggle)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(outputPowerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(excitationSourceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(laserTemperatureLabel)
+                    .addComponent(laserRepRateLabel)
+                    .addComponent(laserSerialNumberLabel)
+                    .addComponent(laserRunTimeLabel))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        excitationSourceLayout.setVerticalGroup(
+            excitationSourceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(excitationSourceLayout.createSequentialGroup()
+                .addGroup(excitationSourceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(excitationSourceLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(excitationSourceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(outputPowerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(excitationSourceLayout.createSequentialGroup()
+                                .addComponent(laserRepRateLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(laserTemperatureLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(laserSerialNumberLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(laserRunTimeLabel))))
+                    .addGroup(excitationSourceLayout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(laserToggle, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         Filters.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Filters"));
@@ -137,7 +182,7 @@ public class LightPathControls extends javax.swing.JPanel {
             }
         });
 
-        jLabel1.setText("Intensity");
+        jLabel1.setText("Neutral density");
 
         jLabel2.setText("Excitation");
 
@@ -166,7 +211,7 @@ public class LightPathControls extends javax.swing.JPanel {
                 .addGroup(FiltersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addComponent(emissionComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(122, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         FiltersLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {dichroicComboBox, emissionComboBox, excitationComboBox, ndFWComboBox});
@@ -216,7 +261,7 @@ public class LightPathControls extends javax.swing.JPanel {
 
         jLabel6.setText("Filter Cube");
 
-        jLabel7.setText("BeamPath");
+        jLabel7.setText("Output port");
 
         javax.swing.GroupLayout OlympusLayout = new javax.swing.GroupLayout(Olympus);
         Olympus.setLayout(OlympusLayout);
@@ -225,17 +270,17 @@ public class LightPathControls extends javax.swing.JPanel {
             .addGroup(OlympusLayout.createSequentialGroup()
                 .addGap(44, 44, 44)
                 .addGroup(OlympusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(objectiveComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ObjectiveLabel))
-                .addGap(18, 18, 18)
+                    .addComponent(ObjectiveLabel)
+                    .addComponent(objectiveComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(OlympusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(filterCubeComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel6))
-                .addGap(18, 18, 18)
+                    .addComponent(jLabel6)
+                    .addComponent(filterCubeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(OlympusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
-                    .addComponent(switchPortComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(215, 215, 215))
+                    .addComponent(switchPortComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         OlympusLayout.setVerticalGroup(
             OlympusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -256,96 +301,98 @@ public class LightPathControls extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(Olympus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(General, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(excitationSource, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(Filters, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(General, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(excitationSource, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Filters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Olympus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
+
+        excitationSource.getAccessibleContext().setAccessibleName("Excitation source");
     }// </editor-fold>//GEN-END:initComponents
 
-    private void laserONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_laserONActionPerformed
+    private void laserToggleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_laserToggleActionPerformed
 
-            if (laserON.isSelected()){
-                laserON.setText("Laser ON");
-                try {
-                    core_.setProperty("FianiumSC","LaserOn?", "Off");
-                } catch (Exception ex) {
-                    Logger.getLogger(LightPathControls.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                
-            } else {
-                laserON.setText("Laser OFF");
-                try {
-                    core_.setProperty("FianiumSC","LaserOn?", "On");
-                } catch (Exception ex) {
-                    Logger.getLogger(LightPathControls.class.getName()).log(Level.SEVERE, null, ex);
-                }
+        if (laserToggle.isSelected()) {
+            laserToggle.setText("Laser ON");
+            try {
+                core_.setProperty("FianiumSC", "LaserOn?", "Off");
+            } catch (Exception ex) {
+                Logger.getLogger(LightPathControls.class.getName()).log(Level.SEVERE, null, ex);
             }
-           
-    }//GEN-LAST:event_laserONActionPerformed
+
+        } else {
+            laserToggle.setText("Laser OFF");
+            try {
+                core_.setProperty("FianiumSC", "LaserOn?", "On");
+            } catch (Exception ex) {
+                Logger.getLogger(LightPathControls.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+    }//GEN-LAST:event_laserToggleActionPerformed
 
     private void dichroicComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dichroicComboBoxActionPerformed
         setByLabel(dichroicComboBox, "Dichroic");
-        var_.DichroicComboBoxSelectedItem=(String)dichroicComboBox.getSelectedItem();
+        var_.DichroicComboBoxSelectedItem = (String) dichroicComboBox.getSelectedItem();
 
     }//GEN-LAST:event_dichroicComboBoxActionPerformed
 
     private void ndFWComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ndFWComboBoxActionPerformed
         setByLabel(ndFWComboBox, "NDFW");
-        var_.NDFWComboBoxSelectedItem=(String)ndFWComboBox.getSelectedItem();
+        var_.NDFWComboBoxSelectedItem = (String) ndFWComboBox.getSelectedItem();
     }//GEN-LAST:event_ndFWComboBoxActionPerformed
 
     private void excitationComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excitationComboBoxActionPerformed
         setByLabel(excitationComboBox, "SpectralFW");
-        var_.ExcitationComboBoxSelectedItem=(String)excitationComboBox.getSelectedItem();
+        var_.ExcitationComboBoxSelectedItem = (String) excitationComboBox.getSelectedItem();
     }//GEN-LAST:event_excitationComboBoxActionPerformed
 
     private void emissionComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emissionComboBoxActionPerformed
         setByLabel(emissionComboBox, "CSUX-Filter Wheel");
-        var_.EmissionComboBoxSelectedItem=(String)emissionComboBox.getSelectedItem();
+        var_.EmissionComboBoxSelectedItem = (String) emissionComboBox.getSelectedItem();
     }//GEN-LAST:event_emissionComboBoxActionPerformed
-    
+
     private void objectiveComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objectiveComboBoxActionPerformed
         setByLabel(objectiveComboBox, "Objective");
-        var_.ObjectiveComboBoxSelectedItem=(String)objectiveComboBox.getSelectedItem();
+        var_.ObjectiveComboBoxSelectedItem = (String) objectiveComboBox.getSelectedItem();
     }//GEN-LAST:event_objectiveComboBoxActionPerformed
 
     private void filterCubeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterCubeComboBoxActionPerformed
         setByLabel(filterCubeComboBox, "FilterCube");
-        var_.FilterCubeComboBoxSelectedItem=(String)filterCubeComboBox.getSelectedItem();
+        var_.FilterCubeComboBoxSelectedItem = (String) filterCubeComboBox.getSelectedItem();
     }//GEN-LAST:event_filterCubeComboBoxActionPerformed
 
     private void switchPortComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_switchPortComboBoxActionPerformed
         setByLabel(switchPortComboBox, "LightPathPrism");
-        var_.SwitchPortComboBoxSelectedItem=(String)switchPortComboBox.getSelectedItem();
+        var_.SwitchPortComboBoxSelectedItem = (String) switchPortComboBox.getSelectedItem();
     }//GEN-LAST:event_switchPortComboBoxActionPerformed
 
-     private void setByLabel(JComboBox combo, String device){
-        try{
+    private void setByLabel(JComboBox combo, String device) {
+        try {
             String setval = (String) combo.getSelectedItem();
             // only send command if combo has been properly populated
-            if (setval != null){
+            if (setval != null) {
                 core_.setProperty(device, "Label", setval);
             } else {
-                System.out.println("Not setting property for device " + device 
-                + "because combo hasn't yet been populated (setByLabel method)");
+                System.out.println("Not setting property for device " + device
+                        + "because combo hasn't yet been populated (setByLabel method)");
             }
             // TODO: implement updating of var_ here rather than in individual actionlisteners?
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        
+
     }
-    
-    public void setLoadedSoftwareValues(){
+
+    public void setLoadedSoftwareValues() {
         // searching label of prperty in SoftwareConfig and set values in LightPathControls
         dichroicComboBox.setSelectedItem(var_.findLabelOfProperty("Dichroic"));
         emissionComboBox.setSelectedItem(var_.findLabelOfProperty("Emission"));
@@ -355,17 +402,17 @@ public class LightPathControls extends javax.swing.JPanel {
         filterCubeComboBox.setSelectedItem(var_.findLabelOfProperty("Filter Cube"));
         switchPortComboBox.setSelectedItem(var_.findLabelOfProperty("Light Path Prism"));
     }
-    
-    public void setLoadedHardwareValues(){
+
+    public void setLoadedHardwareValues() {
         //Intensity (NDFW) Load
         populateComboBoxes(ndFWComboBox, "NDFW");
-        
+
         //Excitation (SpectralFW) Load
         populateComboBoxes(excitationComboBox, "SpectralFW");
-        
+
         //Dichroic Load
         populateComboBoxes(dichroicComboBox, "CSUX-Dichroic Mirror");
-        
+
         //Emission Load
         populateComboBoxes(emissionComboBox, "CSUX-Filter Wheel");
 
@@ -374,38 +421,77 @@ public class LightPathControls extends javax.swing.JPanel {
 
         //Objective Load
         populateComboBoxes(objectiveComboBox, "Objective");
-        
+
         //SwitchPort Load
         populateComboBoxes(switchPortComboBox, "LightPathPrism");
-       
-//        }        
+
+        // if Fianium present, load up these controls:
+        try {
+            String sn = core_.getProperty("FianiumSC", "LaserSerialNumber");
+            String temp = "TBA";
+            String rr = core_.getProperty("FianiumSC", "RepRate");
+            String ot = core_.getProperty("FianiumSC", "OperatingTime(Mins)");
+            laserSerialNumberLabel.setText("Laser serial number: " + sn);
+            laserRepRateLabel.setText("Laser repetition rate: " + rr + " MHz");
+            laserRunTimeLabel.setText("Laser run time: " + ot + " mins");
+            laserTemperatureLabel.setText("Laser temperature: " + temp + "\u00b0C");
+
+            powerSlider_ = new SliderControl("Laser output power (%): ", 0, 100, 0);
+            outputPowerPanel.setLayout(new BorderLayout());
+            outputPowerPanel.add(powerSlider_, BorderLayout.SOUTH);
+            powerSlider_.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+
+                @Override
+                public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                    try {
+                        if (laserToggle.isSelected()) {
+                            core_.setProperty("FianiumSC", "Power output (%)", powerSlider_.getValue());
+                        }
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+            });
+
+            outputPowerPanel.revalidate();
+            outputPowerPanel.repaint();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
-    
-    private void populateComboBoxes(JComboBox combo, String device){
+
+    private void populateComboBoxes(JComboBox combo, String device) {
         StrVector vals = new StrVector();
         try {
             vals = core_.getAllowedPropertyValues(device, "Label");
             combo.removeAllItems();
-            for (String str : vals){
+            for (String str : vals) {
                 combo.addItem(str);
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
+            // if the combo can't be populated, chances are
+            // the device isn't included in the .cfg, so disable 
+            // the control. 
+            // TODO: check whether this works if the device is in the .cfg, but
+            // is not currently attached/accessible. 
+            combo.setEnabled(false);
         }
     }
-    
-    public void setParent(Object o){
+
+    public void setParent(Object o) {
         parent_ = o;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Filters;
-    private javax.swing.JPanel General;
     private javax.swing.JLabel ObjectiveLabel;
     private javax.swing.JPanel Olympus;
     private javax.swing.JComboBox dichroicComboBox;
     private javax.swing.JComboBox emissionComboBox;
     private javax.swing.JComboBox excitationComboBox;
+    private javax.swing.JPanel excitationSource;
     private javax.swing.JComboBox filterCubeComboBox;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -413,9 +499,14 @@ public class LightPathControls extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JToggleButton laserON;
+    private javax.swing.JLabel laserRepRateLabel;
+    private javax.swing.JLabel laserRunTimeLabel;
+    private javax.swing.JLabel laserSerialNumberLabel;
+    private javax.swing.JLabel laserTemperatureLabel;
+    private javax.swing.JToggleButton laserToggle;
     private javax.swing.JComboBox ndFWComboBox;
     private javax.swing.JComboBox objectiveComboBox;
+    private javax.swing.JPanel outputPowerPanel;
     private javax.swing.JComboBox switchPortComboBox;
     // End of variables declaration//GEN-END:variables
 }

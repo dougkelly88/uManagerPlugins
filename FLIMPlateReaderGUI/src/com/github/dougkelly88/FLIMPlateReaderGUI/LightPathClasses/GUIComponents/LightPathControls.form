@@ -17,14 +17,14 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="Olympus" alignment="0" max="32767" attributes="0"/>
-          <Component id="General" alignment="0" max="32767" attributes="0"/>
+          <Component id="excitationSource" alignment="0" max="32767" attributes="0"/>
           <Component id="Filters" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Component id="General" min="-2" max="-2" attributes="0"/>
+              <Component id="excitationSource" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="Filters" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -35,11 +35,11 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JPanel" name="General">
+    <Container class="javax.swing.JPanel" name="excitationSource">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="General">
+            <TitledBorder title="Excitation source">
               <Border PropertyName="innerBorder" info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
                 <EtchetBorder/>
               </Border>
@@ -47,35 +47,101 @@
           </Border>
         </Property>
       </Properties>
+      <AccessibilityProperties>
+        <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Excitation source"/>
+      </AccessibilityProperties>
 
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                  <Component id="laserON" min="-2" pref="113" max="-2" attributes="0"/>
-                  <EmptySpace pref="441" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="laserToggle" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="outputPowerPanel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="laserTemperatureLabel" min="-2" max="-2" attributes="0"/>
+                      <Component id="laserRepRateLabel" min="-2" max="-2" attributes="0"/>
+                      <Component id="laserSerialNumberLabel" min="-2" max="-2" attributes="0"/>
+                      <Component id="laserRunTimeLabel" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="laserON" min="-2" pref="25" max="-2" attributes="0"/>
-                  <EmptySpace pref="26" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="outputPowerPanel" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Component id="laserRepRateLabel" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="laserTemperatureLabel" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="laserSerialNumberLabel" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="laserRunTimeLabel" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                          <Component id="laserToggle" min="-2" pref="25" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JToggleButton" name="laserON">
+        <Component class="javax.swing.JToggleButton" name="laserToggle">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Laser ON"/>
+            <Property name="text" type="java.lang.String" value="Turn laser ON"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="laserONActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="laserToggleActionPerformed"/>
           </Events>
+        </Component>
+        <Container class="javax.swing.JPanel" name="outputPowerPanel">
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <EmptySpace min="0" pref="275" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <EmptySpace min="0" pref="65" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+        </Container>
+        <Component class="javax.swing.JLabel" name="laserRepRateLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Laser repetition rate (MHz):"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laserTemperatureLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Laser temperature (oC): "/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laserSerialNumberLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Laser serial number:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laserRunTimeLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Laser run time (mins):"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
@@ -116,7 +182,7 @@
                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                       <Component id="emissionComboBox" linkSize="1" min="-2" pref="57" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="122" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -205,7 +271,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Intensity"/>
+            <Property name="text" type="java.lang.String" value="Neutral density"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
@@ -244,20 +310,20 @@
               <Group type="102" attributes="0">
                   <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="objectiveComboBox" alignment="0" max="32767" attributes="0"/>
-                      <Component id="ObjectiveLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="ObjectiveLabel" min="-2" max="-2" attributes="0"/>
+                      <Component id="objectiveComboBox" min="-2" pref="160" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="filterCubeComboBox" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                      <Component id="filterCubeComboBox" min="-2" pref="160" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                      <Component id="switchPortComboBox" max="32767" attributes="0"/>
+                      <Component id="switchPortComboBox" min="-2" pref="161" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="215" max="-2" attributes="0"/>
+                  <EmptySpace pref="33" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -337,7 +403,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel7">
           <Properties>
-            <Property name="text" type="java.lang.String" value="BeamPath"/>
+            <Property name="text" type="java.lang.String" value="Output port"/>
           </Properties>
         </Component>
       </SubComponents>
