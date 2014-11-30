@@ -111,8 +111,10 @@ public class XYSequencing extends javax.swing.JPanel {
                 int r = fovTable_.getSelectedRow();
 //                FOV fov = tableModel_.getData().get(r);
                 xyzmi_.gotoFOV(tableModel_.getData().get(r));
-                if (!zAsOffset_)
-                    xyzmi_.moveZAbsolute(tableModel_.getData().get(r).getZ());
+                if (!zAsOffset_){
+                    double zval = tableModel_.getData().get(r).getZ();
+                    xyzmi_.moveZAbsolute(zval);
+                }
                 else {
                     // obviously, this isn't quite right - we want to get
                     // the offset of the CURRENT FOV (perhaps from parent in 
@@ -747,7 +749,6 @@ public class XYSequencing extends javax.swing.JPanel {
         tableModel_.addRow(newfov);
         doZStackGeneration(getZStackParams());
         pmdp_.addSelectedWell(newfov.getWell());
-//        xyzmi_.fovXYtoStageXY(newfov);
     }//GEN-LAST:event_storeXYZButtonActionPerformed
 
     private void groupDescFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_groupDescFieldActionPerformed
@@ -768,6 +769,20 @@ public class XYSequencing extends javax.swing.JPanel {
     }
     
     public double[] getZStackParams() {
+        if (zAsOffset_)
+            return zStackParams;
+        else {
+            try{
+                double z1 = xyzmi_.getZAbsolute();
+                double[] zs = {z1, z1, z1};
+                for (int ind = 1; ind < 3; ind++){
+                    zs[ind] = zs[ind] + zStackParams[ind];
+                }
+                return zs;
+            } catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+        }
         return zStackParams;
     }
 
