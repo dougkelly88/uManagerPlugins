@@ -438,7 +438,8 @@ public class XYZPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_keyboardStageCheckActionPerformed
 
     private void zDButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zDButtonActionPerformed
-        // TODO add your handling code here:
+        Double step = -1 * Double.parseDouble(zStepSizeField.getText());
+        xyzmi_.moveZRelative(step);
     }//GEN-LAST:event_zDButtonActionPerformed
 
     private void goToWellButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goToWellButtonActionPerformed
@@ -448,13 +449,15 @@ public class XYZPanel extends javax.swing.JPanel {
         String upper = (wellField.getText()).toUpperCase();
         wellField.setText(upper);
         dp_.setCurrentWell(upper);
-        double currentZ = 1000; //TODO get current Z
+//        double currentZ = 1000; //TODO get current Z
+        double currentZ = xyzmi_.getZAbsolute();
         FOV fov = new FOV(upper, pp_, currentZ);
         xyzmi_.gotoFOV(fov);
     }//GEN-LAST:event_goToWellButtonActionPerformed
 
     private void zUButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zUButtonActionPerformed
-        // TODO add your handling code here:
+        Double step = Double.parseDouble(zStepSizeField.getText());
+        xyzmi_.moveZRelative(step);
     }//GEN-LAST:event_zUButtonActionPerformed
 
     private void setControlDefaults(){
@@ -594,12 +597,12 @@ public class XYZPanel extends javax.swing.JPanel {
     private void pan(int axis, int multiplier){
         Double step = multiplier * Double.parseDouble(stepSizeField.getText());
         if (axis == X_AXIS){
-            xyzmi_.moveRelative(step,0);
+            xyzmi_.moveXYRelative(step,0);
             currentXUm_ = currentXUm_ + step;
             dp_.setCurrentX(currentXUm_);
         }
         else if (axis == Y_AXIS){
-            xyzmi_.moveRelative(0,step);
+            xyzmi_.moveXYRelative(0,step);
             currentYUm_ = currentYUm_ + step;
             dp_.setCurrentY(currentYUm_);
         }

@@ -111,6 +111,16 @@ public class XYSequencing extends javax.swing.JPanel {
                 int r = fovTable_.getSelectedRow();
 //                FOV fov = tableModel_.getData().get(r);
                 xyzmi_.gotoFOV(tableModel_.getData().get(r));
+                if (!zAsOffset_)
+                    xyzmi_.moveZAbsolute(tableModel_.getData().get(r).getZ());
+                else {
+                    // obviously, this isn't quite right - we want to get
+                    // the offset of the CURRENT FOV (perhaps from parent in 
+                    // later implementations?) and subtract from that of the 
+                    // NEWLY SELECTED FOV. 
+                    // TODO: fix for proper zAsOffset behaviour. 
+                    xyzmi_.moveZRelative(tableModel_.getData().get(r).getZ());
+                }
             }
         });
         
