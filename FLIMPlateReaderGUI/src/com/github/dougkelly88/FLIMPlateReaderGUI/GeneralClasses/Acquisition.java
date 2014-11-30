@@ -35,6 +35,8 @@ import java.io.File;
 import java.io.IOException;
 
 import com.quirkware.guid.PlatformIndependentGuidGen;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import loci.common.Location;
 import loci.formats.FormatException;
 import loci.formats.IFormatWriter;
@@ -60,14 +62,50 @@ public class Acquisition {
     public void snapFLIMImage(String path, ArrayList<Integer> delays) {
 
         try {
+            OMEXMLMetadata m = setBasicMetadata(delays);
+            IFormatWriter writer = generateWriter(path, m);
+
             for (Integer delay : delays) {
                 core_.setProperty("Delay box", "Delay (ps)", delay);
                 core_.snapImage();
+                saveLayersToOMETiff(writer, delays.indexOf(delay));
             }
+            // clean up writer when finished...
+            writer.close();
         } catch (Exception e) {
-            String errstring = e.getMessage();
+            System.out.println(e.getMessage());
         }
 
+    }
+
+    private void saveLayersToOMETiff(IFormatWriter writer, int layer)
+            throws Exception {
+        Object img = core_.getImage();
+
+        if (img instanceof byte[]) {
+            System.out.println("Img is in bytes");
+            writer.saveBytes(layer, (byte[]) img);
+        } else if (img instanceof short[]) {
+            byte[] bytes = DataTools.shortsToBytes((short[]) img, true);
+            System.out.println("Img is short[], converting to bytes, i = " + layer);
+            writer.saveBytes(layer, bytes);
+        } else {
+            System.out.println("I don't know what type img is!");
+        }
+    }
+
+    ;
+
+    private IFormatWriter generateWriter(String path, OMEXMLMetadata m)
+            throws FormatException, IOException {
+        IFormatWriter writer = new ImageWriter().getWriter(path);
+        writer.setWriteSequentially(true);
+        writer.setMetadataRetrieve(m);
+        writer.setCompression("LZW");
+
+        writer.setId(path);
+
+        return writer;
     }
 
     public void dummyTest() {
@@ -268,7 +306,89 @@ public class Acquisition {
 
         return pitch;
     }
-    
+
+    private OMEXMLMetadata setBasicMetadata(ArrayList<Integer> delays)
+            throws ServiceException {
+
+        OMEXMLServiceImpl serv = new OMEXMLServiceImpl();
+        OMEXMLMetadata m = serv.createOMEXMLMetadata();
+
+        int no_delays = delays.size();
+        // delays must be parsed as strings for metadata
+        String[] delArrayStr = new String[no_delays];
+        for (int ind = 0; ind < no_delays; ind++) {
+            delArrayStr[ind] = String.valueOf(delays.get(ind));
+        }
+
+        try {
+            m.createRoot();
+            m.setImageID("Image:0", 0);
+            m.setPixelsID("Pixels:0", 0);
+            m.setPixelsDimensionOrder(DimensionOrder.XYZCT, 0);
+            m.setChannelID("Channel:0:0", 0, 0);
+            m.setChannelSamplesPerPixel(new PositiveInteger(1), 0, 0);
+            m.setPixelsBinDataBigEndian(Boolean.FALSE, 0, 0);
+            m.setPixelsType(PixelType.UINT8, 0);
+
+            long bpp = core_.getBytesPerPixel();
+
+            if (bpp == 1) {
+                m.setPixelsType(PixelType.UINT8, 0);
+            }
+            if (bpp == 2) {
+                m.setPixelsType(PixelType.UINT16, 0);
+            }
+
+            PositiveInteger w1 = new PositiveInteger((int) core_.getImageWidth());
+            PositiveInteger h1 = new PositiveInteger((int) core_.getImageHeight());
+            PositiveInteger g1 = new PositiveInteger(no_delays);
+
+            m.setPixelsSizeX((w1), 0);
+            m.setPixelsSizeY((h1), 0);
+            m.setPixelsSizeZ(new PositiveInteger(1), 0);
+            m.setPixelsSizeC(new PositiveInteger(1), 0);
+            m.setPixelsSizeT(g1, 0);
+
+            PositiveFloat pitch = checkPixelPitch();
+
+            m.setPixelsPhysicalSizeX(pitch, 0);
+            m.setPixelsPhysicalSizeY(pitch, 0);
+            m.setPixelsPhysicalSizeZ(new PositiveFloat(1.0), 0);
+
+            PlatformIndependentGuidGen p = PlatformIndependentGuidGen.getInstance();
+
+            for (int ii = 0; ii < no_delays; ii++) {
+
+                m.setUUIDFileName(delArrayStr[ii], 0, ii);
+                m.setUUIDValue(p.genNewGuid(), 0, ii);
+                m.setTiffDataPlaneCount(new NonNegativeInteger(0), 0, ii);
+                m.setTiffDataIFD(new NonNegativeInteger(0), 0, ii);
+                m.setTiffDataFirstZ(new NonNegativeInteger(0), 0, ii);
+                m.setTiffDataFirstC(new NonNegativeInteger(0), 0, ii);
+                m.setTiffDataFirstT(new NonNegativeInteger(0), 0, ii);
+                m.setPlaneTheC(new NonNegativeInteger(0), 0, ii);
+                m.setPlaneTheZ(new NonNegativeInteger(0), 0, ii);
+                m.setPlaneTheT(new NonNegativeInteger(ii), 0, ii);
+                m.setTiffDataPlaneCount(new NonNegativeInteger(ii), 0, ii);
+                System.out.println("done loop ind " + ii);
+            }
+
+            CoreMetadata cm = new CoreMetadata();
+
+            cm.moduloT.labels = delArrayStr;
+            cm.moduloT.unit = "ps";
+            cm.moduloT.typeDescription = "Gated";
+            cm.moduloT.type = loci.formats.FormatTools.LIFETIME;
+            serv.addModuloAlong(m, cm, 0);
+            System.out.println("did addModulo");
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return m;
+    }
+
     public void doacqModulo() {
         int[] delArrayInt = {0, 7000, 7500, 9600, 9900};
         int no_delays = delArrayInt.length;
@@ -277,16 +397,8 @@ public class Acquisition {
             delArrayStr[a] = String.valueOf(delArrayInt[a]);
         }
 
-        //width = height = 512;
         String path = "C:/Users/dk1109/newtest_FROMHCAFLIM.OME.tiff";
 
-    		//set up hri
-        // core_.setProperty("KentechHRISingleEdge", "Calibrated", "Yes");
-        // core_.setProperty("KentechHRISingleEdge", "Inhibit", "Running");
-        // core_.setProperty("KentechHRISingleEdge", "Gain", 450);
-        // core_.setProperty("KentechHRISingleEdge", "Width", 3000);
-        //populate metadata
-        //N.B. setting up all metadata beforehand precludes things like power monitoring being saved...
         try {
             OMEXMLServiceImpl serv = new OMEXMLServiceImpl();
 
@@ -333,8 +445,6 @@ public class Acquisition {
                 m.setPlaneTheT(new NonNegativeInteger(ii), 0, ii);
                 m.setTiffDataPlaneCount(new NonNegativeInteger(ii), 0, ii);
                 System.out.println("done loop ind " + ii);
-//                System.out.println("done loop ind" + ii);
-
             }
 
             CoreMetadata cm = new CoreMetadata();
@@ -344,7 +454,7 @@ public class Acquisition {
             cm.moduloT.typeDescription = "Gated";
             cm.moduloT.type = loci.formats.FormatTools.LIFETIME;
             serv.addModuloAlong(m, cm, 0);
-				System.out.println("did addModulo");
+            System.out.println("did addModulo");
             new File(path).delete();
             System.out.println("did newfile");
 //            IFormatWriter writer = new ImageWriter().getWriter(path);
@@ -361,21 +471,13 @@ public class Acquisition {
                 core_.setProperty("KentechHDG800", "Delay (ps)", delay);
                 core_.sleep(1000);
                 System.out.println("Count = " + i);
-//                System.out.println("count = " + i);
                 core_.setExposure(200 * (i + 1));
                 System.out.println("exposure is " + core_.getExposure());
                 core_.snapImage();
                 Object img = core_.getImage();
-//                //No camera so simulate image
-//                short[] pixels = new short[1344 * 1024];
-//                Arrays.fill(pixels, (short) ((5 - i) * 128));
-//
-//                byte[] img = DataTools.shortsToBytes(pixels, true);
 
                 if (img instanceof byte[]) {
                     System.out.println("Img is in bytes");
-//                    System.out.println("img is in bytes");
-                    //writer.setId(path);
                     writer.saveBytes(i, (byte[]) img);
                 } else if (img instanceof short[]) {
                     byte[] bytes = DataTools.shortsToBytes((short[]) img, true);
@@ -389,15 +491,10 @@ public class Acquisition {
 
             writer.close();
 
-        } //    catch (ServiceException e){
-        //        System.out.println("Service exception = " + e) ;
-        //    }
-        catch (ServiceException e) {
-            //System.out.println("Service exception = " + e);
+        } catch (ServiceException e) {
             System.out.println("svc exception = " + e.getMessage());
 
         } catch (FormatException e) {
-            //System.out.println("Format exception = " + e);
             System.out.println("fmt exception = " + e.getMessage());
         } catch (Exception e) {
             System.out.println("other exception = " + e.getMessage());

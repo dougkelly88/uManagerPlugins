@@ -30,6 +30,8 @@ import org.micromanager.MMStudio;
 import org.micromanager.api.events.PropertyChangedEvent;
 import java.io.FileReader;
 import java.net.URLDecoder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 /**
@@ -494,8 +496,11 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
 //            System.out.println("Exceptiopn = " +e.getMessage());
 //        }
         Acquisition acq = new Acquisition();
+        String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss").format(new Date());
+        String fullname = (currentBasePathField.getText() + "/" + timeStamp + " test.ome.tiff");
 //        acq.dummyTest();
-        acq.doacqModulo();
+//        acq.doacqModulo();
+        acq.snapFLIMImage(fullname, sap_.getDelaysArray().get(0));
 
     }//GEN-LAST:event_snapFLIMButtonActionPerformed
 
