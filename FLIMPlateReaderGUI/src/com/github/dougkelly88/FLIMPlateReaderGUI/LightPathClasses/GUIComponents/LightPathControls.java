@@ -11,6 +11,7 @@ import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.VariableTest;
 import com.google.common.eventbus.Subscribe;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import mmcorej.CMMCore;
 import mmcorej.StrVector;
 import org.micromanager.MMStudio;
@@ -339,16 +340,32 @@ public class LightPathControls extends javax.swing.JPanel {
         var_.EmissionComboBoxSelectedItem=(String)EmissionComboBox.getSelectedItem();
     }//GEN-LAST:event_EmissionComboBoxActionPerformed
 
-    private void ObjectiveComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ObjectiveComboBoxActionPerformed
-    // description see Dichroic as example
-        int ObjeState= ObjectiveComboBox.getSelectedIndex();
-        try {
-            core_.setProperty("Objective", "State", ObjeState);
-        } catch (Exception ex) {
-            Logger.getLogger(LightPathControls.class.getName()).log(Level.SEVERE, null, ex);
+    private void setByLabel(JComboBox combo, String device){
+        try{
+            String setval = (String) combo.getSelectedItem();
+            core_.setProperty(device, "Label", setval);
+            // TODO: implement updating of var_...
+        } catch (Exception e){
+            System.out.println(e.getMessage());
         }
-        var_.ObjectiveComboBoxSelectedItem=(String)ObjectiveComboBox.getSelectedItem();
-        // TODO add your handling code here:
+        
+    }
+    
+    private void ObjectiveComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ObjectiveComboBoxActionPerformed
+        setByLabel(ObjectiveComboBox, "Objective");
+        
+//        int ObjeState= ObjectiveComboBox.getSelectedIndex();
+//        
+//        try {
+//            StrVector vals = core_.getAllowedPropertyValues("Objective", "Label");
+//            
+//            String setval = (String) ObjectiveComboBox.getSelectedItem();
+//            core_.setProperty("Objective", "State", ObjeState);
+//        } catch (Exception ex) {
+//            Logger.getLogger(LightPathControls.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        var_.ObjectiveComboBoxSelectedItem=(String)ObjectiveComboBox.getSelectedItem();
+//        // TODO add your handling code here:
     }//GEN-LAST:event_ObjectiveComboBoxActionPerformed
 
     private void FilterCubeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FilterCubeComboBoxActionPerformed
@@ -388,110 +405,130 @@ public class LightPathControls extends javax.swing.JPanel {
     }
     
     public void setLoadedHardwareValues(){
-    //Intensity (NDFW) Load
+        //Intensity (NDFW) Load
+        populateComboBoxes(NDFWComboBox, "NDFW");
         // Read allowed values for Label
-        StrVector NDFWBox = null;
-        try {
-            NDFWBox = core_.getAllowedPropertyValues("NDFW", "Label");
-        } catch (Exception ex) {
-            Logger.getLogger(LightPathControls.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        //Write Dichroic Label ComboBox
-        NDFWComboBox.removeAllItems();
-        for(String str : NDFWBox) {
-        NDFWComboBox.addItem(str);
-        }
+//        StrVector NDFWBox = new StrVector();
+//        try {
+//            NDFWBox = core_.getAllowedPropertyValues("NDFW", "Label");
+//        } catch (Exception ex) {
+//            Logger.getLogger(LightPathControls.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//
+//        //Write Dichroic Label ComboBox
+//        NDFWComboBox.removeAllItems();
+//        for(String str : NDFWBox) {
+//        NDFWComboBox.addItem(str);
+//        }
         
-    //Excitation (SpectralFW) Load
+        //Excitation (SpectralFW) Load
+        populateComboBoxes(ExcitationComboBox, "SpectralFW");
         // Read allowed values for Label
-        StrVector ExciBox = null;
-        try {
-            ExciBox = core_.getAllowedPropertyValues("SpectralFW", "Label");
-        } catch (Exception ex) {
-            Logger.getLogger(LightPathControls.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        //Write Dichroic Label ComboBox
-        ExcitationComboBox.removeAllItems();
-        for(String str : ExciBox) {
-        ExcitationComboBox.addItem(str);
-        }
+//        StrVector ExciBox = new StrVector();
+//        try {
+//            ExciBox = core_.getAllowedPropertyValues("SpectralFW", "Label");
+//        } catch (Exception ex) {
+//            Logger.getLogger(LightPathControls.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//
+//        //Write Dichroic Label ComboBox
+//        ExcitationComboBox.removeAllItems();
+//        for(String str : ExciBox) {
+//        ExcitationComboBox.addItem(str);
+//        }
         
-    //Dichroic Load
+        //Dichroic Load
+        populateComboBoxes(DichroicComboBox, "CSUX-Dichroic Mirror");
         // Read allowed values for Label
-        StrVector DichBox = null;
-        try {
-            DichBox = core_.getAllowedPropertyValues("CSUX-Dichroic Mirror", "Label");
-        } catch (Exception ex) {
-            Logger.getLogger(LightPathControls.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        //Write Dichroic Label ComboBox
-        DichroicComboBox.removeAllItems();
-        for(String str : DichBox) {
-        DichroicComboBox.addItem(str);
-        }      
+//        StrVector DichBox = new StrVector();
+//        try {
+//            DichBox = core_.getAllowedPropertyValues("CSUX-Dichroic Mirror", "Label");
+//        } catch (Exception ex) {
+//            Logger.getLogger(LightPathControls.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//
+//        //Write Dichroic Label ComboBox
+//        DichroicComboBox.removeAllItems();
+//        for(String str : DichBox) {
+//        DichroicComboBox.addItem(str);
+//        }      
         
-    //Emission Load
+        //Emission Load
+        populateComboBoxes(EmissionComboBox, "CSUX-Filter Wheel");
         // Read allowed values for Label
-        StrVector EmisBox = null;
-        try {
-            EmisBox = core_.getAllowedPropertyValues("CSUX-Filter Wheel", "Label");
-        } catch (Exception ex) {
-            Logger.getLogger(LightPathControls.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        //Write Dichroic Label ComboBox
-        EmissionComboBox.removeAllItems();
-        for(String str : EmisBox) {
-        EmissionComboBox.addItem(str);
-        }    
+//        StrVector EmisBox = new StrVector();
+//        try {
+//            EmisBox = core_.getAllowedPropertyValues("CSUX-Filter Wheel", "Label");
+//        } catch (Exception ex) {
+//            Logger.getLogger(LightPathControls.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//
+//        //Write Dichroic Label ComboBox
+//        EmissionComboBox.removeAllItems();
+//        for(String str : EmisBox) {
+//        EmissionComboBox.addItem(str);
+//        }    
         
-    //FilterCube Load
+        //FilterCube Load
+        populateComboBoxes(FilterCubeComboBox, "FilterCube");
         // Read allowed values for Label
-        StrVector CubeBox = null;
-        try {
-            CubeBox = core_.getAllowedPropertyValues("FilterCube", "Label");
-        } catch (Exception ex) {
-            Logger.getLogger(LightPathControls.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        //Write Dichroic Label ComboBox
-        FilterCubeComboBox.removeAllItems();
-        for(String str : CubeBox) {
-        FilterCubeComboBox.addItem(str);
-        }
+//        StrVector CubeBox = new StrVector();
+//        try {
+//            CubeBox = core_.getAllowedPropertyValues("FilterCube", "Label");
+//        } catch (Exception ex) {
+//            Logger.getLogger(LightPathControls.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//
+//        //Write Dichroic Label ComboBox
+//        FilterCubeComboBox.removeAllItems();
+//        for(String str : CubeBox) {
+//        FilterCubeComboBox.addItem(str);
+//        }
         
-    //Objective Load
+        //Objective Load
+        populateComboBoxes(ObjectiveComboBox, "Objective");
         // Read allowed values for Label
-        StrVector ObjeBox = null;
-        try {
-            ObjeBox = core_.getAllowedPropertyValues("Objective", "Label");
-        } catch (Exception ex) {
-            Logger.getLogger(LightPathControls.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        //Write Dichroic Label ComboBox
-        ObjectiveComboBox.removeAllItems();
-        for(String str : ObjeBox) {
-        ObjectiveComboBox.addItem(str);
-        }  
+//        StrVector ObjeBox = new StrVector();
+//        try {
+//            ObjeBox = core_.getAllowedPropertyValues("Objective", "Label");
+//        } catch (Exception ex) {
+//            Logger.getLogger(LightPathControls.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//
+//        //Write Dichroic Label ComboBox
+//        ObjectiveComboBox.removeAllItems();
+//        for(String str : ObjeBox) {
+//        ObjectiveComboBox.addItem(str);
+//        }  
         
-    //SwitchProt Load
+        //SwitchPort Load
+        populateComboBoxes(SwitchPortComboBox, "LigthPathPrism");
         // Read allowed values for Label
-        StrVector SwPoBox = null;
+//        StrVector SwPoBox = new StrVector();
+//        try {
+//            SwPoBox = core_.getAllowedPropertyValues("LightPathPrism", "Label");
+//        } catch (Exception ex) {
+//            Logger.getLogger(LightPathControls.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//
+//        //Write Dichroic Label ComboBox
+//        SwitchPortComboBox.removeAllItems();
+//        for(String str : SwPoBox) {
+//        SwitchPortComboBox.addItem(str);
+//        }        
+    }
+    
+    private void populateComboBoxes(JComboBox combo, String device){
+        StrVector vals = new StrVector();
         try {
-            SwPoBox = core_.getAllowedPropertyValues("LightPathPrism", "Label");
-        } catch (Exception ex) {
-            Logger.getLogger(LightPathControls.class.getName()).log(Level.SEVERE, null, ex);
+            vals = core_.getAllowedPropertyValues(device, "Label");
+            combo.removeAllItems();
+            for (String str : vals){
+                combo.addItem(str);
+            }
+        } catch (Exception e){
+            System.out.println(e.getMessage());
         }
-
-        //Write Dichroic Label ComboBox
-        SwitchPortComboBox.removeAllItems();
-        for(String str : ObjeBox) {
-        SwitchPortComboBox.addItem(str);
-        }        
     }
     
     public void setParent(Object o){

@@ -94,7 +94,7 @@ public class Acquisition {
         }
     }
 
-    ;
+    
 
     private IFormatWriter generateWriter(String path, OMEXMLMetadata m)
             throws FormatException, IOException {

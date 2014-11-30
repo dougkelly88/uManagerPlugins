@@ -82,6 +82,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         currentBasePathField.setText(var_.basepath);
 
         loadDefaultPlateConfig();
+        lightPathControls1.setLoadedHardwareValues();
     }
 
     /**
@@ -269,6 +270,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         frameScrollPane.setViewportView(basePanel);
 
         fileMenu.setText("File");
+        fileMenu.setEnabled(false);
 
         loadPlateConfigMenu.setText("Load plate properties...");
         loadPlateConfigMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -497,7 +499,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
 //        }
         Acquisition acq = new Acquisition();
         String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss").format(new Date());
-        String fullname = (currentBasePathField.getText() + "/" + timeStamp + " test.ome.tiff");
+        String fullname = (currentBasePathField.getText() + "/" + timeStamp + "_FLIMSnap.ome.tiff");
 //        acq.dummyTest();
 //        acq.doacqModulo();
         acq.snapFLIMImage(fullname, sap_.getDelaysArray().get(0));
