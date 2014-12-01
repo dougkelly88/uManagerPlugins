@@ -5,6 +5,8 @@
  */
 package com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes;
 
+import com.github.dougkelly88.FLIMPlateReaderGUI.FLIMClasses.GUIComponents.FLIMPanel;
+import com.github.dougkelly88.FLIMPlateReaderGUI.LightPathClasses.GUIComponents.LightPathPanel;
 import java.util.ArrayList;
 
 /**
@@ -31,6 +33,16 @@ public class FilterSetup {
         emFilt_ = em;
         intTime_ = intTime;
         delays_ = delays;
+    }
+    
+    public FilterSetup(LightPathPanel lpp, int intTime, FLIMPanel fp){
+        label_ = "Unknown";
+        exFilt_ = lpp.getCurrentLightPath().getExFilterLabel();
+        ndFilt_ = lpp.getCurrentLightPath().getNdFilterLabel();
+        diFilt_ = lpp.getCurrentLightPath().getDichroicLabel();
+        emFilt_ = lpp.getCurrentLightPath().getEmFilterLabel();
+        intTime_ = intTime;
+        delays_ = fp.getDelays();
     }
     
     public FilterSetup getFilterSetup(){

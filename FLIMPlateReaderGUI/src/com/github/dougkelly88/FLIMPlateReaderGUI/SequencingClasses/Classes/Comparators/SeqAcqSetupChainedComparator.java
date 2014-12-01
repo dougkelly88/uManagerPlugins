@@ -24,6 +24,10 @@ public class SeqAcqSetupChainedComparator implements Comparator<SeqAcqSetup> {
     public SeqAcqSetupChainedComparator(Comparator<SeqAcqSetup>... comparators) {
         this.listComparators = Arrays.asList(comparators);
     }
+    
+    public SeqAcqSetupChainedComparator(List<Comparator<SeqAcqSetup>> comparatorList){
+        this.listComparators = comparatorList;
+    }
 
     @Override
     public int compare(SeqAcqSetup sas1, SeqAcqSetup sas2) {

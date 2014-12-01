@@ -8,6 +8,7 @@ package com.github.dougkelly88.FLIMPlateReaderGUI.LightPathClasses.GUIComponents
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.SeqAcqProps;
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.VariableTest;
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralGUIComponents.SliderControl;
+import com.github.dougkelly88.FLIMPlateReaderGUI.LightPathClasses.Classes.CurrentLightPath;
 import com.google.common.eventbus.Subscribe;
 import java.awt.BorderLayout;
 import java.util.logging.Level;
@@ -24,7 +25,7 @@ import org.micromanager.api.events.PropertyChangedEvent;
  *
  * @author dk1109
  */
-public class LightPathControls extends javax.swing.JPanel {
+public class LightPathPanel extends javax.swing.JPanel {
 
     MMStudio gui_;
     CMMCore core_;
@@ -33,12 +34,20 @@ public class LightPathControls extends javax.swing.JPanel {
     private VariableTest var_;
     Object parent_;
     SliderControl powerSlider_;
+    CurrentLightPath currentLightPath_;
+    // TODO: replace var_ stuff with currentLightPath_
 //    private SequencedAcquisitionProperties sap_;
+    // TODO: generate a method that checks for spectral overlap between
+    // filters based on central wavelength and bandpass. This method would 
+    // return a false if there was (significant?) spectral overlap between
+    // excitation and emission, risking overloading the HRI, and would 
+    // be used to prevent such a filter change occuring without the shutter
+    // first being closed. 
 
     /**
      * Creates new form FLIMControls
      */
-    public LightPathControls() {
+    public LightPathPanel() {
         initComponents();
         gui_ = MMStudio.getInstance();
         sap_ = SeqAcqProps.getInstance();
@@ -49,6 +58,7 @@ public class LightPathControls extends javax.swing.JPanel {
         } catch (Exception e) {
             //gui_.showMessage("Error in FLIMPanel constructor: " + e.getMessage());
         }
+        currentLightPath_ = new CurrentLightPath();
 
     }
 
@@ -314,8 +324,6 @@ public class LightPathControls extends javax.swing.JPanel {
                 .addComponent(Olympus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
-
-        excitationSource.getAccessibleContext().setAccessibleName("Excitation source");
     }// </editor-fold>//GEN-END:initComponents
 
     private void laserToggleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_laserToggleActionPerformed
@@ -340,17 +348,19 @@ public class LightPathControls extends javax.swing.JPanel {
 
     private void dichroicComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dichroicComboBoxActionPerformed
         setByLabel(dichroicComboBox, "Dichroic");
+        currentLightPath_.setDichroicLabel((String) dichroicComboBox.getSelectedItem());
         var_.DichroicComboBoxSelectedItem = (String) dichroicComboBox.getSelectedItem();
-
     }//GEN-LAST:event_dichroicComboBoxActionPerformed
 
     private void ndFWComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ndFWComboBoxActionPerformed
         setByLabel(ndFWComboBox, "NDFW");
+        currentLightPath_.setNdFilterLabel((String) ndFWComboBox.getSelectedItem());
         var_.NDFWComboBoxSelectedItem = (String) ndFWComboBox.getSelectedItem();
     }//GEN-LAST:event_ndFWComboBoxActionPerformed
 
     private void excitationComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excitationComboBoxActionPerformed
         setByLabel(excitationComboBox, "SpectralFW");
+        currentLightPath_.setNdFilterLabel((String) ndFWComboBox.getSelectedItem());
         var_.ExcitationComboBoxSelectedItem = (String) excitationComboBox.getSelectedItem();
     }//GEN-LAST:event_excitationComboBoxActionPerformed
 
@@ -361,16 +371,19 @@ public class LightPathControls extends javax.swing.JPanel {
 
     private void objectiveComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objectiveComboBoxActionPerformed
         setByLabel(objectiveComboBox, "Objective");
+        currentLightPath_.setObjectiveLabel((String) objectiveComboBox.getSelectedItem());
         var_.ObjectiveComboBoxSelectedItem = (String) objectiveComboBox.getSelectedItem();
     }//GEN-LAST:event_objectiveComboBoxActionPerformed
 
     private void filterCubeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterCubeComboBoxActionPerformed
         setByLabel(filterCubeComboBox, "FilterCube");
+        currentLightPath_.setFilterCubeLabel((String) filterCubeComboBox.getSelectedItem());
         var_.FilterCubeComboBoxSelectedItem = (String) filterCubeComboBox.getSelectedItem();
     }//GEN-LAST:event_filterCubeComboBoxActionPerformed
 
     private void switchPortComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_switchPortComboBoxActionPerformed
         setByLabel(switchPortComboBox, "LightPathPrism");
+        currentLightPath_.setPortLabel((String) switchPortComboBox.getSelectedItem());
         var_.SwitchPortComboBoxSelectedItem = (String) switchPortComboBox.getSelectedItem();
     }//GEN-LAST:event_switchPortComboBoxActionPerformed
 
@@ -482,6 +495,10 @@ public class LightPathControls extends javax.swing.JPanel {
 
     public void setParent(Object o) {
         parent_ = o;
+    }
+    
+    public CurrentLightPath getCurrentLightPath(){
+        return this.currentLightPath_;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

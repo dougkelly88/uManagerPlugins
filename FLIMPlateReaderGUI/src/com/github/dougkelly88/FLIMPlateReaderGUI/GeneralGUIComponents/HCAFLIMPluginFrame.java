@@ -14,6 +14,7 @@ import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.AcqOr
 import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.Comparators.FComparator;
 import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.Comparators.SeqAcqSetupChainedComparator;
 import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.Comparators.TComparator;
+import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.Comparators.WellComparator;
 import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.Comparators.XComparator;
 import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.Comparators.YComparator;
 import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.Comparators.ZComparator;
@@ -246,7 +247,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         frameScrollPane = new javax.swing.JScrollPane();
         basePanel = new javax.swing.JPanel();
         FLIMPanel = new javax.swing.JTabbedPane();
-        lightPathControls1 = new com.github.dougkelly88.FLIMPlateReaderGUI.LightPathClasses.GUIComponents.LightPathControls();
+        lightPathControls1 = new com.github.dougkelly88.FLIMPlateReaderGUI.LightPathClasses.GUIComponents.LightPathPanel();
         xYZPanel1 = new com.github.dougkelly88.FLIMPlateReaderGUI.XYZClasses.GUIComponents.XYZPanel();
         fLIMPanel1 = new com.github.dougkelly88.FLIMPlateReaderGUI.FLIMClasses.GUIComponents.FLIMPanel();
         statusLabel = new javax.swing.JLabel();
@@ -541,7 +542,47 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-
+    private void testSorting(List<SeqAcqSetup> sass){
+        System.out.println("Before sorting: ");
+            for (SeqAcqSetup sas : sass){
+                System.out.println(sas.toString());
+            }
+            
+            Collections.sort(sass, new SeqAcqSetupChainedComparator(
+                    new XComparator(), 
+                    new YComparator(), 
+                    new ZComparator(), 
+                    new FComparator(), 
+                    new TComparator()));
+            
+            System.out.println("After sorting XYZFT: ");
+            for (SeqAcqSetup sas : sass){
+                System.out.println(sas.toString());
+            }
+            
+            Collections.sort(sass, new SeqAcqSetupChainedComparator(
+                    new FComparator(), 
+                    new TComparator(),
+                    new XComparator(), 
+                    new YComparator(), 
+                    new ZComparator()));
+            System.out.println("After sorting FTXYZ: ");
+            for (SeqAcqSetup sas : sass){
+                System.out.println(sas.toString());
+            }
+            
+            Collections.sort(sass, new SeqAcqSetupChainedComparator(
+                    new TComparator(),
+                    new XComparator(), 
+                    new YComparator(), 
+                    new ZComparator(), 
+                    new FComparator()));
+            System.out.println("After sorting TXYZF: ");
+            for (SeqAcqSetup sas : sass){
+                System.out.println(sas.toString());
+            }
+    }
+    
     private void aboutMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuActionPerformed
         Splash s = new Splash();
         s.setVisible(true);
@@ -647,34 +688,46 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     private void currentBasePathFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_currentBasePathFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_currentBasePathFieldActionPerformed
-
-//    static final Comparator<SeqAcqSetup> XY_ORDER = new Comparator<SeqAcqSetup>(){
-//
-//        @Override
-//        public int compare(SeqAcqSetup o1, SeqAcqSetup o2) {
-//            return o2.getFOV().getWell().compareTo(o1.getFOV().getWell());
-//        }
-//    
-//    };
-//    
-//    static final Comparator<SeqAcqSetup> T_ORDER = new Comparator<SeqAcqSetup>(){
-//
-//        @Override
-//        public int compare(SeqAcqSetup o1, SeqAcqSetup o2) {
-//            return o2.getTimePoint().getTimeCell().compareTo(o1.getTimePoint().getTimeCell());
-//        }
-//    
-//    };
     
     private void startSequenceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startSequenceButtonActionPerformed
             Acquisition acq = new Acquisition();
+            ArrayList<FOV> fovs = new ArrayList<FOV>();
+            ArrayList<TimePoint> tps = new ArrayList<TimePoint>();
+            ArrayList<FilterSetup> fss = new ArrayList<FilterSetup>();
 
             // get all sequence parameters and put them together into an 
             // array list of objects containing all acquisition points...
+            // Note that if a term is absent from the sequence setup, current
+            // values should be used instead...
+            
             List<SeqAcqSetup> sass = new ArrayList<SeqAcqSetup>();
-            ArrayList<FOV> fovs = xYSequencing1.getFOVTable();
-            ArrayList<TimePoint> tps = timeCourseSequencing1.getTimeTable();
-            ArrayList<FilterSetup> fss = spectralSequencing1.getFilterTable();
+            ArrayList<String> order = tableModel_.getData();
+            
+            if (!order.contains("XY") & !order.contains("Z")){
+                fovs.add(xyzmi_.getCurrentFOV());
+            } else {
+                 fovs = xYSequencing1.getFOVTable();
+            }
+            
+            if (!order.contains("Time course")){
+                tps.add(new TimePoint(0.0));
+            } else {
+                tps = timeCourseSequencing1.getTimeTable();
+            }
+            
+            if (!order.contains("Filter change")){
+                int intTime = 100;
+                try {
+                    intTime = (int) core_.getExposure();
+                } catch (Exception e){
+                    System.out.println(e.getMessage());
+                }
+                fss.add(new FilterSetup(lightPathControls1, intTime, fLIMPanel1));
+            } else {
+                fss = spectralSequencing1.getFilterTable();
+            } 
+            
+            List<Comparator<SeqAcqSetup>> comparators = new ArrayList<Comparator<SeqAcqSetup>>();
             
             for (FOV fov : fovs){
                 for (TimePoint tp : tps){
@@ -684,76 +737,30 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
                 }
             }
             
-            // use chained comparators to sort by multiple fields AT ONCE
-            
-            System.out.println("Before sorting: ");
+            // use chained comparators to sort by multiple fields AT ONCE, based
+            // on order determined in UI table. 
+//            testSorting(sass);
+            for (String str : order){
+                if (str.equals("XY"))
+                        comparators.add(new WellComparator());
+                else if (str.equals("Z"))
+                    comparators.add(new ZComparator());
+                else if (str.equals("Filter change"))
+                    comparators.add(new FComparator());
+                else if (str.equals("Time course"))
+                    comparators.add(new TComparator());
+            }
+            Collections.sort(sass, new SeqAcqSetupChainedComparator(comparators));
+            // DEBUG
+            System.out.println("After sorting according to UI: ");
             for (SeqAcqSetup sas : sass){
                 System.out.println(sas.toString());
             }
-            
-            Collections.sort(sass, new SeqAcqSetupChainedComparator(
-                    new XComparator(), 
-                    new YComparator(), 
-                    new ZComparator(), 
-                    new FComparator(), 
-                    new TComparator()));
-            
-            System.out.println("After sorting XYZFT: ");
-            for (SeqAcqSetup sas : sass){
-                System.out.println(sas.toString());
-            }
-            
-            Collections.sort(sass, new SeqAcqSetupChainedComparator(
-                    new FComparator(), 
-                    new TComparator(),
-                    new XComparator(), 
-                    new YComparator(), 
-                    new ZComparator()));
-            System.out.println("After sorting FTXYZ: ");
-            for (SeqAcqSetup sas : sass){
-                System.out.println(sas.toString());
-            }
-            
-            Collections.sort(sass, new SeqAcqSetupChainedComparator(
-                    new TComparator(),
-                    new XComparator(), 
-                    new YComparator(), 
-                    new ZComparator(), 
-                    new FComparator()));
-            System.out.println("After sorting TXYZF: ");
-            for (SeqAcqSetup sas : sass){
-                System.out.println(sas.toString());
-            }
-            
-            // use comparators to sort this superarray by multiple fields...
-//            http://stackoverflow.com/questions/3704804/how-to-sort-an-arraylist-using-multiple-sorting-criteria
- 
-//            Collections.sort(sass, XY_ORDER);
-//            SeqAcqSetup sas = sass.get(sass.size() - 1);
-//            System.out.println("Sorted by well, last entry in SAS is x = " + sas.getFOV().getX() +
-//                    ", y = " + sas.getFOV().getY() + 
-//                    ", z = " + sas.getFOV().getZ() + 
-//                    ", t = " + sas.getTimePoint().getTimeCell() + 
-//                    ", f = " + sas.getFilters().getLabel());
-//            Collections.sort(sass, T_ORDER);
-//            sas = sass.get(sass.size() - 1);
-//            System.out.println("Sorted by T, last entry in SAS is x = " + sas.getFOV().getX() +
-//                    ", y = " + sas.getFOV().getY() + 
-//                    ", z = " + sas.getFOV().getZ() + 
-//                    ", t = " + sas.getTimePoint().getTimeCell() + 
-//                    ", f = " + sas.getFilters().getLabel());
-            
+                       
     }//GEN-LAST:event_startSequenceButtonActionPerformed
 
     private void snapFLIMButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_snapFLIMButtonActionPerformed
-        //        FileWriteTestHarness h = new FileWriteTestHarness();
-        //        String fileOut = currentBasePathField.getText();
-        //        try{
-            //            h.generateDummyData(fileOut + "FLIMFromJava.ome.tiff");
-            //        }
-        //        catch (Exception e){
-            //            System.out.println("Exceptiopn = " +e.getMessage());
-            //        }
+        
         Acquisition acq = new Acquisition();
         String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss").format(new Date());
         String fullname = (currentBasePathField.getText() + "/" + timeStamp + "_FLIMSnap.ome.tiff");
@@ -808,7 +815,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JProgressBar jProgressBar1;
-    private com.github.dougkelly88.FLIMPlateReaderGUI.LightPathClasses.GUIComponents.LightPathControls lightPathControls1;
+    private com.github.dougkelly88.FLIMPlateReaderGUI.LightPathClasses.GUIComponents.LightPathPanel lightPathControls1;
     private javax.swing.JMenuItem loadPlateConfigMenu;
     private javax.swing.JMenuItem loadPlateMetadataMenu;
     private javax.swing.JMenuItem loadSoftwareConfig;

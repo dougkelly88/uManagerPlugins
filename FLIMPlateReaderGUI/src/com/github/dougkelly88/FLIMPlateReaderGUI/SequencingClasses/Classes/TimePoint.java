@@ -22,6 +22,12 @@ public class TimePoint implements Comparable<TimePoint> {
    
     }
     
+    public TimePoint (Double time){
+        time_ = time;
+        ld_ = 0.0;
+        sa_ = false;
+    }
+    
     public TimePoint getTimePoint(){
         return this;
     }

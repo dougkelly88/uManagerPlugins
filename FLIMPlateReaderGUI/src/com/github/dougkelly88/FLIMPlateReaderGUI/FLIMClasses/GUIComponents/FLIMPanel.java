@@ -871,6 +871,10 @@ public class FLIMPanel extends javax.swing.JPanel {
     public void setParent(Object o){
         parent_ = o;
     }
+    
+    public ArrayList<Integer> getDelays(){
+        return tableModel_.getData();
+    }
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
