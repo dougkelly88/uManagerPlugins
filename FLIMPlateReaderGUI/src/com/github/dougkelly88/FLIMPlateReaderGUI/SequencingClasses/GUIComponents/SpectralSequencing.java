@@ -81,7 +81,7 @@ public class SpectralSequencing extends javax.swing.JPanel {
         filtTable_.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
 
         JScrollPane scroller = new javax.swing.JScrollPane(filtTable_);
-        filtTable_.setPreferredScrollableViewportSize(new java.awt.Dimension(500, 500));
+        filtTable_.setPreferredScrollableViewportSize(new java.awt.Dimension(500, 300));
         filtSeqBasePanel.setLayout(new BorderLayout());
         filtSeqBasePanel.add(scroller, BorderLayout.CENTER);
         
@@ -213,7 +213,7 @@ public class SpectralSequencing extends javax.swing.JPanel {
         filtSeqBasePanel.setLayout(filtSeqBasePanelLayout);
         filtSeqBasePanelLayout.setHorizontalGroup(
             filtSeqBasePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 623, Short.MAX_VALUE)
+            .addGap(0, 633, Short.MAX_VALUE)
         );
         filtSeqBasePanelLayout.setVerticalGroup(
             filtSeqBasePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -224,7 +224,7 @@ public class SpectralSequencing extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 647, Short.MAX_VALUE)
+            .addGap(0, 657, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
