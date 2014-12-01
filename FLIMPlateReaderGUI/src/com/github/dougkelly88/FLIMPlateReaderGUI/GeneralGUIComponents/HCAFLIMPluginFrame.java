@@ -11,6 +11,12 @@ import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.SeqAcqProps;
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.VariableTest;
 import com.github.dougkelly88.FLIMPlateReaderGUI.InstrumentInterfaceClasses.XYZMotionInterface;
 import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.AcqOrderTableModel;
+import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.Comparators.FComparator;
+import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.Comparators.SeqAcqSetupChainedComparator;
+import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.Comparators.TComparator;
+import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.Comparators.XComparator;
+import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.Comparators.YComparator;
+import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.Comparators.ZComparator;
 import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.FOV;
 import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.FilterSetup;
 import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.SeqAcqSetup;
@@ -680,7 +686,44 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
             
             // use chained comparators to sort by multiple fields AT ONCE
             
-            System.out.println("Before sorting:");
+            System.out.println("Before sorting: ");
+            for (SeqAcqSetup sas : sass){
+                System.out.println(sas.toString());
+            }
+            
+            Collections.sort(sass, new SeqAcqSetupChainedComparator(
+                    new XComparator(), 
+                    new YComparator(), 
+                    new ZComparator(), 
+                    new FComparator(), 
+                    new TComparator()));
+            
+            System.out.println("After sorting XYZFT: ");
+            for (SeqAcqSetup sas : sass){
+                System.out.println(sas.toString());
+            }
+            
+            Collections.sort(sass, new SeqAcqSetupChainedComparator(
+                    new FComparator(), 
+                    new TComparator(),
+                    new XComparator(), 
+                    new YComparator(), 
+                    new ZComparator()));
+            System.out.println("After sorting FTXYZ: ");
+            for (SeqAcqSetup sas : sass){
+                System.out.println(sas.toString());
+            }
+            
+            Collections.sort(sass, new SeqAcqSetupChainedComparator(
+                    new TComparator(),
+                    new XComparator(), 
+                    new YComparator(), 
+                    new ZComparator(), 
+                    new FComparator()));
+            System.out.println("After sorting TXYZF: ");
+            for (SeqAcqSetup sas : sass){
+                System.out.println(sas.toString());
+            }
             
             // use comparators to sort this superarray by multiple fields...
 //            http://stackoverflow.com/questions/3704804/how-to-sort-an-arraylist-using-multiple-sorting-criteria
