@@ -195,6 +195,10 @@ public class SpectralSequencing extends javax.swing.JPanel {
             System.out.println(str);
         }
     }
+    
+    public ArrayList<FilterSetup> getFilterTable(){
+        return tableModel_.getData();
+    }
    
     /**
      * This method is called from within the constructor to initialize the form.

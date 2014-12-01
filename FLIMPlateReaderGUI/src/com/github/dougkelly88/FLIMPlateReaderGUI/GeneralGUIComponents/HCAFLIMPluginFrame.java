@@ -11,6 +11,10 @@ import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.SeqAcqProps;
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.VariableTest;
 import com.github.dougkelly88.FLIMPlateReaderGUI.InstrumentInterfaceClasses.XYZMotionInterface;
 import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.AcqOrderTableModel;
+import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.FOV;
+import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.FilterSetup;
+import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.SeqAcqSetup;
+import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.TimePoint;
 import com.google.common.eventbus.Subscribe;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -39,6 +43,8 @@ import java.io.FileReader;
 import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
@@ -635,10 +641,59 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_currentBasePathFieldActionPerformed
 
+    static final Comparator<SeqAcqSetup> XY_ORDER = new Comparator<SeqAcqSetup>(){
+
+        @Override
+        public int compare(SeqAcqSetup o1, SeqAcqSetup o2) {
+            return o2.getFOV().getWell().compareTo(o1.getFOV().getWell());
+        }
+    
+    };
+    
+    static final Comparator<SeqAcqSetup> T_ORDER = new Comparator<SeqAcqSetup>(){
+
+        @Override
+        public int compare(SeqAcqSetup o1, SeqAcqSetup o2) {
+            return o2.getTimePoint().getTimeCell().compareTo(o1.getTimePoint().getTimeCell());
+        }
+    
+    };
+    
     private void startSequenceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startSequenceButtonActionPerformed
-        //        xYSequencing1.getArray
-        //        spectralSequencing1.getArray
-        //        timeCourseSequencing1.getArray
+            Acquisition acq = new Acquisition();
+
+            // get all sequence parameters and put them together into an 
+            // array list of objects containing all acquisition points...
+            ArrayList<SeqAcqSetup> sass = new ArrayList<SeqAcqSetup>();
+            ArrayList<FOV> fovs = xYSequencing1.getFOVTable();
+            ArrayList<TimePoint> tps = timeCourseSequencing1.getTimeTable();
+            ArrayList<FilterSetup> fss = spectralSequencing1.getFilterTable();
+            
+            for (FOV fov : fovs){
+                for (TimePoint tp : tps){
+                    for (FilterSetup fs : fss){
+                        sass.add(new SeqAcqSetup(fov, tp, fs));
+                    }
+                }
+            }
+            
+            // use comparators to sort this superarray by multiple fields...
+ 
+            Collections.sort(sass, XY_ORDER);
+            SeqAcqSetup sas = sass.get(1);
+            System.out.println("Second entry in SAS is x = " + sas.getFOV().getX() +
+                    ", y = " + sas.getFOV().getY() + 
+                    ", z = " + sas.getFOV().getZ() + 
+                    ", t = " + sas.getTimePoint().getTimeCell() + 
+                    ", f = " + sas.getFilters().getLabel());
+            Collections.sort(sass, T_ORDER);
+            sas = sass.get(1);
+            System.out.println("Second entry in SAS is x = " + sas.getFOV().getX() +
+                    ", y = " + sas.getFOV().getY() + 
+                    ", z = " + sas.getFOV().getZ() + 
+                    ", t = " + sas.getTimePoint().getTimeCell() + 
+                    ", f = " + sas.getFilters().getLabel());
+            
     }//GEN-LAST:event_startSequenceButtonActionPerformed
 
     private void snapFLIMButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_snapFLIMButtonActionPerformed

@@ -785,6 +785,10 @@ public class XYSequencing extends javax.swing.JPanel {
         }
         return zStackParams;
     }
+    
+    public ArrayList<FOV> getFOVTable(){
+        return tableModel_.getData();
+    }
 
     public void setZStackParams(double start, double end, double step) {
         this.zStackParams[0] = start;
