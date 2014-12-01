@@ -92,5 +92,13 @@ public class FilterSetup {
    public void setLabel(String label){
        this.label_ = label;
    }
+   
+    @Override
+   public String toString(){
+       return "Filters: Label = " + this.label_ + ", ND = " + this.ndFilt_ 
+                + ", Excitation = " + this.exFilt_ + ", Emission = " + this.emFilt_
+                + ", Camera integration (ms) = " + this.intTime_ 
+                + ", Delays (ps) = " + this.delays_.toString();
+   }
     
 }

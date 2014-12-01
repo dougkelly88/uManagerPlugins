@@ -53,6 +53,13 @@ public class SeqAcqSetup {
     public void setFilterSetup(FilterSetup fs) {
         this.fs_ = fs;
     }
+    
+    @Override
+    public String toString(){
+        return "Acquisition point: " + this.fov_.toString() 
+                + "; " + this.fs_.toString()
+                + "; " + this.tp_.toString();
+    }
 //
 //    // Override compareTo so that FOV.sort orders by well value
 //    @Override

@@ -683,7 +683,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
             System.out.println("Before sorting:");
             
             // use comparators to sort this superarray by multiple fields...
-            http://stackoverflow.com/questions/3704804/how-to-sort-an-arraylist-using-multiple-sorting-criteria
+//            http://stackoverflow.com/questions/3704804/how-to-sort-an-arraylist-using-multiple-sorting-criteria
  
 //            Collections.sort(sass, XY_ORDER);
 //            SeqAcqSetup sas = sass.get(sass.size() - 1);

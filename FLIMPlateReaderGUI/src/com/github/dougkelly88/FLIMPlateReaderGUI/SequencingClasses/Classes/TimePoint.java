@@ -92,4 +92,10 @@ public class TimePoint implements Comparable<TimePoint> {
         return hash;
     }
     
+    @Override
+    public String toString(){
+        return "Time point: Time (s) = " + this.time_ 
+                + ", Liquid dispensing volume = " + this.ld_; 
+    }
+    
 }
