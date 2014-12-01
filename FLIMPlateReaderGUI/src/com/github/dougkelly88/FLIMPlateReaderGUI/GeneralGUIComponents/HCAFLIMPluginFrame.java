@@ -120,10 +120,11 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
 
     private void setupSequencingTable(){
         
-        String[] possibles = {"XY", "Z", "Filter change", "Time course", "Bright field"};
+        String[] possibles = {"XYZ", "Filter change", "Time course", "Bright field"};
+//        String[] possibles = {"XY", "Z", "Filter change", "Time course", "Bright field"};
         
         tableModel_ = new AcqOrderTableModel();
-        tableModel_.addRow("XY");
+        tableModel_.addRow("XYZ");
         tableModel_.addTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent e) {
@@ -211,11 +212,6 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     }
     
     private void populateCombo(JComboBox stepCombo, String[] possibles){
-//        stepCombo.addItem("XY");
-//        stepCombo.addItem("Z");
-//        stepCombo.addItem("Time course");
-//        stepCombo.addItem("Filter change");
-//        stepCombo.addItem("Bright field");
         for (String str : possibles){
             stepCombo.addItem(str);
         }
@@ -703,7 +699,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
             List<SeqAcqSetup> sass = new ArrayList<SeqAcqSetup>();
             ArrayList<String> order = tableModel_.getData();
             
-            if (!order.contains("XY") & !order.contains("Z")){
+            if (!order.contains("XYZ")){
                 fovs.add(xyzmi_.getCurrentFOV());
             } else {
                  fovs = xYSequencing1.getFOVTable();
@@ -741,10 +737,12 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
             // on order determined in UI table. 
 //            testSorting(sass);
             for (String str : order){
-                if (str.equals("XY"))
+                if (str.equals("XYZ")){
                         comparators.add(new WellComparator());
-                else if (str.equals("Z"))
-                    comparators.add(new ZComparator());
+                        comparators.add(new ZComparator());
+                }
+//                else if (str.equals("Z"))
+//                    comparators.add(new ZComparator());
                 else if (str.equals("Filter change"))
                     comparators.add(new FComparator());
                 else if (str.equals("Time course"))
@@ -756,6 +754,8 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
             for (SeqAcqSetup sas : sass){
                 System.out.println(sas.toString());
             }
+            
+            System.out.println("Pause here during debug");
                        
     }//GEN-LAST:event_startSequenceButtonActionPerformed
 
