@@ -18,7 +18,7 @@ public class AcqOrderTableModel extends AbstractTableModel {
     public static final int DESC_INDEX = 0;
 
     private ArrayList<String> data_ = new ArrayList<String>();
-    private String[] colNames_ = {"Acquisition step"};
+    private String[] colNames_ = {"Acquisition step order"};
 
     public AcqOrderTableModel() {
         // TODO: add default (i.e. xyz?)
