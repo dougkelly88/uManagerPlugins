@@ -309,5 +309,12 @@ public class FOV implements Comparable<FOV> {
         hash = 79 * hash + (int) (Double.doubleToLongBits(this.y_) ^ (Double.doubleToLongBits(this.y_) >>> 32));
         return hash;
     }
+    
+    @Override
+    public String toString(){
+        return "FOV: Well = " + this.well_ + ", x = " + this.x_ 
+                + ", y = " + this.y_ + ", z = " + this.z_
+                + ", im_group = " + this.group_;
+    }
 
 }
