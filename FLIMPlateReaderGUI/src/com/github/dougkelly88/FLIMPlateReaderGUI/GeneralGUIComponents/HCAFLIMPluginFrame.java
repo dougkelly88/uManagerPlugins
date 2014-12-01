@@ -299,6 +299,11 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         });
 
         snapBFButton.setText("Snap brightfield image");
+        snapBFButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                snapBFButtonActionPerformed(evt);
+            }
+        });
 
         currentBasePathField.setEditable(false);
         currentBasePathField.setText("C:/Users/dk1109/FLIMFromJava.ome.tiff");
@@ -337,15 +342,12 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
                         .addGap(9, 9, 9)
                         .addGroup(flimAcquisitionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(seqOrderBasePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(flimAcquisitionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(flimAcquisitionPanelLayout.createSequentialGroup()
-                                    .addGap(207, 207, 207)
-                                    .addComponent(snapFLIMButton, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, flimAcquisitionPanelLayout.createSequentialGroup()
-                                    .addGap(207, 207, 207)
-                                    .addGroup(flimAcquisitionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(snapBFButton, javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(startSequenceButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                            .addGroup(flimAcquisitionPanelLayout.createSequentialGroup()
+                                .addGap(207, 207, 207)
+                                .addGroup(flimAcquisitionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(snapFLIMButton, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(snapBFButton, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(startSequenceButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
@@ -686,6 +688,9 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_currentBasePathFieldActionPerformed
     
     private void startSequenceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startSequenceButtonActionPerformed
+            
+            // TODO: break up into submethods!
+        
             Acquisition acq = new Acquisition();
             ArrayList<FOV> fovs = new ArrayList<FOV>();
             ArrayList<TimePoint> tps = new ArrayList<TimePoint>();
@@ -733,8 +738,9 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
                 }
             }
             
-            // use chained comparators to sort by multiple fields AT ONCE, based
-            // on order determined in UI table. 
+            // use chained comparators to sort by multiple fields SIMULTANEOUSLY,
+            // based on order determined in UI table. 
+            // DEBUG
 //            testSorting(sass);
             for (String str : order){
                 if (str.equals("XYZ")){
@@ -749,25 +755,108 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
                     comparators.add(new TComparator());
             }
             Collections.sort(sass, new SeqAcqSetupChainedComparator(comparators));
+            
             // DEBUG
-            System.out.println("After sorting according to UI: ");
-            for (SeqAcqSetup sas : sass){
-                System.out.println(sas.toString());
+//            System.out.println("After sorting according to UI: ");
+//            for (SeqAcqSetup sas : sass){
+//                System.out.println(sas.toString());
+//            }
+//            System.out.println("Pause here during debug");
+            
+            long start_time = System.currentTimeMillis();
+            // TODO: modify data saving such that time courses, z can be put in a 
+            // single OME.TIFF. DISCUSS WITH IAN!
+            // N.B. z should be relatively easy...
+            // for now, just make a base folder and name files based on 
+            // filterlabel, time point.  
+            String timeStamp = new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss").format(new Date());
+            String baseLevelPath = currentBasePathField.getText() + "/Sequenced FLIM acquisition " +
+                    timeStamp;
+            File f = new File(baseLevelPath);
+            try {
+                f.mkdir();
+            } catch (Exception e){
+                System.out.println(e.getMessage());
             }
             
-            System.out.println("Pause here during debug");
+            
+//            for (SeqAcqSetup sas : sass){
+            Double lastTime = 0.0;
+            String lastFiltLabel = "";
+            FOV lastFOV = new FOV(0, 0, 0, pp_);
+            Double lastZ = 0.0;
+//            int fovSinceLastAF = 0;
+            for (int ind = 0; ind < sass.size(); ind++){
+                // TODO: how much can these steps be parallelised?
+                // set FOV params
+                SeqAcqSetup sas = sass.get(ind);
+                // if time point changed different from last time, wait until 
+                // next time point reached...
+                if (!sas.getTimePoint().getTimeCell().equals(lastTime)){
+                    Double next_time = sas.getTimePoint().getTimeCell() * 1000;
+                    while ((System.currentTimeMillis() - start_time) < next_time){
+                        Double timeLeft = next_time - (System.currentTimeMillis() - start_time);
+                        System.out.println("Waiting for " + timeLeft + " until next time point...");
+                    }
+                }
+                // if FOV different, deal with it here...
+                if ( (!sas.getFOV().equals(lastFOV)) | (sas.getFOV().getZ() != lastZ) ){
+                    xyzmi_.gotoFOV(sas.getFOV());
+                    // AUTOFOCUS HERE
+                     
+                }
+                
+                // set filter params - can these be handled by a single class?
+                if (!sas.getFilters().getLabel().equals(lastFiltLabel)){
+                    try {
+                        core_.setProperty("NDFW", "Label", "STOP"); // block light when chaning filters to assure no bleedthrough
+                        core_.setProperty("SpectralFW", "Label", sas.getFilters().getExFilt());
+                        core_.setProperty("CSUX-Dichroic", "Label", sas.getFilters().getDiFilt());
+                        core_.setProperty("CSUX-Filter Wheel", "Label", sas.getFilters().getEmFilt());
+                        core_.setProperty("NDFW", "Label", sas.getFilters().getNDFilt());
+                        core_.setExposure(sas.getFilters().getIntTime());
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+                // do acquisition
+                String fovLabel = String.format("%05d", ind);
+                String path = baseLevelPath + "/" + "T=" + sas.getTimePoint().getTimeCell() + 
+                        " Filterset=" + sas.getFilters().getLabel() + 
+                        " Z=" + sas.getFOV().getZ() + 
+                        " Well=" + sas.getFOV().getWell() + 
+                        " X=" + sas.getFOV().getX() +
+                        " Y=" + sas.getFOV().getY() +
+                        " FOV=" + fovLabel;
+                acq.snapFLIMImage(path, sas.getFilters().getDelays());
+                // shutter laser
+                try {
+                    core_.setProperty("NDFW", "Label", "STOP");
+                } catch (Exception e){
+                    System.out.println(e.getMessage());
+                }
+                
+                lastTime = sas.getTimePoint().getTimeCell();
+                lastFOV = sas.getFOV();
+                lastZ = sas.getFOV().getZ();
+                lastFiltLabel = sas.getFilters().getLabel();
+            }
                        
     }//GEN-LAST:event_startSequenceButtonActionPerformed
 
     private void snapFLIMButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_snapFLIMButtonActionPerformed
         
         Acquisition acq = new Acquisition();
-        String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss").format(new Date());
+        String timeStamp = new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss").format(new Date());
         String fullname = (currentBasePathField.getText() + "/" + timeStamp + "_FLIMSnap.ome.tiff");
         //        acq.dummyTest();
         //        acq.doacqModulo();
         acq.snapFLIMImage(fullname, sap_.getDelaysArray().get(0));
     }//GEN-LAST:event_snapFLIMButtonActionPerformed
+
+    private void snapBFButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_snapBFButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_snapBFButtonActionPerformed
 
     /**
      * @param args the command line arguments

@@ -347,7 +347,7 @@ public class LightPathPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_laserToggleActionPerformed
 
     private void dichroicComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dichroicComboBoxActionPerformed
-        setByLabel(dichroicComboBox, "Dichroic");
+        setByLabel(dichroicComboBox, "CSUX-Dichroic");
         currentLightPath_.setDichroicLabel((String) dichroicComboBox.getSelectedItem());
         var_.DichroicComboBoxSelectedItem = (String) dichroicComboBox.getSelectedItem();
     }//GEN-LAST:event_dichroicComboBoxActionPerformed
