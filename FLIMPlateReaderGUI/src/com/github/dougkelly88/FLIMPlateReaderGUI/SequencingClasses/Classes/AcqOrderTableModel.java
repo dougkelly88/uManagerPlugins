@@ -12,7 +12,7 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author dk1109
  */
-public class acqOrderTableModel extends AbstractTableModel {
+public class AcqOrderTableModel extends AbstractTableModel {
 
 //    public static final int POS_INDEX = 0;
     public static final int DESC_INDEX = 0;
@@ -20,11 +20,11 @@ public class acqOrderTableModel extends AbstractTableModel {
     private ArrayList<String> data_ = new ArrayList<String>();
     private String[] colNames_ = {"Acquisition step"};
 
-    public acqOrderTableModel() {
+    public AcqOrderTableModel() {
         // TODO: add default (i.e. xyz?)
     }
 
-    public acqOrderTableModel(String[] columnNames) {
+    public AcqOrderTableModel(String[] columnNames) {
         this.colNames_ = columnNames;
         // TODO: add default, i.e. xyz
     }

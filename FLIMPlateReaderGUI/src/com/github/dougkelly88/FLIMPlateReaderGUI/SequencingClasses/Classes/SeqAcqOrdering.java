@@ -14,7 +14,7 @@ import java.awt.Rectangle;
  * @author dk1109
  */
 //public class seqAcqOrdering implements Comparable<seqAcqOrdering> {
-public class seqAcqOrdering {
+public class SeqAcqOrdering {
 
     int position_;
     String description_;
@@ -26,13 +26,13 @@ public class seqAcqOrdering {
      * @param desc
      * 
      */
-    public seqAcqOrdering(int pos, String desc) {
+    public SeqAcqOrdering(int pos, String desc) {
         position_ = pos;
         description_ = desc;
         
     }
 
-    public seqAcqOrdering getSeqAcqOrdering() {
+    public SeqAcqOrdering getSeqAcqOrdering() {
         return this;
     }
 
