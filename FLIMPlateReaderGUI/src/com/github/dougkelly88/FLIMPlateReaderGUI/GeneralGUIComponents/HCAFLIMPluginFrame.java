@@ -435,7 +435,6 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         frameScrollPane.setViewportView(basePanel);
 
         fileMenu.setText("File");
-        fileMenu.setEnabled(false);
 
         loadPlateConfigMenu.setText("Load plate properties...");
         loadPlateConfigMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -811,7 +810,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
                     try {
                         core_.setProperty("NDFW", "Label", "STOP"); // block light when chaning filters to assure no bleedthrough
                         core_.setProperty("SpectralFW", "Label", sas.getFilters().getExFilt());
-                        core_.setProperty("CSUX-Dichroic", "Label", sas.getFilters().getDiFilt());
+                        core_.setProperty("CSUX-Dichroic Mirror", "Label", sas.getFilters().getDiFilt());
                         core_.setProperty("CSUX-Filter Wheel", "Label", sas.getFilters().getEmFilt());
                         core_.setProperty("NDFW", "Label", sas.getFilters().getNDFilt());
                         core_.setExposure(sas.getFilters().getIntTime());

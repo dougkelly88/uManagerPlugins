@@ -31,9 +31,9 @@ public class PlateMapDrawPanel extends JPanel implements ActionListener {
 
     XYSequencing parent_;
 
-    Point selectionStart_;
-    Point selectionEnd_;
-    Rectangle selection_;
+    Point selectionStart_ = new Point();
+    Point selectionEnd_ = new Point();
+    Rectangle selection_ = new Rectangle();
     boolean isSelecting_ = false;
     ArrayList<ArrayList<Boolean>> wellsSelected_;
     Color transRed = new Color(128, 0, 0, 64);
@@ -51,6 +51,12 @@ public class PlateMapDrawPanel extends JPanel implements ActionListener {
     PlateMapDrawPanel(XYSequencing parent) {
         // set a preferred size for the custom panel.
         setPreferredSize(new Dimension(470, 313));
+        
+        selectionStart_ = new Point();
+        selectionEnd_ = new Point();
+        selection_ = new Rectangle();
+//        wellsSelected_ = new ArrayList<ArrayList<Boolean>>();
+        
         parent_ = parent;
 //            this.setEnabled(false);     
         addMouseListener(new MouseAdapter() {
