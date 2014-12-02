@@ -149,13 +149,13 @@ public class SpectralSequencing extends javax.swing.JPanel {
         });
         
         JComboBox exCombo = new JComboBox();
-        populateCombos(exCombo, "Excitation", FilterTableModel.EX_INDEX);
-//        JComboBox ndCombo = new JComboBox();
-//        populateCombos(ndCombo, "NDFilter", tableModel_.ND_INDEX);
+        populateCombos(exCombo, "SpectralFW", FilterTableModel.EX_INDEX);
+        JComboBox ndCombo = new JComboBox();
+        populateCombos(ndCombo, "NDFW", tableModel_.ND_INDEX);
         JComboBox diCombo = new JComboBox();
-        populateCombos(diCombo, "Dichroic", FilterTableModel.DI_INDEX);
+        populateCombos(diCombo, "CSUX-Dichroic Mirror", FilterTableModel.DI_INDEX);
         JComboBox emCombo = new JComboBox();
-        populateCombos(emCombo, "Emission", FilterTableModel.EM_INDEX);
+        populateCombos(emCombo, "CSUX-Filter Wheel", FilterTableModel.EM_INDEX);
         
     }
     
