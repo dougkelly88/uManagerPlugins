@@ -21,8 +21,8 @@ import org.micromanager.api.ScriptInterface;
  */
 public class HCAFLIMPlugin implements MMPlugin {
     
-    public static final String menuName = "OpenHCA-FLIM Plugin";
-    public static final String tooltipDescription = "Suite of controls for use with OpenHCA-FLIM instruments";
+    public static final String menuName = "OpenFLIM-HCA Plugin";
+    public static final String tooltipDescription = "Suite of controls for use with OpenFLIM-HCA instruments";
     
     public static JFrame frame_;
     static ScriptInterface si_;
@@ -69,12 +69,12 @@ public class HCAFLIMPlugin implements MMPlugin {
 
     @Override
     public String getDescription() {
-        return "Imperial College London Photonics Group, OpenHCA-FLIM plugin";
+        return "Imperial College London Photonics Group, OpenFLIM-HCA plugin";
     }
 
     @Override
     public String getInfo() {
-        return "Imperial College London Photonics Group, OpenHCA-FLIM plugin";
+        return "Imperial College London Photonics Group, OpenFLIM-HCA plugin";
     }
 
     @Override

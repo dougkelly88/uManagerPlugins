@@ -846,8 +846,11 @@ public class FLIMPanel extends javax.swing.JPanel {
     
     private void fastDelaySliderPropertyChange(java.beans.PropertyChangeEvent evt){
         var_.fastDelaySlider= fastDelaySlider_.getValue();
-        //TODO: set value
-//        FLIMTestText.setText("Fast delay value = " + fastDelaySlider_.getValue());
+        try {
+            core_.setProperty("Delay box", "Delay (ps)", fastDelaySlider_.getValue());
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
         
     }
     

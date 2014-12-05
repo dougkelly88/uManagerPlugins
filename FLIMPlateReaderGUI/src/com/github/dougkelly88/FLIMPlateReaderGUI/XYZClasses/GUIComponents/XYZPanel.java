@@ -48,7 +48,6 @@ public class XYZPanel extends javax.swing.JPanel {
      */
     public XYZPanel() {
         initComponents();
-        core_ = MMStudio.getInstance().getCore();
         setControlDefaults();
         
         // add micro symbols
@@ -666,6 +665,8 @@ public class XYZPanel extends javax.swing.JPanel {
         
         afOffsetLabel.setText("Autofocus offset " + um + ":");
         afSearchLabel.setText("Autofocus seach range " + um + ":");
+        
+        core_ = MMStudio.getInstance().getCore();
         
         try{
             StrVector temp = core_.getAllowedPropertyValues("AutoFocusZDC", "ObjectiveTypeSetting");
