@@ -279,6 +279,8 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         FLIMPanel.addTab("Light Path Control", lightPathControls1);
+
+        xYZPanel1.setEnabled(false);
         FLIMPanel.addTab("XYZ control", xYZPanel1);
         FLIMPanel.addTab("FLIM panel", fLIMPanel1);
 

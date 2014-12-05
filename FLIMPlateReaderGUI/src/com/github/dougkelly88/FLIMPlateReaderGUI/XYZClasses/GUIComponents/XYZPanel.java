@@ -21,6 +21,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import mmcorej.CMMCore;
+import mmcorej.StrVector;
+import org.micromanager.MMStudio;
 
 /**
  *
@@ -32,10 +35,11 @@ public class XYZPanel extends javax.swing.JPanel {
     private PlateProperties pp_;
     private double currentXUm_ = 128;
     private double currentYUm_ = 128;
-    private SeqAcqProps sap_;
     private Object parent_;
+    private SeqAcqProps sap_;
     private XYZMotionInterface xyzmi_;
     private FOV currentFOV_;
+    private CMMCore core_;
     
     public static final int X_AXIS = 0;
     public static final int Y_AXIS = 1;
@@ -44,6 +48,7 @@ public class XYZPanel extends javax.swing.JPanel {
      */
     public XYZPanel() {
         initComponents();
+        core_ = MMStudio.getInstance().getCore();
         setControlDefaults();
         
         // add micro symbols
@@ -81,6 +86,9 @@ public class XYZPanel extends javax.swing.JPanel {
         afObjectiveCombo = new javax.swing.JComboBox();
         afOffsetLabel = new javax.swing.JLabel();
         afOffsetField = new javax.swing.JFormattedTextField();
+        afSearchLabel = new javax.swing.JLabel();
+        afSearchField = new javax.swing.JFormattedTextField();
+        afNowButton = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         manUscopeCheck = new javax.swing.JCheckBox();
         manStageCheck = new javax.swing.JCheckBox();
@@ -123,7 +131,7 @@ public class XYZPanel extends javax.swing.JPanel {
                         .addComponent(stepSizeLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(stepSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
         panningPanelLayout.setVerticalGroup(
             panningPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -267,16 +275,37 @@ public class XYZPanel extends javax.swing.JPanel {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Autofocus"));
 
-        jLabel1.setText("Autofocus objective");
+        jLabel1.setText("Autofocus objective: ");
 
         afObjectiveCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        afObjectiveCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                afObjectiveComboActionPerformed(evt);
+            }
+        });
 
-        afOffsetLabel.setText("Autofocus offset (um)");
+        afOffsetLabel.setText("Autofocus offset (um):");
 
         afOffsetField.setText("0");
         afOffsetField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 afOffsetFieldActionPerformed(evt);
+            }
+        });
+
+        afSearchLabel.setText("Autofocus seach range (um): ");
+
+        afSearchField.setText("50");
+        afSearchField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                afSearchFieldActionPerformed(evt);
+            }
+        });
+
+        afNowButton.setText("AF now");
+        afNowButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                afNowButtonActionPerformed(evt);
             }
         });
 
@@ -286,14 +315,22 @@ public class XYZPanel extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(afOffsetLabel))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(afObjectiveCombo, 0, 83, Short.MAX_VALUE)
-                    .addComponent(afOffsetField))
-                .addContainerGap(237, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(afNowButton, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel1)
+                                .addComponent(afOffsetLabel))
+                            .addGap(51, 51, 51)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(afOffsetField, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(afObjectiveCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(afSearchLabel)
+                            .addGap(18, 18, 18)
+                            .addComponent(afSearchField))))
+                .addContainerGap(130, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -306,7 +343,13 @@ public class XYZPanel extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(afOffsetLabel)
                     .addComponent(afOffsetField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(afSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(afSearchLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(afNowButton)
+                .addContainerGap(65, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout ZPanelLayout = new javax.swing.GroupLayout(ZPanel);
@@ -333,6 +376,11 @@ public class XYZPanel extends javax.swing.JPanel {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         manUscopeCheck.setText("Return microscope controls to chassis?");
+        manUscopeCheck.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                manUscopeCheckActionPerformed(evt);
+            }
+        });
 
         manStageCheck.setText("Return stage controls to joystick?");
         manStageCheck.addActionListener(new java.awt.event.ActionListener() {
@@ -349,6 +397,7 @@ public class XYZPanel extends javax.swing.JPanel {
         });
 
         keyboardStageCheck.setText("Keyboard stage control?");
+        keyboardStageCheck.setEnabled(false);
         keyboardStageCheck.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 keyboardStageCheckActionPerformed(evt);
@@ -426,11 +475,11 @@ public class XYZPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_wellFieldActionPerformed
 
     private void manStageCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manStageCheckActionPerformed
-        // TODO add your handling code here:
+        xyzmi_.enableManualXYControls(manStageCheck.isSelected());
     }//GEN-LAST:event_manStageCheckActionPerformed
 
     private void manFocusCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manFocusCheckActionPerformed
-        // TODO add your handling code here:
+        xyzmi_.enableManualZOnly(manFocusCheck.isSelected());
     }//GEN-LAST:event_manFocusCheckActionPerformed
 
     private void keyboardStageCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_keyboardStageCheckActionPerformed
@@ -459,6 +508,30 @@ public class XYZPanel extends javax.swing.JPanel {
         Double step = Double.parseDouble(zStepSizeField.getText());
         xyzmi_.moveZRelative(step);
     }//GEN-LAST:event_zUButtonActionPerformed
+
+    private void manUscopeCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manUscopeCheckActionPerformed
+        xyzmi_.enableManualZControls(manUscopeCheck.isSelected());
+    }//GEN-LAST:event_manUscopeCheckActionPerformed
+
+    private void afNowButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_afNowButtonActionPerformed
+        xyzmi_.customAutofocus(Double.parseDouble(afOffsetField.getText()));
+    }//GEN-LAST:event_afNowButtonActionPerformed
+
+    private void afObjectiveComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_afObjectiveComboActionPerformed
+        try{
+            core_.setProperty("AutoFocusZDC", "ObjectiveTypeSetting", (String) afObjectiveCombo.getSelectedItem());
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }//GEN-LAST:event_afObjectiveComboActionPerformed
+
+    private void afSearchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_afSearchFieldActionPerformed
+        try {
+            core_.setProperty("AutoFocusZDC", "SearchRange", Double.parseDouble(afSearchField.getText()));
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }//GEN-LAST:event_afSearchFieldActionPerformed
 
     private void setControlDefaults(){
         
@@ -591,6 +664,19 @@ public class XYZPanel extends javax.swing.JPanel {
         
 //        twoXPanningPanel.add(oneXPanningPanel, BorderLayout.CENTER);
         
+        afOffsetLabel.setText("Autofocus offset " + um + ":");
+        afSearchLabel.setText("Autofocus seach range " + um + ":");
+        
+        try{
+            StrVector temp = core_.getAllowedPropertyValues("AutoFocusZDC", "ObjectiveTypeSetting");
+            afObjectiveCombo.removeAllItems();
+            for (String str : temp){
+                afObjectiveCombo.addItem(str);
+            }
+            core_.setProperty("AutoFocusZDC", "SearchRange", Double.parseDouble(afSearchField.getText()));
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
 
     }
     
@@ -639,9 +725,12 @@ public class XYZPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel XYPanel;
     private javax.swing.JPanel ZPanel;
+    private javax.swing.JButton afNowButton;
     private javax.swing.JComboBox afObjectiveCombo;
     private javax.swing.JFormattedTextField afOffsetField;
     private javax.swing.JLabel afOffsetLabel;
+    private javax.swing.JFormattedTextField afSearchField;
+    private javax.swing.JLabel afSearchLabel;
     private javax.swing.JButton goToWellButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;

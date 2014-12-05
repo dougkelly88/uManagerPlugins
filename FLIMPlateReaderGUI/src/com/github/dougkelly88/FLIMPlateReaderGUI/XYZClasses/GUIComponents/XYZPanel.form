@@ -114,7 +114,7 @@
                               <Component id="stepSizeField" min="-2" pref="40" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="44" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -351,18 +351,30 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="afOffsetLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="afNowButton" min="-2" pref="154" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="afOffsetLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Component id="afOffsetField" min="-2" pref="153" max="-2" attributes="0"/>
+                                      <Component id="afObjectiveCombo" min="-2" pref="153" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="afSearchLabel" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="afSearchField" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="afObjectiveCombo" pref="83" max="32767" attributes="0"/>
-                          <Component id="afOffsetField" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace pref="237" max="32767" attributes="0"/>
+                      <EmptySpace pref="130" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -379,7 +391,14 @@
                           <Component id="afOffsetLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="afOffsetField" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="afSearchField" min="-2" max="-2" attributes="0"/>
+                          <Component id="afSearchLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="afNowButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="65" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -387,7 +406,7 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="jLabel1">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Autofocus objective"/>
+                <Property name="text" type="java.lang.String" value="Autofocus objective: "/>
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="afObjectiveCombo">
@@ -401,10 +420,13 @@
                   </StringArray>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="afObjectiveComboActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="afOffsetLabel">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Autofocus offset (um)"/>
+                <Property name="text" type="java.lang.String" value="Autofocus offset (um):"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JFormattedTextField" name="afOffsetField">
@@ -413,6 +435,27 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="afOffsetFieldActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="afSearchLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Autofocus seach range (um): "/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JFormattedTextField" name="afSearchField">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="50"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="afSearchFieldActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="afNowButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="AF now"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="afNowButtonActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
@@ -469,6 +512,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Return microscope controls to chassis?"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="manUscopeCheckActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JCheckBox" name="manStageCheck">
           <Properties>
@@ -489,6 +535,7 @@
         <Component class="javax.swing.JCheckBox" name="keyboardStageCheck">
           <Properties>
             <Property name="text" type="java.lang.String" value="Keyboard stage control?"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="keyboardStageCheckActionPerformed"/>

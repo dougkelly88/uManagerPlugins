@@ -11,14 +11,10 @@ import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralGUIComponents.SliderCont
 import com.github.dougkelly88.FLIMPlateReaderGUI.LightPathClasses.Classes.CurrentLightPath;
 import com.google.common.eventbus.Subscribe;
 import java.awt.BorderLayout;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import mmcorej.CMMCore;
 import mmcorej.StrVector;
 import org.micromanager.MMStudio;
-import org.micromanager.acquisition.AcquisitionEngine;
-import org.micromanager.api.ScriptInterface;
 import org.micromanager.api.events.PropertyChangedEvent;
 
 /**

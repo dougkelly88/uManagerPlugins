@@ -184,4 +184,50 @@ public final class XYZMotionInterface {
         return z;
     }
 
+    public void enableManualXYControls(boolean on){
+        try {
+                if (on)
+                    core_.setProperty(xystage_, "Enable joystick?", "True");
+                else
+                    core_.setProperty(xystage_, "Enable joystick?", "False");
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    public void enableManualZControls(boolean on){
+        try {
+                if (on)
+                    core_.setProperty("OlympusHub", "Control", "Manual + Computer");
+                else
+                    core_.setProperty("OlympusHub", "Control", "Computer");
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    
+    }
+    
+    public void enableManualZOnly(boolean on){
+        try {
+                if (on)
+                    core_.setProperty("ManualFocus", "FocusWheel", "Frame");
+                else
+                    core_.setProperty("ManualFocus", "FocusWheel", "Off");
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    
+    }
+    
+    public void customAutofocus(Double offset){
+        try{
+            this.moveZRelative(-offset);
+            core_.setProperty("AutoFocusZDC", "MeasureOffset", "Now");
+            Double focusOffset = Double.parseDouble(core_.getProperty("AutoFocusZDC", "Offset"));
+            this.moveZRelative(offset - focusOffset);
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+    
 }
