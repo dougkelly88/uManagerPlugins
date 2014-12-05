@@ -91,7 +91,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         initComponents();
         ImageIcon icon = new ImageIcon(this.getClass().getResource("../Resources/GFPFishIcon.png"));
         this.setIconImage(icon.getImage());
-        this.setTitle("HCA-FLIM Plugin");
+        this.setTitle("OpenFLIM-HCA Plugin");
         core_ = core;
         frame_ = this;
 
@@ -620,7 +620,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_saveMetadataMenuActionPerformed
 
     private void loadPlateConfigMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadPlateConfigMenuActionPerformed
-        final JFileChooser fc = new JFileChooser("C:/Program Files (x86)/Micro-Manager-1.4-32 20 Oct 2014 build/mmplugins/OpenHCAFLIM/XPLT");   // for debug, make more general
+        final JFileChooser fc = new JFileChooser("mmplugins/OpenHCAFLIM/XPLT);   // for debug, make more general
         int returnVal = fc.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = fc.getSelectedFile();
