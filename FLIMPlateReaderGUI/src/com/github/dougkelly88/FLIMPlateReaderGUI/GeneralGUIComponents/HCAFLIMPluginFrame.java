@@ -620,7 +620,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_saveMetadataMenuActionPerformed
 
     private void loadPlateConfigMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadPlateConfigMenuActionPerformed
-        final JFileChooser fc = new JFileChooser("mmplugins/OpenHCAFLIM/XPLT);   // for debug, make more general
+        final JFileChooser fc = new JFileChooser("mmplugins/OpenHCAFLIM/XPLT");   // for debug, make more general
         int returnVal = fc.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = fc.getSelectedFile();
@@ -802,20 +802,23 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
                 }
                 // if FOV different, deal with it here...
                 if ( (!sas.getFOV().equals(lastFOV)) | (sas.getFOV().getZ() != lastZ) ){
+                    // TODO: this needs tweaking in order that autofocus works properly with Z stacks...
+                    // Perhaps only do when XY change, and not Z?
                     xyzmi_.gotoFOV(sas.getFOV());
-                    // AUTOFOCUS HERE
-                     
+                    xyzmi_.customAutofocus(xYZPanel1.getSampleAFOffset());                     
                 }
                 
                 // set filter params - can these be handled by a single class?
                 if (!sas.getFilters().getLabel().equals(lastFiltLabel)){
                     try {
-                        core_.setProperty("NDFW", "Label", "STOP"); // block light when chaning filters to assure no bleedthrough
+                        core_.setShutterOpen(false);
+//                        core_.setProperty("NDFW", "Label", "STOP"); // block light when chaning filters to assure no bleedthrough
                         core_.setProperty("SpectralFW", "Label", sas.getFilters().getExFilt());
                         core_.setProperty("CSUX-Dichroic Mirror", "Label", sas.getFilters().getDiFilt());
                         core_.setProperty("CSUX-Filter Wheel", "Label", sas.getFilters().getEmFilt());
                         core_.setProperty("NDFW", "Label", sas.getFilters().getNDFilt());
                         core_.setExposure(sas.getFilters().getIntTime());
+                        
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
@@ -828,11 +831,21 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
                         " Well=" + sas.getFOV().getWell() + 
                         " X=" + sas.getFOV().getX() +
                         " Y=" + sas.getFOV().getY() +
-                        " FOV=" + fovLabel;
+                        " FOV=" + fovLabel + 
+                        ".ome.tiff";
+                try{
+                    core_.setShutterOpen(true);
+                }
+                catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+                
                 acq.snapFLIMImage(path, sas.getFilters().getDelays());
                 // shutter laser
+                // TODO: have this work properly in line with auto-shutter?
                 try {
-                    core_.setProperty("NDFW", "Label", "STOP");
+//                    core_.setProperty("NDFW", "Label", "STOP");
+                    core_.setShutterOpen(false);
                 } catch (Exception e){
                     System.out.println(e.getMessage());
                 }

@@ -513,6 +513,7 @@ public class XYZPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_manUscopeCheckActionPerformed
 
     private void afNowButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_afNowButtonActionPerformed
+        // TODO: deal with potential plate slope, c.f. current uManager HCA tool
         xyzmi_.customAutofocus(Double.parseDouble(afOffsetField.getText()));
     }//GEN-LAST:event_afNowButtonActionPerformed
 
@@ -721,6 +722,10 @@ public class XYZPanel extends javax.swing.JPanel {
         dp_.setEnabled(enable, pp);
         pp_ = pp;
         goToWellButton.setEnabled(enable);
+    }
+    
+    public Double getSampleAFOffset(){
+        return Double.parseDouble(afOffsetField.getText());
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
