@@ -118,6 +118,10 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
         setupSequencingTable();
     }
 
+    public CMMCore getCore() {
+        return core_;
+    }
+    
     private void setupSequencingTable(){
         
         String[] possibles = {"XYZ", "Filter change", "Time course", "Bright field"};
@@ -653,6 +657,7 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
             xyzmi_ = new XYZMotionInterface(pp_, core_);
             xYSequencing1.setXYZMotionInterface(xyzmi_);
             xYZPanel1.setXYZMotionInterface(xyzmi_);
+            
         } catch (Exception e) {
             System.out.println("problem accessing file" + file.getAbsolutePath());
             System.out.println("Problem accessing plate config at " + file.getAbsolutePath()

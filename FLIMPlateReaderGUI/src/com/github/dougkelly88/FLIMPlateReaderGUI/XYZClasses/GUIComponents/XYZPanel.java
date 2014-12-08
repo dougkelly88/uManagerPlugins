@@ -8,6 +8,7 @@ package com.github.dougkelly88.FLIMPlateReaderGUI.XYZClasses.GUIComponents;
 
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.PlateProperties;
 import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralClasses.SeqAcqProps;
+import com.github.dougkelly88.FLIMPlateReaderGUI.GeneralGUIComponents.HCAFLIMPluginFrame;
 import com.github.dougkelly88.FLIMPlateReaderGUI.InstrumentInterfaceClasses.XYZMotionInterface;
 import com.github.dougkelly88.FLIMPlateReaderGUI.SequencingClasses.Classes.FOV;
 import java.awt.BorderLayout;
@@ -667,6 +668,8 @@ public class XYZPanel extends javax.swing.JPanel {
         afOffsetLabel.setText("Autofocus offset " + um + ":");
         afSearchLabel.setText("Autofocus seach range " + um + ":");
         
+        HCAFLIMPluginFrame hfa = (HCAFLIMPluginFrame) parent_;
+//        core_ = hfa.getCore();
         core_ = MMStudio.getInstance().getCore();
         
         try{
