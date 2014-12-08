@@ -18,9 +18,9 @@ import java.util.ArrayList;
 public class FilterSetup {
     private String label_ = "GFP";
     private String exFilt_ = "465/30";
-    private String ndFilt_ = "ND 1.0";
-    private String diFilt_ = "473/561";
-    private String emFilt_ = "525/35";    
+    private String ndFilt_ = "1.0";
+    private String diFilt_ = "473-561";
+    private String emFilt_ = "520/30";    
     private int intTime_ = 100;
     private ArrayList<Integer> delays_;
     

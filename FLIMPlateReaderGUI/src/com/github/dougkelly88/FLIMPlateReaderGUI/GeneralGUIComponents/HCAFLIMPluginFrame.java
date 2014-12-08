@@ -810,7 +810,8 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
                     // TODO: this needs tweaking in order that autofocus works properly with Z stacks...
                     // Perhaps only do when XY change, and not Z?
                     xyzmi_.gotoFOV(sas.getFOV());
-                    xyzmi_.customAutofocus(xYZPanel1.getSampleAFOffset());                     
+                    if (xYZPanel1.getAFInSequence())
+                        xyzmi_.customAutofocus(xYZPanel1.getSampleAFOffset());                     
                 }
                 
                 // set filter params - can these be handled by a single class?
@@ -830,12 +831,14 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
                 }
                 // do acquisition
                 String fovLabel = String.format("%05d", ind);
-                String path = baseLevelPath + "/" + "T=" + sas.getTimePoint().getTimeCell() + 
-                        " Filterset=" + sas.getFilters().getLabel() + 
-                        " Z=" + sas.getFOV().getZ() + 
-                        " Well=" + sas.getFOV().getWell() + 
-                        " X=" + sas.getFOV().getX() +
-                        " Y=" + sas.getFOV().getY() +
+//                String path = baseLevelPath + "/" + "T=" + sas.getTimePoint().getTimeCell() + 
+                String path = baseLevelPath + "/" + 
+//                        "T=" + sas.getTimePoint().getTimeCell() + 
+//                        " Filterset=" + sas.getFilters().getLabel() + 
+//                        " Z=" + sas.getFOV().getZ() + 
+//                        " Well=" + sas.getFOV().getWell() + 
+//                        " X=" + sas.getFOV().getX() +
+//                        " Y=" + sas.getFOV().getY() +
                         " FOV=" + fovLabel + 
                         ".ome.tiff";
                 try{
