@@ -778,12 +778,17 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
             String timeStamp = new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss").format(new Date());
             String baseLevelPath = currentBasePathField.getText() + "/Sequenced FLIM acquisition " +
                     timeStamp;
-            File f = new File(baseLevelPath);
-            try {
-                f.mkdir();
-            } catch (Exception e){
-                System.out.println(e.getMessage());
+            for (FilterSetup fs : fss){
+                String flabel = fs.getLabel();
+//                File f = new File(baseLevelPath);
+                File f = new File(baseLevelPath + "/" + flabel);
+                try {
+                    boolean check1 = f.mkdirs();
+                } catch (Exception e){
+                    System.out.println(e.getMessage());
+                }
             }
+            
             
             
 //            for (SeqAcqSetup sas : sass){
@@ -832,14 +837,14 @@ public class HCAFLIMPluginFrame extends javax.swing.JFrame {
                 // do acquisition
                 String fovLabel = String.format("%05d", ind);
 //                String path = baseLevelPath + "/" + "T=" + sas.getTimePoint().getTimeCell() + 
-                String path = baseLevelPath + "/" + 
-//                        "T=" + sas.getTimePoint().getTimeCell() + 
-//                        " Filterset=" + sas.getFilters().getLabel() + 
-//                        " Z=" + sas.getFOV().getZ() + 
-//                        " Well=" + sas.getFOV().getWell() + 
-//                        " X=" + sas.getFOV().getX() +
-//                        " Y=" + sas.getFOV().getY() +
-                        " FOV=" + fovLabel + 
+                String path = baseLevelPath + "/" + sas.getFilters().getLabel() + "/"+ 
+                        "T=" + sas.getTimePoint().getTimeCell() + 
+                        " Filterset=" + sas.getFilters().getLabel() + 
+                        " Z=" + sas.getFOV().getZ() + 
+                        " Well=" + sas.getFOV().getWell() + 
+                        " X=" + sas.getFOV().getX() +
+                        " Y=" + sas.getFOV().getY() +
+                        " ID=" + fovLabel + 
                         ".ome.tiff";
                 try{
                     core_.setShutterOpen(true);

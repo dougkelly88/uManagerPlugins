@@ -38,6 +38,8 @@ import java.io.File;
 import java.io.IOException;
 
 import com.quirkware.guid.PlatformIndependentGuidGen;
+import ij.ImagePlus;
+import java.awt.Image;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import loci.common.Location;
@@ -70,7 +72,11 @@ public class Acquisition {
 
             for (Integer delay : delays) {
                 core_.setProperty("Delay box", "Delay (ps)", delay);
-                core_.snapImage();
+//                core_.snapImage();
+                gui_.snapSingleImage();
+//                ImagePlus imgP = new ImagePlus();
+//                imgP.
+//                imgP.show();
                 saveLayersToOMETiff(writer, delays.indexOf(delay));
             }
             // clean up writer when finished...
@@ -84,7 +90,6 @@ public class Acquisition {
     private void saveLayersToOMETiff(IFormatWriter writer, int layer)
             throws Exception {
         Object img = core_.getImage();
-
         if (img instanceof byte[]) {
             System.out.println("Img is in bytes");
             writer.saveBytes(layer, (byte[]) img);
